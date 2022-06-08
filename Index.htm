@@ -1,34 +1,160 @@
+<!DOCTYPE html>
 <html>
-  <head>
-  <title>Henry Glover</title>
- <!--) <link rel="stylesheet" type="text/css" href="slick/slick.css"/>
-  <link rel="stylesheet" type="text/css" href="slick/slick-theme.css"/>
--->
+<head>
 
-  <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1"
+    />
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/swiper@8/swiper-bundle.min.css"
+/>
 
-  <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
-        
-  </head>
-  <body>
 
-  <div class="your-class">
-    <div>Some Illustrations</div>
+
+  
+    <style>
+      html,
+      body {
+        position: relative;
+        height: 100%;
+        background: #eee;
+        font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+        font-size: 14px;
+        color: #000;
+        margin: 0;
+        padding: 0;
+      }
+
+
+      .swiper {
+        width: 100%;
+        height: 100%;
+      }
+
+      .swiper-wrapper {
+        /*height: 100vh;*/
+
+      }
+
+      .swiper-slide {
+  
+        height: 97%;
+      /* background-size: contain; */
+        align-items: center;
+        text-align: center;
+        font-size: 18px;
+        background: #fff;
+        width: 97%;
+
+        /* Center slide text vertically */
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        -webkit-justify-content: center;
+        justify-content: center;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        -webkit-align-items: center;
+        align-items: center;
+      }
+
+      .swiper-slide img {
+        display: block;
+        width: auto;
+        height: 97%;
+
+
+
+
+      }
+
+      .swiper-button-next,
+      .swiper-button-prev {
+      right:10px;
+      padding: 30px;
+      color: #000 !important;
+      fill: black !important;
+      stroke: black !important;
+      }
+
+
+
+    </style>
+
+
+</head>
+  
+  
+<body>
+
+
+
+<script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
+
+
+
+<!-- Slider main container -->
+<div class="swiper">
+  <!-- Additional required wrapper -->
+  <div class="swiper-wrapper">
+    <!-- Slides -->
+
+    <div class="swiper-slide"><img src="images/bandanna.jpeg"></div>
+    <div class="swiper-slide"><img src="images/bikeWitch.jpeg"></div>
+    <div class="swiper-slide"><img src="images/chain.jpg"></div>
+    <div class="swiper-slide"><img src="images/floater.jpg"></div>
+    <div class="swiper-slide"><img src="images/legs.jpg"></div>
+    <div class="swiper-slide"><img src="images/medusaMom.jpg"></div>
+    <div class="swiper-slide"><img src="images/streetwalker.jpeg"></div>
+    <div class="swiper-slide"><img src="images/vines.jpg"></div>
+
   </div>
+  <!-- If we need pagination -->
+  <div class="swiper-pagination"></div>
 
-  <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-  <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-  <!--<script type="text/javascript" src="slick/slick.min.js"></script>-->
+  <!-- If we need navigation buttons -->
+  <div class="swiper-button-prev"></div>
+  <div class="swiper-button-next"></div>
 
-  <script type="text/javascript">
-    $(document).ready(function(){
-      $('.your-class').slick({
-        setting-name: setting-value
-      });
-    });
-  </script>
+  <!-- If we need scrollbar -->
+  <div class="swiper-scrollbar"></div>
+</div>
+
+<script> 
+const swiper = new Swiper('.swiper', {
+  // Optional parameters
+  loop: true,
+  centeredSlides: true,
+  spaceBetween: 4,
+
+  // If we need pagination
+  pagination: {
+    el: '.swiper-pagination',
+  },
+  clickable: true,
+  // Navigation arrows
+  navigation: {
+    nextEl: '.swiper-button-next',
+    prevEl: '.swiper-button-prev',
+  },
+
+
+  // And if we need scrollbar
+  scrollbar: {
+    el: '.swiper-scrollbar',
+  },
 
 
 
-  </body>
+
+});
+</script>
+
+  
+</body>
 </html>
