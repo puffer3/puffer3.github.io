@@ -79,26 +79,30 @@
 
       .swiper-button-next
       {      
-      bottom: 100px;
+      bottom: 30px;
       top: auto;
-      transform: translateX(-50%);
-      left:30x;
-      padding: 30px;
+      transform: translateX(-10%);
+      left:10x;
+      padding: 10px;
       color: #000 !important;
       fill: black !important;
       stroke: black !important;
       }
       .swiper-button-prev {
-      bottom: 100px;
+      bottom: 30px;
       top: auto;
-      transform: translateX(+50%);
-      right:30x;
-      padding: 30px;
+      transform: translateX(+10%);
+      right:10x;
+      padding: 10px;
       color: #000 !important;
       fill: black !important;
       stroke: black !important;
       }
 
+  span.swiper-pagination-bullet.swiper-pagination-bullet-active {
+    background-color: black;
+    opacity: 1;
+}
 
 
 
@@ -140,7 +144,7 @@
   <div class="swiper-button-next"></div>
 
   <!-- If we need scrollbar -->
-  <div class="swiper-scrollbar"></div>
+
 </div>
 
 <script> 
@@ -163,9 +167,7 @@ const swiper = new Swiper('.swiper', {
 
 
   // And if we need scrollbar
-  scrollbar: {
-    el: '.swiper-scrollbar',
-  },
+
 
 
 
