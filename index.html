@@ -100,10 +100,10 @@
       }
 
   span.swiper-pagination-bullet.swiper-pagination-bullet-active {
+
     background-color: black;
     opacity: 1;
 }
-
 
 
 
@@ -127,6 +127,23 @@
     <!-- Slides -->
 
     <div class="swiper-slide"><img src="images/bandanna.jpeg"></div>
+
+
+            <div class="swiper-slide">
+          <div class="swiper mySwiper2 swiper-v">
+            <div class="swiper-wrapper">
+              <div class="swiper-slide"><img src="images/vines.jpg"></div>
+              <div class="swiper-slide"><img src="images/vines.jpg"></div>
+              <div class="swiper-slide"><img src="images/vines.jpg"></div>
+              <div class="swiper-slide"><img src="images/vines.jpg"></div>
+              <div class="swiper-slide"><img src="images/vines.jpg"></div>
+            </div>
+            <div class="swiper-pagination"></div>
+          </div>
+        </div>
+
+
+
     <div class="swiper-slide"><img src="images/bikeWitch.jpeg"></div>
     <div class="swiper-slide"><img src="images/chain.jpg"></div>
     <div class="swiper-slide"><img src="images/floater.jpg"></div>
@@ -134,6 +151,7 @@
     <div class="swiper-slide"><img src="images/medusaMom.jpg"></div>
     <div class="swiper-slide"><img src="images/streetwalker.jpeg"></div>
     <div class="swiper-slide"><img src="images/vines.jpg"></div>
+
 
   </div>
   <!-- If we need pagination -->
@@ -153,26 +171,34 @@ const swiper = new Swiper('.swiper', {
   loop: true,
   centeredSlides: true,
   spaceBetween: 0,
-
-  // If we need pagination
-  pagination: {
-    el: '.swiper-pagination',
+  keyboard: {
+  enabled: true,
   },
-  clickable: true,
+  // If we need pagination
+        pagination: {
+          el: ".swiper-pagination",
+          clickable: true,
+        },
   // Navigation arrows
   navigation: {
     nextEl: '.swiper-button-next',
     prevEl: '.swiper-button-prev',
   },
-
-
-  // And if we need scrollbar
-
-
-
-
-
+  // And if we need scroll
 });
+
+     var swiper2 = new Swiper(".mySwiper2", {
+        direction: "vertical",
+        centeredSlides: true,
+        spaceBetween: 0,
+        keyboard: {
+        enabled: true,
+        },
+        pagination: {
+          el: ".swiper-pagination",
+          clickable: true,
+        },
+      });
 </script>
 
   
