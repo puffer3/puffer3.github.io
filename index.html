@@ -30,7 +30,7 @@
 
       .swiper {
         width: 100vw;
-        height: 100vh;
+        height: 95vh;
       }
 
       .swiper-wrapper {
@@ -69,6 +69,7 @@
         display: block;
         width: auto
         height: 90vh;
+        max-height: 90%;
         max-width: 80%
 
 
@@ -77,7 +78,8 @@
       }
 
       .swiper-button-next
-      {      bottom: 200px;
+      {      
+      bottom: 100px;
       top: auto;
       transform: translateX(-50%);
       left:30x;
@@ -87,7 +89,7 @@
       stroke: black !important;
       }
       .swiper-button-prev {
-      bottom: 200px;
+      bottom: 100px;
       top: auto;
       transform: translateX(+50%);
       right:30x;
@@ -106,9 +108,7 @@
 
 
 </head>
-  
-  
-<body>
+<body style="background-color:white;">  
 
 
 
@@ -148,7 +148,7 @@ const swiper = new Swiper('.swiper', {
   // Optional parameters
   loop: true,
   centeredSlides: true,
-  spaceBetween: 4,
+  spaceBetween: 0,
 
   // If we need pagination
   pagination: {
