@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1"
+    />
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/swiper@8/swiper-bundle.min.css"
+/>
+
+  <link rel="stylesheet" href="style.css">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+
+  
+    <style>
+      html,
+      body {
+        position: relative;
+        height: 100%;
+        background: #ffffff;
+        font-family: Papyrus, Helvetica, Arial, sans-serif;
+        font-size: 16px;
+        color: #000;
+        margin: 0;
+        padding: 0;
+      }
+
+
+      .swiper {
+        width: 100vw;
+        height: 89vh;
+      }
+
+      .swiper-wrapper {
+       height: 79%;
+      width:100%;
+
+      }
+
+      .swiper-slide {
+  
+        height: 89vh;
+        width: 90vw;
+      /* background-size: contain; */
+        align-items: center;
+        text-align: center;
+        font-size: 18px;
+        background: #fff;
+
+
+        /* Center slide text vertically */
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        -webkit-justify-content: center;
+        justify-content: center;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        -webkit-align-items: center;
+        align-items: center;
+      }
+
+      .swiper-slide img {
+        display: block;
+        width: auto
+        height: 89vh;
+        max-height: 80%;
+        max-width: 80%
+
+      }
+
+
+
+
+      .swiper-button-next
+      {      
+      bottom: 30px;
+      top: auto;
+      transform: translateX(-10%);
+      left:10x;
+      padding: 10px;
+      color: #000 !important;
+      fill: black !important;
+      stroke: black !important;
+      }
+      .swiper-button-prev {
+      bottom: 30px;
+      top: auto;
+      transform: translateX(+10%);
+      right:10x;
+      padding: 10px;
+      color: #000 !important;
+      fill: black !important;
+      stroke: black !important;
+      }
+
+  span.swiper-pagination-bullet.swiper-pagination-bullet-active {
+
+    background-color: black;
+    opacity: 1;
+}
+
+/*
+
+.swiper-pagination-number {
+  width: 20px;
+  height: 20px;
+  text-align: center;
+  line-height: 20px;
+  font-size: 12px;
+  color:#000;
+  opacity: 1;
+  background: rgba(0,0,0,0.2);
+}
+.swiper-pagination-number-active- {
+  color:#fff;
+  background: #007aff;
+}
+
+
+}
+
+
+
+    </style>
+
+
+</head>
+<body>  
+
+
+
+<script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
+
+
+<!-- nav bar stuff   WONT EXPAND-->
+
+<nav class="navbar navbar-inverse navbar-static-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="about.html"><img src="images/nav/HJG_Title.png"></a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">Graphic <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="logos.html">Design</a></li>
+            <li><a href="index.html">Illustrations</a></li>
+          </ul>
+        </li>
+
+
+
+        <li><a href="#">Technical</a></li>
+
+
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">Sound<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="#">Composition</a></li>
+            <li><a href="#">Design</a></li>
+          </ul>
+        </li>
+
+       <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">Photography </a>
+
+          </ul>
+        </li>
+      </ul>
+
+
+
+            <ul class="nav navbar-nav navbar-right">
+
+        <li><a href="#"><span></span>CV&ensp;&ensp;</a></li>
+
+
+        <li><a href="mailto:henryjamesglover@gmail.com"><span class="glyphicon glyphicon-envelope"></span>&ensp;&ensp;</a></li>
+
+        <li><a href="https://soundcloud.com/ballet"target="_blank"><span class="glyphicon glyphicon-music"></span>&ensp;&ensp;</a></li>
+
+        <li><a href="https://www.instagram.com/poly_shore/"target="_blank"><span class="glyphicon glyphicon-camera"></span>&ensp;&ensp; </a></li>
+
+
+      </ul>
+
+
+
+    </div>
+  </div>
+</nav>
+
+
+<!-- Slider main container -->
+<div class="swiper">
+  <!-- Additional required wrapper -->
+  <div class="swiper-wrapper">
+    <!-- Slides -->
+
+
+<!--
+            <div class="swiper-slide">
+          <div class="swiper mySwiper2 swiper-v">
+            <div class="swiper-wrapper">
+              <div class="swiper-slide"><img src="images/vines.jpg"></div>
+              <div class="swiper-slide"><img src="images/vines.jpg"></div>
+              <div class="swiper-slide"><img src="images/vines.jpg"></div>
+            </div>
+            <div class="swiper-pagination-number"></div>
+          </div>
+        </div>
+-->
+
+
+    <div class="swiper-slide"><img src="images/logos/aaTinLabel2.png"></div>
+    <div class="swiper-slide"><img src="images/logos/materia.png"></div>
+    <div class="swiper-slide"><img src="images/logos/phygital.png"></div>
+    <div class="swiper-slide"><img src="images/logos/GS.png"></div>
+    <div class="swiper-slide"><img src="images/logos/WKEplayingCard.png"></div>
+    <div class="swiper-slide"><img src="images/logos/WKEracerLogo.png"></div>
+    <div class="swiper-slide"><img src="images/logos/WKEtorpedo.png"></div>
+    <div class="swiper-slide"><img src="images/logos/richardsonLogo.png"></div>
+
+
+
+  </div>
+  <!-- If we need pagination -->
+  <div class="swiper-pagination"></div>
+
+  <!-- If we need navigation buttons -->
+  <div class="swiper-button-prev"></div>
+  <div class="swiper-button-next"></div>
+
+  <!-- If we need scrollbar -->
+
+</div>
+
+<script> 
+const swiper = new Swiper('.swiper', {
+  // Optional parameters
+  loop: true,
+  centeredSlides: true,
+  spaceBetween: 0,
+  keyboard: {
+  enabled: true,
+  },
+  // If we need pagination
+        pagination: {
+          el: ".swiper-pagination",
+          clickable: true,
+        },
+  // Navigation arrows
+  navigation: {
+    nextEl: '.swiper-button-next',
+    prevEl: '.swiper-button-prev',
+  },
+  // And if we need scroll
+});
+
+
+/*
+
+    // For our nested slider 
+
+
+     var swiper2 = new Swiper(".mySwiper2", {
+        direction: "vertical",
+        loop: true,
+        centeredSlides: true,
+        spaceBetween: 0,
+        keyboard: {
+        enabled: true,
+        },
+        pagination: {
+          bulletClass: `swiper-pagination-bullet ${style['feature-pagination']}`,
+          clickable: true,
+
+
+        },
+
+
+      });
+
+      */
+</script>
+
+  
+</body>
+</html>
