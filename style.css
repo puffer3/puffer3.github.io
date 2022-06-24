@@ -1,9 +1,10 @@
 body {
-  font-family: "Papyrus";
+  font-family: Monospace;
   font-size: 14pt;
+  
 }
 blockquote {
-  font-family: "Papyrus";
+  font-family: Arial;
   background-color: #F8EFBE;
   border-left-color: #F4B514;
 }
@@ -31,7 +32,7 @@ blockquote {
 }
 
 h1.headingStatement {
-  font-family: Papyrus;
+  font-family: Monospace;
   font-size: 2em;
 }
 
