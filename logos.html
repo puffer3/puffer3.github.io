@@ -236,14 +236,30 @@
 -->
 
 
-    <div class="swiper-slide"><img src="images/logos/aaTinLabel2.png"></div>
-    <div class="swiper-slide"><img src="images/logos/materia.png"></div>
-    <div class="swiper-slide"><img src="images/logos/phygital.png"></div>
-    <div class="swiper-slide"><img src="images/logos/GS.png"></div>
-    <div class="swiper-slide"><img src="images/logos/WKEplayingCard.png"></div>
-    <div class="swiper-slide"><img src="images/logos/WKEracerLogo.png"></div>
-    <div class="swiper-slide"><img src="images/logos/WKEtorpedo.png"></div>
-    <div class="swiper-slide"><img src="images/logos/richardsonLogo.png"></div>
+    <div class="swiper-slide">          
+    <div class="swiper-zoom-container">
+    <img src="images/logos/aaTinLabel2.png"></div>          </div>
+    <div class="swiper-slide">          
+    <div class="swiper-zoom-container">
+    <img src="images/logos/materia.png"></div>          </div>
+    <div class="swiper-slide">          
+    <div class="swiper-zoom-container">
+    <img src="images/logos/phygital.png"></div>          </div>
+    <div class="swiper-slide">          
+    <div class="swiper-zoom-container">
+    <img src="images/logos/GS.png"></div>          </div>
+    <div class="swiper-slide">          
+    <div class="swiper-zoom-container">
+    <img src="images/logos/WKEplayingCard.png"></div>          </div>
+    <div class="swiper-slide">          
+    <div class="swiper-zoom-container">
+    <img src="images/logos/WKEracerLogo.png"></div>          </div>
+    <div class="swiper-slide">          
+    <div class="swiper-zoom-container">
+    <img src="images/logos/WKEtorpedo.png"></div>          </div>
+    <div class="swiper-slide">          
+    <div class="swiper-zoom-container">
+    <img src="images/logos/richardsonLogo.png"></div>          </div>
 
 
 
@@ -278,6 +294,18 @@ const swiper = new Swiper('.swiper', {
     nextEl: '.swiper-button-next',
     prevEl: '.swiper-button-prev',
   },
+
+  zoom: {
+      maxRatio: 3,
+      minRatio: 1
+    },
+  
+    off: {
+      slideChangeTransitionEnd: function () {
+        console.log('clicked!')
+        this.zoom.in();
+      }
+    },
   // And if we need scroll
 });
 
