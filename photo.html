@@ -228,17 +228,39 @@
 
 
 
-              <div class="swiper-slide"><img src="images/photos/photo3.jpg"></div>
-              <div class="swiper-slide"><img src="images/photos/photo4.jpg"></div>
-              <div class="swiper-slide"><img src="images/photos/photo5.jpg"></div>
-              <div class="swiper-slide"><img src="images/photos/photo6.jpg"></div>
-              <div class="swiper-slide"><img src="images/photos/photo7.jpg"></div>
-              <div class="swiper-slide"><img src="images/photos/photo8.jpg"></div>
-              <div class="swiper-slide"><img src="images/photos/photo9.jpg"></div>
-              <div class="swiper-slide"><img src="images/photos/photo10.jpg"></div>                      
-              <div class="swiper-slide"><img src="images/photos/photo11.jpg"></div>
-              <div class="swiper-slide"><img src="images/photos/12.jpg"></div>
-              <div class="swiper-slide"><img src="images/photos/photo2.jpg"></div>
+              <div class="swiper-slide">
+            <div class="swiper-zoom-container">
+              <img src="images/photos/photo3.jpg"></div></div>
+                          <div class="swiper-slide">
+            <div class="swiper-zoom-container">
+              <img src="images/photos/photo4.jpg"></div></div>
+                          <div class="swiper-slide">
+            <div class="swiper-zoom-container">
+              <img src="images/photos/photo5.jpg"></div></div>
+                          <div class="swiper-slide">
+            <div class="swiper-zoom-container">
+              <img src="images/photos/photo6.jpg"></div></div>
+                          <div class="swiper-slide">
+            <div class="swiper-zoom-container">
+              <img src="images/photos/photo7.jpg"></div></div>
+                          <div class="swiper-slide">
+            <div class="swiper-zoom-container">
+              <img src="images/photos/photo8.jpg"></div></div>
+                          <div class="swiper-slide">
+            <div class="swiper-zoom-container">
+              <img src="images/photos/photo9.jpg"></div></div>
+                          <div class="swiper-slide">
+            <div class="swiper-zoom-container">
+              <img src="images/photos/photo10.jpg"></div></div>                 
+                          <div class="swiper-slide">
+            <div class="swiper-zoom-container">
+              <img src="images/photos/photo11.jpg"></div></div>
+                          <div class="swiper-slide">
+            <div class="swiper-zoom-container">
+              <img src="images/photos/12.jpg"></div></div>
+                          <div class="swiper-slide">
+            <div class="swiper-zoom-container">
+              <img src="images/photos/photo2.jpg"></div></div>
 
 
   </div>
@@ -274,6 +296,17 @@ const swiper = new Swiper('.swiper', {
     nextEl: '.swiper-button-next',
     prevEl: '.swiper-button-prev',
   },
+    zoom: {
+      maxRatio: 3,
+      minRatio: 1
+    },
+  
+    off: {
+      slideChangeTransitionEnd: function () {
+        console.log('clicked!')
+        this.zoom.in();
+      }
+    },
   // And if we need scroll
 });
 
