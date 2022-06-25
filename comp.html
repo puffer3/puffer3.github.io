@@ -31,7 +31,15 @@
         color: #000;
         margin: 0;
         padding: 0;
+
+
       }
+      .p2 {
+      width: 80vh;
+
+      font-family: Arial, Helvetica, sans-serif;
+      }
+
 
 
       .swiper {
@@ -113,7 +121,7 @@
 
 /*
 
-.swiper-pagination-number {
+.swiper-pagination-bullet-2 {
   width: 20px;
   height: 20px;
   text-align: center;
@@ -123,11 +131,13 @@
   opacity: 1;
   background: rgba(0,0,0,0.2);
 }
-.swiper-pagination-number-active- {
+.swiper-pagination-bullet-active-2 {
   color:#fff;
   background: #007aff;
 }
 
+.swiper-pagination-vertical {
+how can i add the pagination-bullet-2 and active-2 to this class? */
 
 }
 
@@ -215,95 +225,23 @@
   </div>
 </nav>
 
+
+
+ <center> 
+
+  <br>
+<br>
+<br>
+<div class="p2">
+Under Construction.  Until then check out my <a href="http://www.soundcloud.com/ballet" target="_blank">Soundcloud</a>
+</div>
+</center>
 <!-- Slider main container -->
-<div class="swiper">
-  <!-- Additional required wrapper -->
-  <div class="swiper-wrapper">
-    <!-- Slides -->
-
-
-<!--
-            <div class="swiper-slide">
-          <div class="swiper mySwiper2 swiper-v">
-            <div class="swiper-wrapper">
-              <div class="swiper-slide"><img src="images/vines.jpg"></div>
-              <div class="swiper-slide"><img src="images/vines.jpg"></div>
-              <div class="swiper-slide"><img src="images/vines.jpg"></div>
-            </div>
-            <div class="swiper-pagination-number"></div>
-          </div>
-        </div>
--->
-
-
-    <div class="swiper-slide"><img src="images/dev/obsxPanel.png"></div>
-    <div class="swiper-slide"><img src="images/dev/ob8Panel.png"></div>
-    <div class="swiper-slide"><img src="images/dev/prophet600Panel.png"><br></div>
-    <div class="swiper-slide"><img src="images/dev/prophet10Panel.png"><br></div>
-    <div class="swiper-slide"><img src="images/dev/juno106Panel.png"><br></div>
-
-
-
-  </div>
-  <!-- If we need pagination -->
-  <div class="swiper-pagination"></div>
-
-  <!-- If we need navigation buttons -->
-  <div class="swiper-button-prev"></div>
-  <div class="swiper-button-next"></div>
 
   <!-- If we need scrollbar -->
 
 </div>
 
-<script> 
-const swiper = new Swiper('.swiper', {
-  // Optional parameters
-  loop: true,
-  centeredSlides: true,
-  spaceBetween: 0,
-  keyboard: {
-  enabled: true,
-  },
-  // If we need pagination
-        pagination: {
-          el: ".swiper-pagination",
-          clickable: true,
-        },
-  // Navigation arrows
-  navigation: {
-    nextEl: '.swiper-button-next',
-    prevEl: '.swiper-button-prev',
-  },
-  // And if we need scroll
-});
-
-
-/*
-
-    // For our nested slider 
-
-
-     var swiper2 = new Swiper(".mySwiper2", {
-        direction: "vertical",
-        loop: true,
-        centeredSlides: true,
-        spaceBetween: 0,
-        keyboard: {
-        enabled: true,
-        },
-        pagination: {
-          bulletClass: `swiper-pagination-bullet ${style['feature-pagination']}`,
-          clickable: true,
-
-
-        },
-
-
-      });
-
-      */
-</script>
 
   
 </body>
