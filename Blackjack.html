@@ -404,10 +404,11 @@
     <div class="card-face card-front">
       <span class="card-suit-corner">♠</span>
       <span class="card-suit-corner br">♠</span>
-      <div class="card-label">The Rule</div>
+      <div class="card-label">The Hand</div>
       <div class="card-question" id="questionText"></div>
     </div>
     <div class="card-face card-back" id="backFace">
+      <div class="card-label" style="opacity:0.5;">The Rule</div>
       <div class="result-verdict" id="resultVerdict"></div>
       <div class="your-answer" id="yourAnswerLabel"></div>
       <div class="action-badge" id="actionBadge"></div>
@@ -424,10 +425,6 @@
   <button class="action-btn double"    onclick="answer('DOUBLE')">Double</button>
   <button class="action-btn surrender" id="surrenderBtn" onclick="answer('SURRENDER')">Surrender</button>
   <button class="action-btn fliptable-btn" id="flipBtn" onclick="flipTable()">┬─┬ ノ( ゜-゜ノ)</button>
-</div>
-
-<div class="bottom-row">
-  <button class="btn-fullscreen" id="fsBtn" onclick="toggleFullscreen()" title="Fullscreen">⛶</button>
 </div>
 
 <!-- END SCREEN -->
@@ -540,6 +537,7 @@ let idx = 0;
 let correctCount = 0;
 let wrongCount = 0;
 let answered = false;
+let renderTimer = null;
 
 
 
@@ -553,8 +551,9 @@ function shuffle() {
   document.getElementById('cardScene').style.display = '';
   document.getElementById('actionButtons').style.display = '';
   document.getElementById('btnShuffle') && (document.getElementById('btnShuffle').style.display = '');
-  document.getElementById('cardInner').classList.remove('flipped');
   document.getElementById('backFace').className = 'card-face card-back';
+  void document.getElementById('backFace').offsetHeight;
+  document.getElementById('cardInner').classList.remove('flipped');
   document.getElementById('tapHint').style.display = 'none';
   updateScore();
   render();
@@ -568,10 +567,13 @@ function render() {
   document.getElementById('actionBadge').textContent = card.action;
   document.getElementById('actionBadge').className = 'action-badge ' + card.cls;
   document.getElementById('answerDetail').innerHTML = card.detail;
+  // Start the return flip immediately, then reset back face at the halfway point
   document.getElementById('cardInner').classList.remove('flipped');
-  document.getElementById('backFace').className = 'card-face card-back';
-  document.getElementById('resultVerdict').textContent = '';
-  document.getElementById('yourAnswerLabel').textContent = '';
+  setTimeout(() => {
+    document.getElementById('backFace').className = 'card-face card-back';
+    document.getElementById('resultVerdict').textContent = '';
+    document.getElementById('yourAnswerLabel').textContent = '';
+  }, 300); // halfway through the 0.6s transition
   answered = false;
   setButtonsDisabled(false);
   document.getElementById('tapHint').style.display = 'none';
@@ -828,24 +830,6 @@ function flipTable() {
 
 shuffle();
 
-function toggleFullscreen() {
-  const el = document.documentElement;
-  if (!document.fullscreenElement) {
-    if (el.requestFullscreen) el.requestFullscreen();
-    else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
-    document.getElementById('fsBtn').textContent = '✕';
-  } else {
-    if (document.exitFullscreen) document.exitFullscreen();
-    else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
-    document.getElementById('fsBtn').textContent = '⛶';
-  }
-  document.addEventListener('fullscreenchange', () => {
-    document.getElementById('fsBtn').textContent = document.fullscreenElement ? '✕' : '⛶';
-  });
-  document.addEventListener('webkitfullscreenchange', () => {
-    document.getElementById('fsBtn').textContent = document.fullscreenElement ? '✕' : '⛶';
-  });
-}
 </script>
 
 <style>
