@@ -889,7 +889,12 @@ function shuffle() {
 function render() {
   const card = deck[idx];
 
-  // Flip back immediately
+  // Clear result state from back face before flipping
+  document.getElementById('backFace').className = 'card-face card-back';
+  document.getElementById('resultVerdict').textContent = '';
+  document.getElementById('yourAnswerLabel').textContent = '';
+
+  // Flip back
   document.getElementById('cardInner').classList.remove('flipped');
   answered = false;
   setButtonsDisabled(false);
