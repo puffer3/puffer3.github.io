@@ -210,7 +210,14 @@
     letter-spacing: 2px;
     line-height: 1.35;
     text-transform: uppercase;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    width: 100%;
   }
+  .card-question .q-hand { display: block; }
+  .card-question .q-dealer { display: block; font-size: clamp(1rem, 3.5vw, 1.4rem); opacity: 0.75; }
 
   /* back face */
   .result-verdict {
@@ -900,27 +907,23 @@ function render() {
   setButtonsDisabled(false);
   document.getElementById('tapHint').style.display = 'none';
 
-  // Swap all content at halfway point when card is edge-on and invisible
+  // Pre-load front face before flip — it's hidden so no jump
+  const qParts = card.q.split('\n');
+  document.getElementById('questionText').innerHTML = '<span class="q-hand">' + qParts[0] + '</span>' + (qParts[1] ? '<span class="q-dealer">' + qParts[1] + '</span>' : '');
+  const pct = ((idx + 1) / deck.length) * 100;
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('counter').textContent = 'Card ' + (idx + 1) + ' of ' + deck.length;
+
+  // Load back face for next answer after flip completes
   setTimeout(() => {
-    document.getElementById('backFace').className = 'card-face card-back';
-    document.getElementById('resultVerdict').textContent = '';
-    document.getElementById('yourAnswerLabel').textContent = '';
     document.getElementById('actionBadge').textContent = card.action;
     document.getElementById('actionBadge').className = 'action-badge ' + card.cls;
     document.getElementById('answerDetail').innerHTML = card.detail;
-    // Hand summary
     const qLines = card.q.split('\n');
     const hand = qLines[0].replace(/\s*\(.*?\)/, '').trim();
     const dealer = qLines[1] ? qLines[1].replace('Dealer showing ', '').trim() : '';
     document.getElementById('handSummary').textContent = dealer ? hand + '  ·  Dealer ' + dealer : hand;
-    // Front face
-    const qParts = card.q.split('\n');
-    document.getElementById('questionText').innerHTML = qParts[0] + (qParts[1] ? '<br><span style="display:block;margin-top:18px">' + qParts[1] + '</span>' : '');
-    // Progress
-    const pct = ((idx + 1) / deck.length) * 100;
-    document.getElementById('progressFill').style.width = pct + '%';
-    document.getElementById('counter').textContent = 'Card ' + (idx + 1) + ' of ' + deck.length;
-  }, 300);
+  }, 650);
 }
 
 function updateSplitButton() {
@@ -1197,7 +1200,7 @@ function flipTable() {
 
   // Show "deck shuffled" on the card
   shuffle();
-  document.getElementById('questionText').innerHTML = 'DECK SHUFFLED<br><span style="font-size:0.55rem;letter-spacing:3px;color:rgba(236,234,228,0.35);font-weight:300;">TAP TO CONTINUE</span>';
+  document.getElementById('questionText').innerHTML = '<span class="q-hand">Deck Shuffled</span><span class="q-dealer" style="font-size:0.55rem;opacity:0.35;">Tap to Continue</span>';
   document.getElementById('cardInner').classList.remove('flipped');
   document.getElementById('backFace').className = 'card-face card-back';
   answered = true;
