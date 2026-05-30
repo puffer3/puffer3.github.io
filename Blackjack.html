@@ -932,7 +932,7 @@ function render() {
   document.getElementById('questionText').innerHTML = '<span class="q-hand">' + qParts[0] + '</span>' + (qParts[1] ? '<span class="q-dealer">' + qParts[1] + '</span>' : '');
   const pct = ((idx + 1) / deck.length) * 100;
   document.getElementById('progressFill').style.width = pct + '%';
-  document.getElementById('counter').textContent = 'Card ' + (idx + 1) + ' of ' + deck.length;
+  document.getElementById('counter').textContent = (idx + 1) + ' of ' + deck.length;
 
   // Load back face for next answer after flip completes
   setTimeout(() => {
@@ -1068,7 +1068,7 @@ function goBack() {
   document.getElementById('backFace').className = 'card-face card-back';
   const pct = ((idx + 1) / deck.length) * 100;
   document.getElementById('progressFill').style.width = pct + '%';
-  document.getElementById('counter').textContent = 'Card ' + (idx + 1) + ' of ' + deck.length;
+  document.getElementById('counter').textContent = (idx + 1) + ' of ' + deck.length;
   // Show flipped to answer
   document.getElementById('cardInner').classList.add('flipped');
   answered = true;
