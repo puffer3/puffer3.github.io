@@ -332,6 +332,21 @@
   }
   .btn-fullscreen:hover { color: var(--dim); border-color: var(--dim); }
 
+  .btn-back {
+    background: transparent;
+    color: var(--dim);
+    border: 1px solid var(--border);
+    font-family: 'Gill Sans Nova', 'Gill Sans', Optima, sans-serif;
+    font-weight: 300;
+    font-size: 0.56rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 7px 14px;
+    border-radius: 0;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-back:hover { color: var(--hal); border-color: var(--hal); }
   .bottom-nav {
     display: flex;
     gap: 8px;
@@ -738,7 +753,8 @@
   <button class="action-btn surrender" id="surrenderBtn" onclick="answer('SURRENDER')">Surrender</button>
   <button class="action-btn fliptable-btn" id="flipBtn" onclick="flipTable()">┬─┬ ノ( ゜-゜ノ)</button>
 </div>
-<div class="bottom-nav"><button class="btn-chart" onclick="showChart()">Chart</button><button class="btn-chart" onclick="showRules()">Tips</button><button class="btn-chart" onclick="showStats()">Stats</button></div>
+<div class="bottom-nav"><button class="btn-back" id="backBtn" onclick="goBack()" style="display:none">Back</button>
+<button class="btn-chart" onclick="showChart()">Chart</button><button class="btn-chart" onclick="showRules()">Tips</button><button class="btn-chart" onclick="showStats()">Stats</button></div>
 
 <!-- END SCREEN -->
 <div class="end-screen" id="endScreen">
@@ -858,6 +874,7 @@ let correctCount = 0;
 let wrongCount = 0;
 let answered = false;
 let renderTimer = null;
+let history = [];
 
 // Analytics tracking
 let statsByCat = {};
@@ -879,6 +896,9 @@ function shuffle() {
   answered = false;
   statsByCat = {}; statsByAction = {}; statsByDealer = {}; missedCards = {};
   streakCurrent = 0; streakBest = 0; totalAnswered = 0; totalCorrect = 0;
+  history = [];
+  document.getElementById('backBtn').style.display = 'none';
+  // Don't reset doublesOn — keep user's choice
   document.getElementById('endScreen').classList.remove('visible');
   document.getElementById('cardScene').style.display = '';
   document.getElementById('actionButtons').style.display = '';
@@ -1002,16 +1022,58 @@ function answer(chosen) {
 }
 
 function cardTapped() {
-  if (answered) nextCard();
+  if (answered) {
+    nextCard();
+  } else {
+    // Tap the front face to peek at the rule without answering
+    const ci = document.getElementById('cardInner');
+    if (ci.classList.contains('flipped')) {
+      // Already peeking — tap again to flip back to question
+      ci.classList.remove('flipped');
+    } else {
+      // Flip to show the rule
+      ci.classList.add('flipped');
+    }
+  }
 }
 
 function nextCard() {
   if (idx + 1 >= deck.length) {
     showEnd();
   } else {
+    history.push(idx);
     idx++;
     render();
+    document.getElementById('backBtn').style.display = history.length ? '' : 'none';
   }
+}
+
+function goBack() {
+  if (!history.length) return;
+  idx = history.pop();
+  document.getElementById('backBtn').style.display = history.length ? '' : 'none';
+  // Show the card flipped to the answer so they can read the rule
+  const card = deck[idx];
+  const qParts = card.q.split('\n');
+  document.getElementById('questionText').innerHTML = '<span class="q-hand">' + qParts[0] + '</span>' + (qParts[1] ? '<span class="q-dealer">' + qParts[1] + '</span>' : '');
+  document.getElementById('actionBadge').textContent = card.action;
+  document.getElementById('actionBadge').className = 'action-badge ' + card.cls;
+  document.getElementById('answerDetail').innerHTML = card.detail;
+  const qLines = card.q.split('\n');
+  const hand = qLines[0].replace(/\s*\(.*?\)/, '').trim();
+  const dealer = qLines[1] ? qLines[1].replace('Dealer showing ', '').trim() : '';
+  document.getElementById('handSummary').textContent = dealer ? hand + '  ·  Dealer ' + dealer : hand;
+  document.getElementById('resultVerdict').textContent = '';
+  document.getElementById('yourAnswerLabel').textContent = '';
+  document.getElementById('backFace').className = 'card-face card-back';
+  const pct = ((idx + 1) / deck.length) * 100;
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('counter').textContent = 'Card ' + (idx + 1) + ' of ' + deck.length;
+  // Show flipped to answer
+  document.getElementById('cardInner').classList.add('flipped');
+  answered = true;
+  setButtonsDisabled(true);
+  document.getElementById('tapHint').style.display = 'block';
 }
 
 function setButtonsDisabled(disabled) {
@@ -1050,6 +1112,7 @@ const REAL_CATS = ["Hard Totals", "Soft Totals", "Splits"];
 const activeCats = new Set([...REAL_CATS, "Surrender"]);
 
 function getFilteredDeck() {
+  if (doublesOn) return ALL_CARDS.filter(c => c.action === 'DOUBLE');
   let cards = ALL_CARDS.filter(c => activeCats.has(c.cat));
   if (!splitOn)     cards = cards.filter(c => c.action !== 'SPLIT');
   if (!surrenderOn) cards = cards.filter(c => c.action !== 'SURRENDER');
@@ -1087,6 +1150,11 @@ allBtn.onclick = () => {
     const sBtn = document.getElementById('surrenderBtn');
     if (sBtn) sBtn.style.display = '';
   }
+  if (doublesOn) {
+    doublesOn = false;
+    document.getElementById('toggleDoubles').classList.remove('active');
+    document.getElementById('toggleDoubles').classList.add('toggle-off');
+  }
   updateTabStates();
   shuffle();
 };
@@ -1115,6 +1183,12 @@ REAL_CATS.forEach(cat => {
         const splitBtn = document.getElementById('splitActionBtn');
         if (splitBtn) splitBtn.style.display = '';
       }
+    }
+    // Turn doubles off when selecting a category
+    if (doublesOn) {
+      doublesOn = false;
+      document.getElementById('toggleDoubles').classList.remove('active');
+      document.getElementById('toggleDoubles').classList.add('toggle-off');
     }
     updateTabStates();
     shuffle();
@@ -1151,6 +1225,19 @@ surrenderTab.onclick = () => {
 };
 tabsEl.appendChild(surrenderTab);
 
+// Doubles filter tab
+const doublesTab = document.createElement('button');
+doublesTab.className = 'tab toggle-tab toggle-off';
+doublesTab.id = 'toggleDoubles';
+doublesTab.textContent = 'Doubles';
+doublesTab.onclick = () => {
+  doublesOn = !doublesOn;
+  doublesTab.classList.toggle('active', doublesOn);
+  doublesTab.classList.toggle('toggle-off', !doublesOn);
+  shuffle();
+};
+tabsEl.appendChild(doublesTab);
+
 // Add Split to action buttons grid
 const grid = document.getElementById('actionButtons');
 const splitBtn = document.createElement('button');
@@ -1166,6 +1253,7 @@ grid.style.gridTemplateColumns = '1fr 1fr';
 
 let splitOn = true;
 let surrenderOn = true;
+let doublesOn = false; // off by default — acts as a filter not a category
 
 function toggleMode(mode) {
   if (mode === 'split') {
