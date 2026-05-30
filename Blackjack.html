@@ -1112,8 +1112,16 @@ const REAL_CATS = ["Hard Totals", "Soft Totals", "Splits"];
 const activeCats = new Set([...REAL_CATS, "Surrender"]);
 
 function getFilteredDeck() {
-  if (doublesOn) return ALL_CARDS.filter(c => c.action === 'DOUBLE');
-  let cards = ALL_CARDS.filter(c => activeCats.has(c.cat));
+  let cards;
+  if (doublesOn && activeCats.size === 0) {
+    // Doubles alone — show all double cards
+    cards = ALL_CARDS.filter(c => c.action === 'DOUBLE');
+  } else if (doublesOn) {
+    // Doubles + categories — full category deck, no extra filter
+    cards = ALL_CARDS.filter(c => activeCats.has(c.cat));
+  } else {
+    cards = ALL_CARDS.filter(c => activeCats.has(c.cat));
+  }
   if (!splitOn)     cards = cards.filter(c => c.action !== 'SPLIT');
   if (!surrenderOn) cards = cards.filter(c => c.action !== 'SURRENDER');
   return cards;
@@ -1150,11 +1158,6 @@ allBtn.onclick = () => {
     const sBtn = document.getElementById('surrenderBtn');
     if (sBtn) sBtn.style.display = '';
   }
-  if (doublesOn) {
-    doublesOn = false;
-    document.getElementById('toggleDoubles').classList.remove('active');
-    document.getElementById('toggleDoubles').classList.add('toggle-off');
-  }
   updateTabStates();
   shuffle();
 };
@@ -1183,12 +1186,6 @@ REAL_CATS.forEach(cat => {
         const splitBtn = document.getElementById('splitActionBtn');
         if (splitBtn) splitBtn.style.display = '';
       }
-    }
-    // Turn doubles off when selecting a category
-    if (doublesOn) {
-      doublesOn = false;
-      document.getElementById('toggleDoubles').classList.remove('active');
-      document.getElementById('toggleDoubles').classList.add('toggle-off');
     }
     updateTabStates();
     shuffle();
@@ -1227,16 +1224,19 @@ tabsEl.appendChild(surrenderTab);
 
 // Doubles filter tab
 const doublesTab = document.createElement('button');
-doublesTab.className = 'tab toggle-tab toggle-off';
+doublesTab.className = 'tab toggle-tab active';
 doublesTab.id = 'toggleDoubles';
 doublesTab.textContent = 'Doubles';
 doublesTab.onclick = () => {
   doublesOn = !doublesOn;
   doublesTab.classList.toggle('active', doublesOn);
   doublesTab.classList.toggle('toggle-off', !doublesOn);
+  // When doublesOn alone with no other cats, filter to doubles only
+  // When alongside others, just keeps current deck
   shuffle();
 };
 tabsEl.appendChild(doublesTab);
+
 
 // Add Split to action buttons grid
 const grid = document.getElementById('actionButtons');
@@ -1253,7 +1253,8 @@ grid.style.gridTemplateColumns = '1fr 1fr';
 
 let splitOn = true;
 let surrenderOn = true;
-let doublesOn = false; // off by default — acts as a filter not a category
+let doublesOn = true;
+
 
 function toggleMode(mode) {
   if (mode === 'split') {
