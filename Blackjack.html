@@ -217,7 +217,7 @@
     font-size: 0.6rem;
     letter-spacing: 4px;
     text-transform: uppercase;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
     font-weight: 400;
   }
   .result-verdict.correct { color: var(--correct); }
@@ -228,7 +228,7 @@
     font-weight: 200;
     letter-spacing: 6px;
     text-transform: uppercase;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
   }
   .action-badge.hit      { color: var(--amber); }
   .action-badge.stand    { color: var(--correct); }
@@ -241,7 +241,7 @@
     color: var(--dim);
     letter-spacing: 2px;
     text-transform: uppercase;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
     opacity: 0.7;
   }
   .card-answer-detail {
@@ -255,6 +255,16 @@
     text-transform: uppercase;
   }
   .card-answer-detail strong { color: var(--bone); font-weight: 400; }
+  .hand-summary {
+    margin-top: 0;
+    margin-bottom: 12px;
+    font-size: 0.55rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--dim);
+    opacity: 0.45;
+    font-weight: 300;
+  }
 
   /* ACTION BUTTONS */
   .action-buttons {
@@ -411,6 +421,7 @@
       <div class="card-label" style="opacity:0.5;">The Rule</div>
       <div class="result-verdict" id="resultVerdict"></div>
       <div class="your-answer" id="yourAnswerLabel"></div>
+      <div class="hand-summary" id="handSummary"></div>
       <div class="action-badge" id="actionBadge"></div>
       <div class="card-answer-detail" id="answerDetail"></div>
       <div class="tap-hint" id="tapHint" style="display:none;margin-top:14px;font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:2px;color:rgba(255,255,255,0.3);text-transform:uppercase;">tap to continue</div>
@@ -437,95 +448,95 @@
 <script>
 const ALL_CARDS = [
   // ── HARD TOTALS ──
-  { cat:"Hard Totals", q:"Hard 8\nvs. Dealer showing 13",   action:"HIT",    cls:"hit",    detail:"Always <strong>hit</strong> hard 8 or less against any dealer total." },
-  { cat:"Hard Totals", q:"Hard 8\nvs. Dealer showing 17",   action:"HIT",    cls:"hit",    detail:"Always <strong>hit</strong> hard 8 or less against any dealer total." },
-  { cat:"Hard Totals", q:"Hard 9\nvs. Dealer showing 13",   action:"DOUBLE", cls:"double", detail:"<strong>Double</strong> hard 9 against dealer soft 13–16 (bust range).<br>Hit against dealer 17 or higher." },
-  { cat:"Hard Totals", q:"Hard 9\nvs. Dealer showing 14",   action:"DOUBLE", cls:"double", detail:"<strong>Double</strong> hard 9 against dealer soft 13–16 (bust range).<br>Hit against dealer 17 or higher." },
-  { cat:"Hard Totals", q:"Hard 9\nvs. Dealer showing 15",   action:"DOUBLE", cls:"double", detail:"<strong>Double</strong> hard 9 against dealer soft 13–16 (bust range).<br>Hit against dealer 17 or higher." },
-  { cat:"Hard Totals", q:"Hard 9\nvs. Dealer showing 16",   action:"DOUBLE", cls:"double", detail:"<strong>Double</strong> hard 9 against dealer soft 13–16 (bust range).<br>Hit against dealer 17 or higher." },
-  { cat:"Hard Totals", q:"Hard 9\nvs. Dealer showing 17",   action:"HIT",    cls:"hit",    detail:"<strong>Hit</strong> hard 9 against dealer 17 or higher.<br>Only double against dealer soft 13–16." },
-  { cat:"Hard Totals", q:"Hard 9\nvs. Dealer showing 20",   action:"HIT",    cls:"hit",    detail:"<strong>Hit</strong> hard 9 against dealer 17 or higher.<br>Only double against dealer soft 13–16." },
-  { cat:"Hard Totals", q:"Hard 10\nvs. Dealer showing 12",  action:"DOUBLE", cls:"double", detail:"<strong>Double</strong> hard 10 against dealer hard 12–19.<br>Hit against dealer hard 20 or soft 21." },
-  { cat:"Hard Totals", q:"Hard 10\nvs. Dealer showing 16",  action:"DOUBLE", cls:"double", detail:"<strong>Double</strong> hard 10 against dealer hard 12–19.<br>Hit against dealer hard 20 or soft 21." },
-  { cat:"Hard Totals", q:"Hard 10\nvs. Dealer showing 19",  action:"DOUBLE", cls:"double", detail:"<strong>Double</strong> hard 10 against dealer hard 12–19.<br>Hit against dealer hard 20 or soft 21." },
-  { cat:"Hard Totals", q:"Hard 10\nvs. Dealer showing 20",  action:"HIT",    cls:"hit",    detail:"<strong>Hit</strong> hard 10 against dealer hard 20 or soft 21.<br>Only double against dealer 12–19." },
-  { cat:"Hard Totals", q:"Hard 11\nvs. Dealer showing 12",  action:"DOUBLE", cls:"double", detail:"<strong>Double</strong> hard 11 against dealer hard 12–20.<br>Hit against dealer soft 21 (Ace up)." },
-  { cat:"Hard Totals", q:"Hard 11\nvs. Dealer showing 17",  action:"DOUBLE", cls:"double", detail:"<strong>Double</strong> hard 11 against dealer hard 12–20.<br>Hit against dealer soft 21 (Ace up)." },
-  { cat:"Hard Totals", q:"Hard 11\nvs. Dealer showing 20",  action:"DOUBLE", cls:"double", detail:"<strong>Double</strong> hard 11 against dealer hard 12–20.<br>Hit against dealer soft 21 (Ace up)." },
-  { cat:"Hard Totals", q:"Hard 11\nvs. Dealer showing 21",  action:"HIT",    cls:"hit",    detail:"<strong>Hit</strong> hard 11 against dealer soft 21 (Ace up).<br>Double against all other dealer totals." },
-  { cat:"Hard Totals", q:"Hard 12\nvs. Dealer showing 14",  action:"STAND",  cls:"stand",  detail:"<strong>Stand</strong> hard 12 against dealer soft 14–16 (bust range).<br>Hit against everything else." },
-  { cat:"Hard Totals", q:"Hard 12\nvs. Dealer showing 15",  action:"STAND",  cls:"stand",  detail:"<strong>Stand</strong> hard 12 against dealer soft 14–16 (bust range).<br>Hit against everything else." },
-  { cat:"Hard Totals", q:"Hard 12\nvs. Dealer showing 16",  action:"STAND",  cls:"stand",  detail:"<strong>Stand</strong> hard 12 against dealer soft 14–16 (bust range).<br>Hit against everything else." },
-  { cat:"Hard Totals", q:"Hard 12\nvs. Dealer showing 17",  action:"HIT",    cls:"hit",    detail:"<strong>Hit</strong> hard 12 against dealer 17 or higher.<br>Only stand against dealer soft 14–16." },
-  { cat:"Hard Totals", q:"Hard 12\nvs. Dealer showing 20",  action:"HIT",    cls:"hit",    detail:"<strong>Hit</strong> hard 12 against dealer 17 or higher.<br>Only stand against dealer soft 14–16." },
-  { cat:"Hard Totals", q:"Hard 13\nvs. Dealer showing 12",  action:"STAND",  cls:"stand",  detail:"<strong>Stand</strong> hard 13–16 against dealer soft 12–16 (bust range).<br>Hit against dealer hard 17 or higher." },
-  { cat:"Hard Totals", q:"Hard 13\nvs. Dealer showing 16",  action:"STAND",  cls:"stand",  detail:"<strong>Stand</strong> hard 13–16 against dealer soft 12–16 (bust range).<br>Hit against dealer hard 17 or higher." },
-  { cat:"Hard Totals", q:"Hard 13\nvs. Dealer showing 17",  action:"HIT",    cls:"hit",    detail:"<strong>Hit</strong> hard 13 against dealer hard 17 or higher.<br>Stand against dealer soft 12–16." },
-  { cat:"Hard Totals", q:"Hard 14\nvs. Dealer showing 13",  action:"STAND",  cls:"stand",  detail:"<strong>Stand</strong> hard 13–16 against dealer soft 12–16 (bust range).<br>Hit against dealer hard 17 or higher." },
-  { cat:"Hard Totals", q:"Hard 14\nvs. Dealer showing 19",  action:"HIT",    cls:"hit",    detail:"<strong>Hit</strong> hard 14 against dealer hard 17 or higher.<br>Stand against dealer soft 12–16." },
-  { cat:"Hard Totals", q:"Hard 15\nvs. Dealer showing 14",  action:"STAND",  cls:"stand",  detail:"<strong>Stand</strong> hard 13–16 against dealer soft 12–16 (bust range).<br>Hit against dealer hard 17 or higher." },
-  { cat:"Hard Totals", q:"Hard 15\nvs. Dealer showing 18",  action:"HIT",    cls:"hit",    detail:"<strong>Hit</strong> hard 15 against dealer hard 17 or higher.<br>Stand against dealer soft 12–16." },
-  { cat:"Hard Totals", q:"Hard 16\nvs. Dealer showing 15",  action:"STAND",  cls:"stand",  detail:"<strong>Stand</strong> hard 13–16 against dealer soft 12–16 (bust range).<br>Hit against dealer hard 17 or higher." },
-  { cat:"Hard Totals", q:"Hard 16\nvs. Dealer showing 18",  action:"HIT",    cls:"hit",    detail:"<strong>Hit</strong> hard 16 against dealer hard 17 or higher.<br>Stand against dealer soft 12–16." },
-  { cat:"Hard Totals", q:"Hard 17\nvs. Dealer showing 14",  action:"STAND",  cls:"stand",  detail:"Always <strong>stand</strong> on hard 17 or more — never take another card." },
-  { cat:"Hard Totals", q:"Hard 17\nvs. Dealer showing 20",  action:"STAND",  cls:"stand",  detail:"Always <strong>stand</strong> on hard 17 or more — never take another card." },
-  { cat:"Hard Totals", q:"Hard 19\nvs. Dealer showing 21",  action:"STAND",  cls:"stand",  detail:"Always <strong>stand</strong> on hard 17 or more — never take another card." },
+  { cat:"Hard Totals", q:"Hard 8\nDealer showing 13",   action:"HIT",    cls:"hit",    detail:"Always <strong>hit</strong> hard 8 or less against any dealer total." },
+  { cat:"Hard Totals", q:"Hard 8\nDealer showing 17",   action:"HIT",    cls:"hit",    detail:"Always <strong>hit</strong> hard 8 or less against any dealer total." },
+  { cat:"Hard Totals", q:"Hard 9\nDealer showing 13",   action:"DOUBLE", cls:"double", detail:"<strong>Double</strong> hard 9 against dealer soft 13–16 (bust range).<br>Hit against dealer 17 or higher." },
+  { cat:"Hard Totals", q:"Hard 9\nDealer showing 14",   action:"DOUBLE", cls:"double", detail:"<strong>Double</strong> hard 9 against dealer soft 13–16 (bust range).<br>Hit against dealer 17 or higher." },
+  { cat:"Hard Totals", q:"Hard 9\nDealer showing 15",   action:"DOUBLE", cls:"double", detail:"<strong>Double</strong> hard 9 against dealer soft 13–16 (bust range).<br>Hit against dealer 17 or higher." },
+  { cat:"Hard Totals", q:"Hard 9\nDealer showing 16",   action:"DOUBLE", cls:"double", detail:"<strong>Double</strong> hard 9 against dealer soft 13–16 (bust range).<br>Hit against dealer 17 or higher." },
+  { cat:"Hard Totals", q:"Hard 9\nDealer showing 17",   action:"HIT",    cls:"hit",    detail:"<strong>Hit</strong> hard 9 against dealer 17 or higher.<br>Only double against dealer soft 13–16." },
+  { cat:"Hard Totals", q:"Hard 9\nDealer showing 20",   action:"HIT",    cls:"hit",    detail:"<strong>Hit</strong> hard 9 against dealer 17 or higher.<br>Only double against dealer soft 13–16." },
+  { cat:"Hard Totals", q:"Hard 10\nDealer showing 12",  action:"DOUBLE", cls:"double", detail:"<strong>Double</strong> hard 10 against dealer hard 12–19.<br>Hit against dealer hard 20 or soft 21." },
+  { cat:"Hard Totals", q:"Hard 10\nDealer showing 16",  action:"DOUBLE", cls:"double", detail:"<strong>Double</strong> hard 10 against dealer hard 12–19.<br>Hit against dealer hard 20 or soft 21." },
+  { cat:"Hard Totals", q:"Hard 10\nDealer showing 19",  action:"DOUBLE", cls:"double", detail:"<strong>Double</strong> hard 10 against dealer hard 12–19.<br>Hit against dealer hard 20 or soft 21." },
+  { cat:"Hard Totals", q:"Hard 10\nDealer showing 20",  action:"HIT",    cls:"hit",    detail:"<strong>Hit</strong> hard 10 against dealer hard 20 or soft 21.<br>Only double against dealer 12–19." },
+  { cat:"Hard Totals", q:"Hard 11\nDealer showing 12",  action:"DOUBLE", cls:"double", detail:"<strong>Double</strong> hard 11 against dealer hard 12–20.<br>Hit against dealer soft 21 (Ace up)." },
+  { cat:"Hard Totals", q:"Hard 11\nDealer showing 17",  action:"DOUBLE", cls:"double", detail:"<strong>Double</strong> hard 11 against dealer hard 12–20.<br>Hit against dealer soft 21 (Ace up)." },
+  { cat:"Hard Totals", q:"Hard 11\nDealer showing 20",  action:"DOUBLE", cls:"double", detail:"<strong>Double</strong> hard 11 against dealer hard 12–20.<br>Hit against dealer soft 21 (Ace up)." },
+  { cat:"Hard Totals", q:"Hard 11\nDealer showing 21",  action:"HIT",    cls:"hit",    detail:"<strong>Hit</strong> hard 11 against dealer soft 21 (Ace up).<br>Double against all other dealer totals." },
+  { cat:"Hard Totals", q:"Hard 12\nDealer showing 14",  action:"STAND",  cls:"stand",  detail:"<strong>Stand</strong> hard 12 against dealer soft 14–16 (bust range).<br>Hit against everything else." },
+  { cat:"Hard Totals", q:"Hard 12\nDealer showing 15",  action:"STAND",  cls:"stand",  detail:"<strong>Stand</strong> hard 12 against dealer soft 14–16 (bust range).<br>Hit against everything else." },
+  { cat:"Hard Totals", q:"Hard 12\nDealer showing 16",  action:"STAND",  cls:"stand",  detail:"<strong>Stand</strong> hard 12 against dealer soft 14–16 (bust range).<br>Hit against everything else." },
+  { cat:"Hard Totals", q:"Hard 12\nDealer showing 17",  action:"HIT",    cls:"hit",    detail:"<strong>Hit</strong> hard 12 against dealer 17 or higher.<br>Only stand against dealer soft 14–16." },
+  { cat:"Hard Totals", q:"Hard 12\nDealer showing 20",  action:"HIT",    cls:"hit",    detail:"<strong>Hit</strong> hard 12 against dealer 17 or higher.<br>Only stand against dealer soft 14–16." },
+  { cat:"Hard Totals", q:"Hard 13\nDealer showing 12",  action:"STAND",  cls:"stand",  detail:"<strong>Stand</strong> hard 13–16 against dealer soft 12–16 (bust range).<br>Hit against dealer hard 17 or higher." },
+  { cat:"Hard Totals", q:"Hard 13\nDealer showing 16",  action:"STAND",  cls:"stand",  detail:"<strong>Stand</strong> hard 13–16 against dealer soft 12–16 (bust range).<br>Hit against dealer hard 17 or higher." },
+  { cat:"Hard Totals", q:"Hard 13\nDealer showing 17",  action:"HIT",    cls:"hit",    detail:"<strong>Hit</strong> hard 13 against dealer hard 17 or higher.<br>Stand against dealer soft 12–16." },
+  { cat:"Hard Totals", q:"Hard 14\nDealer showing 13",  action:"STAND",  cls:"stand",  detail:"<strong>Stand</strong> hard 13–16 against dealer soft 12–16 (bust range).<br>Hit against dealer hard 17 or higher." },
+  { cat:"Hard Totals", q:"Hard 14\nDealer showing 19",  action:"HIT",    cls:"hit",    detail:"<strong>Hit</strong> hard 14 against dealer hard 17 or higher.<br>Stand against dealer soft 12–16." },
+  { cat:"Hard Totals", q:"Hard 15\nDealer showing 14",  action:"STAND",  cls:"stand",  detail:"<strong>Stand</strong> hard 13–16 against dealer soft 12–16 (bust range).<br>Hit against dealer hard 17 or higher." },
+  { cat:"Hard Totals", q:"Hard 15\nDealer showing 18",  action:"HIT",    cls:"hit",    detail:"<strong>Hit</strong> hard 15 against dealer hard 17 or higher.<br>Stand against dealer soft 12–16." },
+  { cat:"Hard Totals", q:"Hard 16\nDealer showing 15",  action:"STAND",  cls:"stand",  detail:"<strong>Stand</strong> hard 13–16 against dealer soft 12–16 (bust range).<br>Hit against dealer hard 17 or higher." },
+  { cat:"Hard Totals", q:"Hard 16\nDealer showing 18",  action:"HIT",    cls:"hit",    detail:"<strong>Hit</strong> hard 16 against dealer hard 17 or higher.<br>Stand against dealer soft 12–16." },
+  { cat:"Hard Totals", q:"Hard 17\nDealer showing 14",  action:"STAND",  cls:"stand",  detail:"Always <strong>stand</strong> on hard 17 or more — never take another card." },
+  { cat:"Hard Totals", q:"Hard 17\nDealer showing 20",  action:"STAND",  cls:"stand",  detail:"Always <strong>stand</strong> on hard 17 or more — never take another card." },
+  { cat:"Hard Totals", q:"Hard 19\nDealer showing 21",  action:"STAND",  cls:"stand",  detail:"Always <strong>stand</strong> on hard 17 or more — never take another card." },
 
   // ── SOFT TOTALS ──
-  { cat:"Soft Totals", q:"Soft 13\nvs. Dealer showing 15",  action:"DOUBLE", cls:"double", detail:"<strong>Double</strong> soft 13–14 against dealer soft 15–16.<br>Hit against all other dealer totals." },
-  { cat:"Soft Totals", q:"Soft 13\nvs. Dealer showing 16",  action:"DOUBLE", cls:"double", detail:"<strong>Double</strong> soft 13–14 against dealer soft 15–16.<br>Hit against all other dealer totals." },
-  { cat:"Soft Totals", q:"Soft 13\nvs. Dealer showing 17",  action:"HIT",    cls:"hit",    detail:"<strong>Hit</strong> soft 13 against dealer 17 or higher.<br>Only double against dealer soft 15–16." },
-  { cat:"Soft Totals", q:"Soft 14\nvs. Dealer showing 15",  action:"DOUBLE", cls:"double", detail:"<strong>Double</strong> soft 13–14 against dealer soft 15–16.<br>Hit against all other dealer totals." },
-  { cat:"Soft Totals", q:"Soft 14\nvs. Dealer showing 14",  action:"HIT",    cls:"hit",    detail:"<strong>Hit</strong> soft 14 against dealer 17 or higher, or bust range below 15.<br>Only double against dealer soft 15–16." },
-  { cat:"Soft Totals", q:"Soft 15\nvs. Dealer showing 14",  action:"DOUBLE", cls:"double", detail:"<strong>Double</strong> soft 15–16 against dealer soft 14–16.<br>Hit against all other dealer totals." },
-  { cat:"Soft Totals", q:"Soft 15\nvs. Dealer showing 16",  action:"DOUBLE", cls:"double", detail:"<strong>Double</strong> soft 15–16 against dealer soft 14–16.<br>Hit against all other dealer totals." },
-  { cat:"Soft Totals", q:"Soft 15\nvs. Dealer showing 17",  action:"HIT",    cls:"hit",    detail:"<strong>Hit</strong> soft 15 against dealer 17 or higher.<br>Only double against dealer soft 14–16." },
-  { cat:"Soft Totals", q:"Soft 16\nvs. Dealer showing 14",  action:"DOUBLE", cls:"double", detail:"<strong>Double</strong> soft 15–16 against dealer soft 14–16.<br>Hit against all other dealer totals." },
-  { cat:"Soft Totals", q:"Soft 16\nvs. Dealer showing 18",  action:"HIT",    cls:"hit",    detail:"<strong>Hit</strong> soft 16 against dealer 17 or higher.<br>Only double against dealer soft 14–16." },
-  { cat:"Soft Totals", q:"Soft 17\nvs. Dealer showing 13",  action:"DOUBLE", cls:"double", detail:"<strong>Double</strong> soft 17 against dealer soft 13–16.<br>Hit against all other dealer totals." },
-  { cat:"Soft Totals", q:"Soft 17\nvs. Dealer showing 16",  action:"DOUBLE", cls:"double", detail:"<strong>Double</strong> soft 17 against dealer soft 13–16.<br>Hit against all other dealer totals." },
-  { cat:"Soft Totals", q:"Soft 17\nvs. Dealer showing 17",  action:"HIT",    cls:"hit",    detail:"<strong>Hit</strong> soft 17 against dealer 17 or higher.<br>Only double against dealer soft 13–16." },
-  { cat:"Soft Totals", q:"Soft 18\nvs. Dealer showing 12",  action:"DOUBLE", cls:"double", detail:"<strong>Double</strong> soft 18 against dealer soft 12–16.<br>Stand against dealer 17–18. Hit against dealer 19–20 or soft 21." },
-  { cat:"Soft Totals", q:"Soft 18\nvs. Dealer showing 15",  action:"DOUBLE", cls:"double", detail:"<strong>Double</strong> soft 18 against dealer soft 12–16.<br>Stand against dealer 17–18. Hit against dealer 19–20 or soft 21." },
-  { cat:"Soft Totals", q:"Soft 18\nvs. Dealer showing 17",  action:"STAND",  cls:"stand",  detail:"<strong>Stand</strong> soft 18 against dealer hard 17–18.<br>Double against soft 12–16. Hit against 19–20 or soft 21." },
-  { cat:"Soft Totals", q:"Soft 18\nvs. Dealer showing 18",  action:"STAND",  cls:"stand",  detail:"<strong>Stand</strong> soft 18 against dealer hard 17–18.<br>Double against soft 12–16. Hit against 19–20 or soft 21." },
-  { cat:"Soft Totals", q:"Soft 18\nvs. Dealer showing 19",  action:"HIT",    cls:"hit",    detail:"<strong>Hit</strong> soft 18 against dealer 19–20 or soft 21.<br>This is the trickiest rule — don't stand here!" },
-  { cat:"Soft Totals", q:"Soft 18\nvs. Dealer showing 20",  action:"HIT",    cls:"hit",    detail:"<strong>Hit</strong> soft 18 against dealer 19–20 or soft 21.<br>This is the trickiest rule — don't stand here!" },
-  { cat:"Soft Totals", q:"Soft 19\nvs. Dealer showing 20",  action:"STAND",  cls:"stand",  detail:"Always <strong>stand</strong> on soft 19 or 20 — these are strong hands." },
-  { cat:"Soft Totals", q:"Soft 20\nvs. Dealer showing 21",  action:"STAND",  cls:"stand",  detail:"Always <strong>stand</strong> on soft 19 or 20 — these are strong hands." },
+  { cat:"Soft Totals", q:"Soft 13\nDealer showing 15",  action:"DOUBLE", cls:"double", detail:"<strong>Double</strong> soft 13–14 against dealer soft 15–16.<br>Hit against all other dealer totals." },
+  { cat:"Soft Totals", q:"Soft 13\nDealer showing 16",  action:"DOUBLE", cls:"double", detail:"<strong>Double</strong> soft 13–14 against dealer soft 15–16.<br>Hit against all other dealer totals." },
+  { cat:"Soft Totals", q:"Soft 13\nDealer showing 17",  action:"HIT",    cls:"hit",    detail:"<strong>Hit</strong> soft 13 against dealer 17 or higher.<br>Only double against dealer soft 15–16." },
+  { cat:"Soft Totals", q:"Soft 14\nDealer showing 15",  action:"DOUBLE", cls:"double", detail:"<strong>Double</strong> soft 13–14 against dealer soft 15–16.<br>Hit against all other dealer totals." },
+  { cat:"Soft Totals", q:"Soft 14\nDealer showing 14",  action:"HIT",    cls:"hit",    detail:"<strong>Hit</strong> soft 14 against dealer 17 or higher, or bust range below 15.<br>Only double against dealer soft 15–16." },
+  { cat:"Soft Totals", q:"Soft 15\nDealer showing 14",  action:"DOUBLE", cls:"double", detail:"<strong>Double</strong> soft 15–16 against dealer soft 14–16.<br>Hit against all other dealer totals." },
+  { cat:"Soft Totals", q:"Soft 15\nDealer showing 16",  action:"DOUBLE", cls:"double", detail:"<strong>Double</strong> soft 15–16 against dealer soft 14–16.<br>Hit against all other dealer totals." },
+  { cat:"Soft Totals", q:"Soft 15\nDealer showing 17",  action:"HIT",    cls:"hit",    detail:"<strong>Hit</strong> soft 15 against dealer 17 or higher.<br>Only double against dealer soft 14–16." },
+  { cat:"Soft Totals", q:"Soft 16\nDealer showing 14",  action:"DOUBLE", cls:"double", detail:"<strong>Double</strong> soft 15–16 against dealer soft 14–16.<br>Hit against all other dealer totals." },
+  { cat:"Soft Totals", q:"Soft 16\nDealer showing 18",  action:"HIT",    cls:"hit",    detail:"<strong>Hit</strong> soft 16 against dealer 17 or higher.<br>Only double against dealer soft 14–16." },
+  { cat:"Soft Totals", q:"Soft 17\nDealer showing 13",  action:"DOUBLE", cls:"double", detail:"<strong>Double</strong> soft 17 against dealer soft 13–16.<br>Hit against all other dealer totals." },
+  { cat:"Soft Totals", q:"Soft 17\nDealer showing 16",  action:"DOUBLE", cls:"double", detail:"<strong>Double</strong> soft 17 against dealer soft 13–16.<br>Hit against all other dealer totals." },
+  { cat:"Soft Totals", q:"Soft 17\nDealer showing 17",  action:"HIT",    cls:"hit",    detail:"<strong>Hit</strong> soft 17 against dealer 17 or higher.<br>Only double against dealer soft 13–16." },
+  { cat:"Soft Totals", q:"Soft 18\nDealer showing 12",  action:"DOUBLE", cls:"double", detail:"<strong>Double</strong> soft 18 against dealer soft 12–16.<br>Stand against dealer 17–18. Hit against dealer 19–20 or soft 21." },
+  { cat:"Soft Totals", q:"Soft 18\nDealer showing 15",  action:"DOUBLE", cls:"double", detail:"<strong>Double</strong> soft 18 against dealer soft 12–16.<br>Stand against dealer 17–18. Hit against dealer 19–20 or soft 21." },
+  { cat:"Soft Totals", q:"Soft 18\nDealer showing 17",  action:"STAND",  cls:"stand",  detail:"<strong>Stand</strong> soft 18 against dealer hard 17–18.<br>Double against soft 12–16. Hit against 19–20 or soft 21." },
+  { cat:"Soft Totals", q:"Soft 18\nDealer showing 18",  action:"STAND",  cls:"stand",  detail:"<strong>Stand</strong> soft 18 against dealer hard 17–18.<br>Double against soft 12–16. Hit against 19–20 or soft 21." },
+  { cat:"Soft Totals", q:"Soft 18\nDealer showing 19",  action:"HIT",    cls:"hit",    detail:"<strong>Hit</strong> soft 18 against dealer 19–20 or soft 21.<br>This is the trickiest rule — don't stand here!" },
+  { cat:"Soft Totals", q:"Soft 18\nDealer showing 20",  action:"HIT",    cls:"hit",    detail:"<strong>Hit</strong> soft 18 against dealer 19–20 or soft 21.<br>This is the trickiest rule — don't stand here!" },
+  { cat:"Soft Totals", q:"Soft 19\nDealer showing 20",  action:"STAND",  cls:"stand",  detail:"Always <strong>stand</strong> on soft 19 or 20 — these are strong hands." },
+  { cat:"Soft Totals", q:"Soft 20\nDealer showing 21",  action:"STAND",  cls:"stand",  detail:"Always <strong>stand</strong> on soft 19 or 20 — these are strong hands." },
 
   // ── PAIRS ──
-  { cat:"Pairs", q:"Hard 4 (two equal low cards)\nvs. Dealer showing 12", action:"SPLIT",  cls:"split",  detail:"<strong>Split</strong> hard 4 against dealer hard 12–17.<br>Hit against dealer 18 or higher." },
-  { cat:"Pairs", q:"Hard 4 (two equal low cards)\nvs. Dealer showing 17", action:"SPLIT",  cls:"split",  detail:"<strong>Split</strong> hard 4 against dealer hard 12–17.<br>Hit against dealer 18 or higher." },
-  { cat:"Pairs", q:"Hard 4 (two equal low cards)\nvs. Dealer showing 18", action:"HIT",    cls:"hit",    detail:"<strong>Hit</strong> hard 4 against dealer 18 or higher.<br>Only split against dealer 12–17." },
-  { cat:"Pairs", q:"Hard 6 (two equal low cards)\nvs. Dealer showing 13", action:"SPLIT",  cls:"split",  detail:"<strong>Split</strong> hard 6 against dealer hard 12–17.<br>Hit against dealer 18 or higher." },
-  { cat:"Pairs", q:"Hard 6 (two equal low cards)\nvs. Dealer showing 19", action:"HIT",    cls:"hit",    detail:"<strong>Hit</strong> hard 6 against dealer 18 or higher.<br>Only split against dealer 12–17." },
-  { cat:"Pairs", q:"Hard 8 (two equal cards)\nvs. Dealer showing 15",     action:"SPLIT",  cls:"split",  detail:"<strong>Split</strong> hard 8 against dealer soft 15–16 only.<br>Hit against all other dealer totals." },
-  { cat:"Pairs", q:"Hard 8 (two equal cards)\nvs. Dealer showing 16",     action:"SPLIT",  cls:"split",  detail:"<strong>Split</strong> hard 8 against dealer soft 15–16 only.<br>Hit against all other dealer totals." },
-  { cat:"Pairs", q:"Hard 8 (two equal cards)\nvs. Dealer showing 17",     action:"HIT",    cls:"hit",    detail:"<strong>Hit</strong> hard 8 against dealer 17 or higher.<br>Only split against dealer soft 15–16." },
-  { cat:"Pairs", q:"Hard 10 (two equal cards)\nvs. Dealer showing 15",    action:"DOUBLE", cls:"double", detail:"<strong>Never split — treat as Hard 10.</strong><br>Double against dealer 12–19. Hit against dealer 20 or soft 21." },
-  { cat:"Pairs", q:"Hard 10 (two equal cards)\nvs. Dealer showing 20",    action:"HIT",    cls:"hit",    detail:"<strong>Never split — treat as Hard 10.</strong><br>Hit against dealer hard 20 or soft 21." },
-  { cat:"Pairs", q:"Hard 12 (two equal cards)\nvs. Dealer showing 12",    action:"SPLIT",  cls:"split",  detail:"<strong>Split</strong> hard 12 against dealer soft 12–16.<br>Hit against dealer hard 17 or higher." },
-  { cat:"Pairs", q:"Hard 12 (two equal cards)\nvs. Dealer showing 16",    action:"SPLIT",  cls:"split",  detail:"<strong>Split</strong> hard 12 against dealer soft 12–16.<br>Hit against dealer hard 17 or higher." },
-  { cat:"Pairs", q:"Hard 12 (two equal cards)\nvs. Dealer showing 17",    action:"HIT",    cls:"hit",    detail:"<strong>Hit</strong> hard 12 against dealer hard 17 or higher.<br>Only split against dealer soft 12–16." },
-  { cat:"Pairs", q:"Hard 14 (two equal cards)\nvs. Dealer showing 13",    action:"SPLIT",  cls:"split",  detail:"<strong>Split</strong> hard 14 against dealer hard 12–17.<br>Hit against dealer 18 or higher." },
-  { cat:"Pairs", q:"Hard 14 (two equal cards)\nvs. Dealer showing 17",    action:"SPLIT",  cls:"split",  detail:"<strong>Split</strong> hard 14 against dealer hard 12–17.<br>Hit against dealer 18 or higher." },
-  { cat:"Pairs", q:"Hard 14 (two equal cards)\nvs. Dealer showing 18",    action:"HIT",    cls:"hit",    detail:"<strong>Hit</strong> hard 14 against dealer 18 or higher.<br>Only split against dealer 12–17." },
-  { cat:"Pairs", q:"Hard 16 (two equal cards)\nvs. Dealer showing 14",    action:"SPLIT",  cls:"split",  detail:"<strong>Always split hard 16.</strong> It is the worst hand in blackjack.<br>Splitting gives you two chances to improve." },
-  { cat:"Pairs", q:"Hard 16 (two equal cards)\nvs. Dealer showing 20",    action:"SPLIT",  cls:"split",  detail:"<strong>Always split hard 16</strong> — even against dealer 20.<br>Hard 16 is the worst hand. Always split." },
-  { cat:"Pairs", q:"Hard 18 (two equal cards)\nvs. Dealer showing 13",    action:"SPLIT",  cls:"split",  detail:"<strong>Split</strong> hard 18 against dealer soft 12–16 and hard 18–19.<br>Stand against dealer hard 17, 20, or soft 21." },
-  { cat:"Pairs", q:"Hard 18 (two equal cards)\nvs. Dealer showing 17",    action:"STAND",  cls:"stand",  detail:"<strong>Stand</strong> hard 18 against dealer hard 17.<br>Split against soft 12–16 and hard 18–19. Stand against 20 and soft 21 too." },
-  { cat:"Pairs", q:"Hard 18 (two equal cards)\nvs. Dealer showing 19",    action:"SPLIT",  cls:"split",  detail:"<strong>Split</strong> hard 18 against dealer hard 18–19.<br>Stand against dealer hard 17, 20, or soft 21." },
-  { cat:"Pairs", q:"Hard 18 (two equal cards)\nvs. Dealer showing 20",    action:"STAND",  cls:"stand",  detail:"<strong>Stand</strong> hard 18 against dealer hard 20 or soft 21.<br>Split against soft 12–16 and hard 18–19." },
-  { cat:"Pairs", q:"Hard 20 (two equal cards)\nvs. Dealer showing 19",    action:"STAND",  cls:"stand",  detail:"<strong>Never split hard 20.</strong> Always stand.<br>Splitting 20 is one of the biggest mistakes at the table." },
-  { cat:"Pairs", q:"Soft 12 (two Aces)\nvs. Dealer showing 15",           action:"SPLIT",  cls:"split",  detail:"<strong>Always split Aces</strong> — no exceptions, any dealer total.<br>You receive only one card on each Ace after splitting." },
-  { cat:"Pairs", q:"Soft 12 (two Aces)\nvs. Dealer showing 20",           action:"SPLIT",  cls:"split",  detail:"<strong>Always split Aces</strong> — even against dealer 20.<br>You receive only one card on each Ace after splitting." },
+  { cat:"Pairs", q:"Hard 4 (equal cards)\nDealer showing 12", action:"SPLIT",  cls:"split",  detail:"<strong>Split</strong> hard 4 against dealer hard 12–17.<br>Hit against dealer 18 or higher." },
+  { cat:"Pairs", q:"Hard 4 (equal cards)\nDealer showing 17", action:"SPLIT",  cls:"split",  detail:"<strong>Split</strong> hard 4 against dealer hard 12–17.<br>Hit against dealer 18 or higher." },
+  { cat:"Pairs", q:"Hard 4 (equal cards)\nDealer showing 18", action:"HIT",    cls:"hit",    detail:"<strong>Hit</strong> hard 4 against dealer 18 or higher.<br>Only split against dealer 12–17." },
+  { cat:"Pairs", q:"Hard 6 (equal cards)\nDealer showing 13", action:"SPLIT",  cls:"split",  detail:"<strong>Split</strong> hard 6 against dealer hard 12–17.<br>Hit against dealer 18 or higher." },
+  { cat:"Pairs", q:"Hard 6 (equal cards)\nDealer showing 19", action:"HIT",    cls:"hit",    detail:"<strong>Hit</strong> hard 6 against dealer 18 or higher.<br>Only split against dealer 12–17." },
+  { cat:"Pairs", q:"Hard 8 (equal cards)\n Dealer showing 15",     action:"SPLIT",  cls:"split",  detail:"<strong>Split</strong> hard 8 against dealer soft 15–16 only.<br>Hit against all other dealer totals." },
+  { cat:"Pairs", q:"Hard 8 (equal cards)\n Dealer showing 16",     action:"SPLIT",  cls:"split",  detail:"<strong>Split</strong> hard 8 against dealer soft 15–16 only.<br>Hit against all other dealer totals." },
+  { cat:"Pairs", q:"Hard 8 (equal cards)\n Dealer showing 17",     action:"HIT",    cls:"hit",    detail:"<strong>Hit</strong> hard 8 against dealer 17 or higher.<br>Only split against dealer soft 15–16." },
+  { cat:"Pairs", q:"Hard 10 (equal cards)\n Dealer showing 15",    action:"DOUBLE", cls:"double", detail:"<strong>Never split — treat as Hard 10.</strong><br>Double against dealer 12–19. Hit against dealer 20 or soft 21." },
+  { cat:"Pairs", q:"Hard 10 (equal cards)\n Dealer showing 20",    action:"HIT",    cls:"hit",    detail:"<strong>Never split — treat as Hard 10.</strong><br>Hit against dealer hard 20 or soft 21." },
+  { cat:"Pairs", q:"Hard 12 (equal cards)\n Dealer showing 12",    action:"SPLIT",  cls:"split",  detail:"<strong>Split</strong> hard 12 against dealer soft 12–16.<br>Hit against dealer hard 17 or higher." },
+  { cat:"Pairs", q:"Hard 12 (equal cards)\n Dealer showing 16",    action:"SPLIT",  cls:"split",  detail:"<strong>Split</strong> hard 12 against dealer soft 12–16.<br>Hit against dealer hard 17 or higher." },
+  { cat:"Pairs", q:"Hard 12 (equal cards)\n Dealer showing 17",    action:"HIT",    cls:"hit",    detail:"<strong>Hit</strong> hard 12 against dealer hard 17 or higher.<br>Only split against dealer soft 12–16." },
+  { cat:"Pairs", q:"Hard 14 (equal cards)\n Dealer showing 13",    action:"SPLIT",  cls:"split",  detail:"<strong>Split</strong> hard 14 against dealer hard 12–17.<br>Hit against dealer 18 or higher." },
+  { cat:"Pairs", q:"Hard 14 (equal cards)\n Dealer showing 17",    action:"SPLIT",  cls:"split",  detail:"<strong>Split</strong> hard 14 against dealer hard 12–17.<br>Hit against dealer 18 or higher." },
+  { cat:"Pairs", q:"Hard 14 (equal cards)\n Dealer showing 18",    action:"HIT",    cls:"hit",    detail:"<strong>Hit</strong> hard 14 against dealer 18 or higher.<br>Only split against dealer 12–17." },
+  { cat:"Pairs", q:"Hard 16 (equal cards)\n Dealer showing 14",    action:"SPLIT",  cls:"split",  detail:"<strong>Always split hard 16.</strong> It is the worst hand in blackjack.<br>Splitting gives you two chances to improve." },
+  { cat:"Pairs", q:"Hard 16 (equal cards)\n Dealer showing 20",    action:"SPLIT",  cls:"split",  detail:"<strong>Always split hard 16</strong> — even against dealer 20.<br>Hard 16 is the worst hand. Always split." },
+  { cat:"Pairs", q:"Hard 18 (equal cards)\n Dealer showing 13",    action:"SPLIT",  cls:"split",  detail:"<strong>Split</strong> hard 18 against dealer soft 12–16 and hard 18–19.<br>Stand against dealer hard 17, 20, or soft 21." },
+  { cat:"Pairs", q:"Hard 18 (equal cards)\n Dealer showing 17",    action:"STAND",  cls:"stand",  detail:"<strong>Stand</strong> hard 18 against dealer hard 17.<br>Split against soft 12–16 and hard 18–19. Stand against 20 and soft 21 too." },
+  { cat:"Pairs", q:"Hard 18 (equal cards)\n Dealer showing 19",    action:"SPLIT",  cls:"split",  detail:"<strong>Split</strong> hard 18 against dealer hard 18–19.<br>Stand against dealer hard 17, 20, or soft 21." },
+  { cat:"Pairs", q:"Hard 18 (equal cards)\n Dealer showing 20",    action:"STAND",  cls:"stand",  detail:"<strong>Stand</strong> hard 18 against dealer hard 20 or soft 21.<br>Split against soft 12–16 and hard 18–19." },
+  { cat:"Pairs", q:"Hard 20 (equal cards)\n Dealer showing 19",    action:"STAND",  cls:"stand",  detail:"<strong>Never split hard 20.</strong> Always stand.<br>Splitting 20 is one of the biggest mistakes at the table." },
+  { cat:"Pairs", q:"Soft 12 (two Aces)\nDealer showing 15",           action:"SPLIT",  cls:"split",  detail:"<strong>Always split Aces</strong> — no exceptions, any dealer total.<br>You receive only one card on each Ace after splitting." },
+  { cat:"Pairs", q:"Soft 12 (two Aces)\nDealer showing 20",           action:"SPLIT",  cls:"split",  detail:"<strong>Always split Aces</strong> — even against dealer 20.<br>You receive only one card on each Ace after splitting." },
 
   // ── SURRENDER ──
-  { cat:"Surrender", q:"Hard 16\nvs. Dealer showing 19",  action:"SURRENDER", cls:"surrender", detail:"<strong>Surrender</strong> hard 16 against dealer 19–21 if allowed.<br>Hit if surrender is unavailable.<br>Exception: if your 16 is two 8s, always split instead." },
-  { cat:"Surrender", q:"Hard 16\nvs. Dealer showing 20",  action:"SURRENDER", cls:"surrender", detail:"<strong>Surrender</strong> hard 16 against dealer 19–21 if allowed.<br>Hit if surrender is unavailable.<br>Exception: if your 16 is two 8s, always split instead." },
-  { cat:"Surrender", q:"Hard 16\nvs. Dealer showing 21",  action:"SURRENDER", cls:"surrender", detail:"<strong>Surrender</strong> hard 16 against dealer 19–21 if allowed.<br>Hit if surrender is unavailable." },
-  { cat:"Surrender", q:"Hard 15\nvs. Dealer showing 20",  action:"SURRENDER", cls:"surrender", detail:"<strong>Surrender</strong> hard 15 against dealer hard 20.<br>Hit if surrender is not available." },
+  { cat:"Surrender", q:"Hard 16\nDealer showing 19",  action:"SURRENDER", cls:"surrender", detail:"<strong>Surrender</strong> hard 16 against dealer 19–21 if allowed.<br>Hit if surrender is unavailable.<br>Exception: if your 16 is two 8s, always split instead." },
+  { cat:"Surrender", q:"Hard 16\nDealer showing 20",  action:"SURRENDER", cls:"surrender", detail:"<strong>Surrender</strong> hard 16 against dealer 19–21 if allowed.<br>Hit if surrender is unavailable.<br>Exception: if your 16 is two 8s, always split instead." },
+  { cat:"Surrender", q:"Hard 16\nDealer showing 21",  action:"SURRENDER", cls:"surrender", detail:"<strong>Surrender</strong> hard 16 against dealer 19–21 if allowed.<br>Hit if surrender is unavailable." },
+  { cat:"Surrender", q:"Hard 15\nDealer showing 20",  action:"SURRENDER", cls:"surrender", detail:"<strong>Surrender</strong> hard 15 against dealer hard 20.<br>Hit if surrender is not available." },
 ];
 
 // Pair actions need SPLIT button — add it dynamically
@@ -563,24 +574,34 @@ function shuffle() {
 
 function render() {
   const card = deck[idx];
-  document.getElementById('questionText').innerHTML = card.q.replace(/\n/g, '<br>');
-  document.getElementById('actionBadge').textContent = card.action;
-  document.getElementById('actionBadge').className = 'action-badge ' + card.cls;
-  document.getElementById('answerDetail').innerHTML = card.detail;
-  // Start the return flip immediately, then reset back face at the halfway point
+
+  // Flip back immediately
   document.getElementById('cardInner').classList.remove('flipped');
-  setTimeout(() => {
-    document.getElementById('backFace').className = 'card-face card-back';
-    document.getElementById('resultVerdict').textContent = '';
-    document.getElementById('yourAnswerLabel').textContent = '';
-  }, 300); // halfway through the 0.6s transition
   answered = false;
   setButtonsDisabled(false);
   document.getElementById('tapHint').style.display = 'none';
 
-  const pct = ((idx + 1) / deck.length) * 100;
-  document.getElementById('progressFill').style.width = pct + '%';
-  document.getElementById('counter').textContent = `Card ${idx + 1} of ${deck.length}`;
+  // Swap all content at halfway point when card is edge-on and invisible
+  setTimeout(() => {
+    document.getElementById('backFace').className = 'card-face card-back';
+    document.getElementById('resultVerdict').textContent = '';
+    document.getElementById('yourAnswerLabel').textContent = '';
+    document.getElementById('actionBadge').textContent = card.action;
+    document.getElementById('actionBadge').className = 'action-badge ' + card.cls;
+    document.getElementById('answerDetail').innerHTML = card.detail;
+    // Hand summary
+    const qLines = card.q.split('\n');
+    const hand = qLines[0].replace(/\s*\(.*?\)/, '').trim();
+    const dealer = qLines[1] ? qLines[1].replace('Dealer showing ', '').trim() : '';
+    document.getElementById('handSummary').textContent = dealer ? hand + '  ·  Dealer ' + dealer : hand;
+    // Front face
+    const qParts = card.q.split('\n');
+    document.getElementById('questionText').innerHTML = qParts[0] + (qParts[1] ? '<br><span style="display:block;margin-top:18px">' + qParts[1] + '</span>' : '');
+    // Progress
+    const pct = ((idx + 1) / deck.length) * 100;
+    document.getElementById('progressFill').style.width = pct + '%';
+    document.getElementById('counter').textContent = 'Card ' + (idx + 1) + ' of ' + deck.length;
+  }, 300);
 }
 
 function updateSplitButton() {
