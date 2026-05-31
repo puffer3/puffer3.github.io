@@ -392,6 +392,7 @@
     transition: all 0.2s;
   }
   .btn-chart:hover { color: var(--hal); border-color: var(--hal); }
+  #startPlayingBtn:hover { color: var(--hal); border-color: var(--hal); }
 
   /* CHART */
   .chart-view {
@@ -1849,13 +1850,13 @@ const TUTORIAL_STEPS = [
   },
   {
     target: '.card-scene',
-    text: 'Flashcard shows a hand\'s total value as well as the dealer\'s hand\n\nTap flashcard to cheat',
+    text: 'Read your total and the dealer\'s card, then make your play\n\nTap flashcard to cheat',
     box: 'bottom'
   },
   {
     target: '#actionButtons',
     text: 'Select your action here\n\nKaomoji shuffles the deck\n\n(╯°□°）╯︵ ┻━┻',
-    box: 'top'
+    box: 'forceTop'
   },
   {
     target: '#tabs',
@@ -1885,7 +1886,9 @@ function showStep5Annotation() {
 
   const nav = document.querySelector('.bottom-nav');
   const btns = nav ? Array.from(nav.querySelectorAll('button')) : [];
-  const btnData = btns.map(b => ({ label: b.textContent.trim(), r: b.getBoundingClientRect() }));
+  // Button order: Expand(0), Chart(1), Tips(2), Stats(3)
+  const btnByLabel = {};
+  btns.forEach(b => { btnByLabel[b.textContent.trim().toUpperCase()] = b.getBoundingClientRect(); });
 
   const W = window.innerWidth;
   const H = window.innerHeight;
@@ -1894,105 +1897,83 @@ function showStep5Annotation() {
   ov.id = 'step5Overlay';
   ov.style.cssText = 'position:fixed;inset:0;z-index:10002;pointer-events:none;';
 
-  const boxW = 148, boxH = 52;
+  const boxW = 150, boxH = 56;
   const centerX = W / 2;
-  const gap = 12;
+  const colGap = 16;
+  const rowGap = 44;
+  const topY = H * 0.30;
 
-  // Full text for each box
+  // Layout: top row [Expand | Stats], bottom row [Chart | Tips]
+  const colLX = centerX - boxW - colGap/2;
+  const colRX = centerX + colGap/2;
+  const stagger = boxH / 2 + rowGap / 2;
+  const leftRow1Y = topY;
+  const leftRow2Y = topY + boxH + rowGap;
+  const rightRow1Y = topY + stagger;
+  const rightRow2Y = topY + stagger + boxH + rowGap;
+
   const boxes = [
-    { label: 'Expand', desc: 'Increases the flashcard deck to quiz all possible hand combinations', color: '#e8450a', btnIdx: 0, side: 'left' },
-    { label: 'Chart',  desc: 'Shows a reference table', color: '#eceae4', btnIdx: 1, side: 'right' },
-    { label: 'Stats',  desc: 'Tracks your progress, revealing weak areas', color: '#eceae4', btnIdx: 2, side: 'left' },
-    { label: 'Tips',   desc: 'Will help with your overall strategy', color: '#eceae4', btnIdx: 3, side: 'right' },
+    { label: 'Expand', desc: 'Increases the flashcard deck to quiz all possible hand combinations', color: '#eceae4', x: colLX, y: leftRow1Y, btn: 'EXPAND', route: 'leftEdge' },
+    { label: 'Stats',  desc: 'Tracks your progress, revealing weak areas', color: '#eceae4', x: colRX, y: rightRow1Y, btn: 'STATS', route: 'rightEdge' },
+    { label: 'Chart',  desc: 'Shows a reference table', color: '#eceae4', x: colLX, y: leftRow2Y, btn: 'CHART', route: 'down' },
+    { label: 'Tips',   desc: 'Will help with your overall strategy', color: '#eceae4', x: colRX, y: rightRow2Y, btn: 'TIPS', route: 'down' },
   ];
 
-  // Two columns, staggered, centered on screen — start at 30% down
-  const midY = H * 0.28;
-  const colL = centerX - boxW - 8;
-  const colR = centerX + 8;
-  let leftY = midY, rightY = midY + boxH/2 + gap/2;
-
-  const positions = boxes.map(b => {
-    if (b.side === 'left') {
-      const pos = { x: colL, y: leftY };
-      leftY += boxH + gap;
-      return pos;
-    } else {
-      const pos = { x: colR, y: rightY };
-      rightY += boxH + gap;
-      return pos;
-    }
-  });
-
-  // Lines:
-  // Top-left box (Expand, i=0) -> line goes left to screen edge
-  // Top-right box (Chart, i=1) -> line goes right to screen edge
-  // Bottom-left box (Stats, i=2) -> line goes straight down to button
-  // Bottom-right box (Tips, i=3) -> line goes straight down to button
+  const margin = 16;
+  const stroke = 'stroke="#c84040" stroke-width="2" fill="none" marker-end="url(#arrowhead)"';
   let svgLines = '';
 
-  boxes.forEach((b, i) => {
-    const btn = btnData[b.btnIdx];
-    if (!btn) return;
-    const p = positions[i];
-    const boxCenterX = p.x + boxW / 2;
-    const boxBottom = p.y + boxH;
-    const toX = btn.r.left + btn.r.width / 2;
-    const toY = btn.r.top + btn.r.height / 2;
+  boxes.forEach(b => {
+    const r = btnByLabel[b.btn];
+    if (!r) return;
+    const boxCX = b.x + boxW / 2;
+    const boxBottom = b.y + boxH;
+    const btnCX = r.left + r.width / 2;
+    const btnCY = r.top + r.height / 2;
+    const btnTop = r.top;
 
-    const margin = 20;
-    const stroke = 'stroke="#c84040" stroke-width="1" fill="none"';
-
-    if (i === 0) {
-      // Expand: left edge of box -> left margin -> down -> to left border of button
-      const fromX = p.x;
-      const fromY = p.y + boxH / 2;
-      const edgeX = margin;
-      const endX = btn.r.left;
-      const endY = btn.r.top + btn.r.height / 2;
-      svgLines += '<polyline points="' + fromX + ',' + fromY + ' ' + edgeX + ',' + fromY + ' ' + edgeX + ',' + endY + ' ' + endX + ',' + endY + '" ' + stroke + '/>';
-      svgLines += '<circle cx="' + endX + '" cy="' + endY + '" r="3" fill="#c84040"/>';
-    } else if (i === 1) {
-      // Chart: right edge of box -> right margin -> down -> to right border of button
-      const fromX = p.x + boxW;
-      const fromY = p.y + boxH / 2;
+    const gap = 8; // stop short of border so arrow points at it
+    if (b.route === 'leftEdge') {
+      // Expand: arrow points right into left border of button
+      const fromX = b.x;
+      const fromY = b.y + boxH / 2;
+      const endX = r.left - gap;
+      const pts = fromX + ',' + fromY + ' ' + margin + ',' + fromY + ' ' + margin + ',' + btnCY + ' ' + endX + ',' + btnCY;
+      svgLines += '<polyline points="' + pts + '" ' + stroke + '/>';
+    } else if (b.route === 'rightEdge') {
+      // Stats: arrow points left into right border of button
+      const fromX = b.x + boxW;
+      const fromY = b.y + boxH / 2;
       const edgeX = W - margin;
-      const endX = btn.r.right;
-      const endY = btn.r.top + btn.r.height / 2;
-      svgLines += '<polyline points="' + fromX + ',' + fromY + ' ' + edgeX + ',' + fromY + ' ' + edgeX + ',' + endY + ' ' + endX + ',' + endY + '" ' + stroke + '/>';
-      svgLines += '<circle cx="' + endX + '" cy="' + endY + '" r="3" fill="#c84040"/>';
-    } else if (i === 2) {
-      // Stats: bottom-center of box -> down to button top-center
-      const endX = btn.r.left + btn.r.width / 2;
-      const endY = btn.r.top;
-      svgLines += '<polyline points="' + boxCenterX + ',' + boxBottom + ' ' + boxCenterX + ',' + endY + ' ' + endX + ',' + endY + '" ' + stroke + '/>';
-      svgLines += '<circle cx="' + endX + '" cy="' + endY + '" r="3" fill="#c84040"/>';
+      const endX = r.right + gap;
+      const pts = fromX + ',' + fromY + ' ' + edgeX + ',' + fromY + ' ' + edgeX + ',' + btnCY + ' ' + endX + ',' + btnCY;
+      svgLines += '<polyline points="' + pts + '" ' + stroke + '/>';
     } else {
-      // Tips: bottom-center of box -> down to button top-center
-      const endX = btn.r.left + btn.r.width / 2;
-      const endY = btn.r.top;
-      svgLines += '<polyline points="' + boxCenterX + ',' + boxBottom + ' ' + boxCenterX + ',' + endY + ' ' + endX + ',' + endY + '" ' + stroke + '/>';
-      svgLines += '<circle cx="' + endX + '" cy="' + endY + '" r="3" fill="#c84040"/>';
+      // Chart and Tips: down into top border of button
+      const turnY = boxBottom + 24;
+      const endY = btnTop - gap;
+      const pts = boxCX + ',' + boxBottom + ' ' + boxCX + ',' + turnY + ' ' + btnCX + ',' + turnY + ' ' + btnCX + ',' + endY;
+      svgLines += '<polyline points="' + pts + '" ' + stroke + '/>';
     }
   });
 
-  // Box HTML
-  const boxHTML = boxes.map((b, i) => {
-    const p = positions[i];
-    return '<div style="position:absolute;left:' + p.x + 'px;top:' + p.y + 'px;width:' + boxW + 'px;min-height:' + boxH + 'px;border:1px solid ' + b.color + ';background:#111210;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:6px 6px;pointer-events:all;">' +
+  const boxHTML = boxes.map(b => {
+    return '<div style="position:absolute;left:' + b.x + 'px;top:' + b.y + 'px;width:' + boxW + 'px;min-height:' + boxH + 'px;border:1px solid ' + b.color + ';background:#111210;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:7px 7px;pointer-events:all;">' +
       '<div style="font-family:Gill Sans Nova,Gill Sans,Optima,sans-serif;font-weight:400;font-size:0.72rem;letter-spacing:2px;text-transform:uppercase;color:' + b.color + ';margin-bottom:3px;">' + b.label + '</div>' +
-      '<div style="font-family:Gill Sans Nova,Gill Sans,Optima,sans-serif;font-weight:300;font-size:0.56rem;color:#c8c4b8;letter-spacing:0.3px;text-align:center;line-height:1.4;">' + b.desc + '</div>' +
+      '<div style="font-family:Gill Sans Nova,Gill Sans,Optima,sans-serif;font-weight:300;font-size:0.78rem;color:#c8c4b8;letter-spacing:0.3px;text-align:center;line-height:1.45;">' + b.desc + '</div>' +
       '</div>';
   }).join('');
 
-  // Start Playing button — above the boxes, top quarter of screen
-  const btnY = midY - 56;
+  const tabsEl2 = document.getElementById('tabs');
+  const tabsRect = tabsEl2 ? tabsEl2.getBoundingClientRect() : null;
+  const chipSize = 110;
+  const btnY = tabsRect ? (tabsRect.top + tabsRect.height/2 - chipSize/2) : H * 0.12;
 
   ov.innerHTML =
-    '<svg style="position:absolute;inset:0;width:100%;height:100%;overflow:visible;">' + svgLines + '</svg>' +
+    '<svg style="position:absolute;inset:0;width:100%;height:100%;overflow:visible;"><defs><marker id="arrowhead" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><polygon points="0 0, 7 3, 0 6" fill="#c84040"/></marker></defs>' + svgLines + '</svg>' +
     boxHTML +
-    '<div style="position:absolute;left:50%;transform:translateX(-50%);top:' + btnY + 'px;pointer-events:all;">' +
-    '<button onclick="endStep5()" style="font-family:Gill Sans Nova,Gill Sans,Optima,sans-serif;font-weight:300;font-size:0.6rem;letter-spacing:3px;text-transform:uppercase;background:transparent;color:#eceae4;border:1px solid #eceae4;padding:8px 20px;cursor:pointer;border-radius:0;">Start Playing!</button>' +
+    '<div style="position:absolute;left:50%;transform:translateX(-50%);top:' + btnY + 'px;width:' + chipSize + 'px;height:' + chipSize + 'px;pointer-events:all;">' +
+    '<button id="startPlayingBtn" onclick="endStep5()" onmouseover="this.style.color=\'#eceae4\';" onmouseout="this.style.color=\'#e8450a\';" style="font-family:Gill Sans Nova,Gill Sans,Optima,sans-serif;font-weight:500;font-size:0.7rem;letter-spacing:2px;text-transform:uppercase;background:#111210;color:#e8450a;border:2px solid #eceae4;box-shadow:inset 0 0 0 8px #111210, inset 0 0 0 10px rgba(236,234,228,0.4);width:100%;height:100%;cursor:pointer;border-radius:50%;transition:color 0.2s;line-height:1.3;padding:0 14px;">Start Playing</button>' +
     '</div>';
 
   document.body.appendChild(ov);
@@ -2056,13 +2037,25 @@ function showTutorialStep(i) {
         'polygon(0 0, '+W+'px 0, '+W+'px '+H+'px, 0 '+H+'px, 0 0, '+l+'px '+t+'px, '+l+'px '+(t+h)+'px, '+(l+w)+'px '+(t+h)+'px, '+(l+w)+'px '+t+'px, '+l+'px '+t+'px)';
 
       if (step.custom) {
+        // No spotlight border for step 5, but cut the nav out of the dim so buttons stay visible
+        spotlight.style.opacity = '0';
+        const nr = el.getBoundingClientRect();
+        const nl = nr.left - 6, nt = nr.top - 6, nw = nr.width + 12, nh = nr.height + 12;
+        document.getElementById('tutorialDim').style.clipPath =
+          'polygon(0 0, '+W+'px 0, '+W+'px '+H+'px, 0 '+H+'px, 0 0, '+nl+'px '+nt+'px, '+nl+'px '+(nt+nh)+'px, '+(nl+nw)+'px '+(nt+nh)+'px, '+(nl+nw)+'px '+nt+'px, '+nl+'px '+nt+'px)';
         setTimeout(showStep5Annotation, 50);
       }
       if (step.box === 'bottom') {
-        box.style.top = (r.bottom + pad + 20) + 'px';
+        box.style.top = Math.min(r.bottom + pad + 12, H - 200) + 'px';
+        box.style.transform = 'translateX(-50%)';
+      } else if (step.box === 'forceTop') {
+        // Place box at very top of screen regardless of element position
+        box.style.top = '80px';
         box.style.transform = 'translateX(-50%)';
       } else {
-        box.style.top = Math.max(10, r.top - 200) + 'px';
+        const boxHeight = 180;
+        const idealTop = r.top - boxHeight - 16;
+        box.style.top = Math.max(10, idealTop) + 'px';
         box.style.transform = 'translateX(-50%)';
       }
     }
