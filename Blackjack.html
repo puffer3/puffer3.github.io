@@ -6,13 +6,13 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Basic Strategy">
-<title>Blackjack Basic Strategy — HAL</title>
+<title>Blackjack Basic Strategy - HAL</title>
 <link href="https://fonts.googleapis.com/css2?family=Gill+Sans+Nova:wght@200;300;400;600&display=swap" rel="stylesheet">
 <style>
   /*
     2001: A Space Odyssey
     Deep blacks, bone whites, HAL red, Discovery orange
-    Gill Sans Light — clean, institutional, slightly cold
+    Gill Sans Light - clean, institutional, slightly cold
   */
   :root {
     --black:    #080808;
@@ -216,8 +216,45 @@
     gap: 16px;
     width: 100%;
   }
-  .card-question .q-hand { display: block; }
-  .card-question .q-dealer { display: block; font-size: clamp(1rem, 3.5vw, 1.4rem); opacity: 0.75; }
+  .card-question .q-hand {
+    display: block;
+    border: 1px solid rgba(236,234,228,0.25);
+    padding: 5px 14px;
+    position: relative;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .card-question .q-hand::before {
+    content: 'YOUR HAND';
+    position: absolute;
+    top: -8px;
+    left: 10px;
+    font-size: 0.42rem;
+    letter-spacing: 2px;
+    color: var(--orange);
+    background: var(--panel);
+    padding: 0 4px;
+  }
+  .card-question .q-dealer {
+    display: block;
+    font-size: clamp(1rem, 3.5vw, 1.4rem);
+    border: 1px solid rgba(236,234,228,0.15);
+    padding: 5px 14px;
+    position: relative;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .card-question .q-dealer::before {
+    content: 'DEALER';
+    position: absolute;
+    top: -8px;
+    left: 10px;
+    font-size: 0.42rem;
+    letter-spacing: 2px;
+    color: var(--dim);
+    background: var(--panel);
+    padding: 0 4px;
+  }
 
   /* back face */
   .result-verdict {
@@ -332,22 +369,7 @@
   }
   .btn-fullscreen:hover { color: var(--dim); border-color: var(--dim); }
 
-  .btn-back {
-    background: transparent;
-    color: var(--dim);
-    border: 1px solid var(--border);
-    font-family: 'Gill Sans Nova', 'Gill Sans', Optima, sans-serif;
-    font-weight: 300;
-    font-size: 0.56rem;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    padding: 7px 14px;
-    border-radius: 0;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-  .btn-back:hover { color: var(--hal); border-color: var(--hal); }
-  .bottom-nav {
+.bottom-nav {
     display: flex;
     gap: 8px;
     justify-content: center;
@@ -753,8 +775,7 @@
   <button class="action-btn surrender" id="surrenderBtn" onclick="answer('SURRENDER')">Surrender</button>
   <button class="action-btn fliptable-btn" id="flipBtn" onclick="flipTable()">┬─┬ ノ( ゜-゜ノ)</button>
 </div>
-<div class="bottom-nav"><button class="btn-back" id="backBtn" onclick="goBack()" style="display:none">Back</button>
-<button class="btn-chart" onclick="showChart()">Chart</button><button class="btn-chart" onclick="showRules()">Tips</button><button class="btn-chart" onclick="showStats()">Stats</button></div>
+<div class="bottom-nav"><button class="btn-chart toggle-off" id="expandBtn" onclick="toggleExpand()">Expand</button><button class="btn-chart" onclick="showChart()">Chart</button><button class="btn-chart" onclick="showRules()">Tips</button><button class="btn-chart" onclick="showStats()">Stats</button></div>
 
 <!-- END SCREEN -->
 <div class="end-screen" id="endScreen">
@@ -772,7 +793,7 @@
 
 <script>
 const ALL_CARDS = [
-  // ── HARD TOTALS ──
+  // -- HARD TOTALS --
   { cat:"Hard Totals", q:"Hard 8\nDealer showing 13",   action:"HIT",    cls:"hit",    detail:"Always <strong>hit</strong> hard 8 or less against any dealer total." },
   { cat:"Hard Totals", q:"Hard 8\nDealer showing 17",   action:"HIT",    cls:"hit",    detail:"Always <strong>hit</strong> hard 8 or less against any dealer total." },
   { cat:"Hard Totals", q:"Hard 9\nDealer showing 13",   action:"DOUBLE", cls:"double", detail:"<strong>Double</strong> hard 9 against dealer soft 13–16 (bust range).<br>Hit against dealer 17 or higher." },
@@ -803,11 +824,11 @@ const ALL_CARDS = [
   { cat:"Hard Totals", q:"Hard 15\nDealer showing 18",  action:"HIT",    cls:"hit",    detail:"<strong>Hit</strong> hard 15 against dealer hard 17 or higher.<br>Stand against dealer soft 12–16." },
   { cat:"Hard Totals", q:"Hard 16\nDealer showing 15",  action:"STAND",  cls:"stand",  detail:"<strong>Stand</strong> hard 13–16 against dealer soft 12–16 (bust range).<br>Hit against dealer hard 17 or higher." },
   { cat:"Hard Totals", q:"Hard 16\nDealer showing 18",  action:"HIT",    cls:"hit",    detail:"<strong>Hit</strong> hard 16 against dealer hard 17 or higher.<br>Stand against dealer soft 12–16." },
-  { cat:"Hard Totals", q:"Hard 17\nDealer showing 14",  action:"STAND",  cls:"stand",  detail:"Always <strong>stand</strong> on hard 17 or more — never take another card." },
-  { cat:"Hard Totals", q:"Hard 17\nDealer showing 20",  action:"STAND",  cls:"stand",  detail:"Always <strong>stand</strong> on hard 17 or more — never take another card." },
-  { cat:"Hard Totals", q:"Hard 19\nDealer showing 21",  action:"STAND",  cls:"stand",  detail:"Always <strong>stand</strong> on hard 17 or more — never take another card." },
+  { cat:"Hard Totals", q:"Hard 17\nDealer showing 14",  action:"STAND",  cls:"stand",  detail:"Always <strong>stand</strong> on hard 17 or more - never take another card." },
+  { cat:"Hard Totals", q:"Hard 17\nDealer showing 20",  action:"STAND",  cls:"stand",  detail:"Always <strong>stand</strong> on hard 17 or more - never take another card." },
+  { cat:"Hard Totals", q:"Hard 19\nDealer showing 21",  action:"STAND",  cls:"stand",  detail:"Always <strong>stand</strong> on hard 17 or more - never take another card." },
 
-  // ── SOFT TOTALS ──
+  // -- SOFT TOTALS --
   { cat:"Soft Totals", q:"Soft 13\nDealer showing 15",  action:"DOUBLE", cls:"double", detail:"<strong>Double</strong> soft 13–14 against dealer soft 15–16.<br>Hit against all other dealer totals." },
   { cat:"Soft Totals", q:"Soft 13\nDealer showing 16",  action:"DOUBLE", cls:"double", detail:"<strong>Double</strong> soft 13–14 against dealer soft 15–16.<br>Hit against all other dealer totals." },
   { cat:"Soft Totals", q:"Soft 13\nDealer showing 17",  action:"HIT",    cls:"hit",    detail:"<strong>Hit</strong> soft 13 against dealer 17 or higher.<br>Only double against dealer soft 15–16." },
@@ -825,12 +846,12 @@ const ALL_CARDS = [
   { cat:"Soft Totals", q:"Soft 18\nDealer showing 15",  action:"DOUBLE", cls:"double", detail:"<strong>Double</strong> soft 18 against dealer soft 12–16.<br>Stand against dealer 17–18. Hit against dealer 19–20 or soft 21." },
   { cat:"Soft Totals", q:"Soft 18\nDealer showing 17",  action:"STAND",  cls:"stand",  detail:"<strong>Stand</strong> soft 18 against dealer hard 17–18.<br>Double against soft 12–16. Hit against 19–20 or soft 21." },
   { cat:"Soft Totals", q:"Soft 18\nDealer showing 18",  action:"STAND",  cls:"stand",  detail:"<strong>Stand</strong> soft 18 against dealer hard 17–18.<br>Double against soft 12–16. Hit against 19–20 or soft 21." },
-  { cat:"Soft Totals", q:"Soft 18\nDealer showing 19",  action:"HIT",    cls:"hit",    detail:"<strong>Hit</strong> soft 18 against dealer 19–20 or soft 21.<br>This is the trickiest rule — don't stand here!" },
-  { cat:"Soft Totals", q:"Soft 18\nDealer showing 20",  action:"HIT",    cls:"hit",    detail:"<strong>Hit</strong> soft 18 against dealer 19–20 or soft 21.<br>This is the trickiest rule — don't stand here!" },
-  { cat:"Soft Totals", q:"Soft 19\nDealer showing 20",  action:"STAND",  cls:"stand",  detail:"Always <strong>stand</strong> on soft 19 or 20 — these are strong hands." },
-  { cat:"Soft Totals", q:"Soft 20\nDealer showing 21",  action:"STAND",  cls:"stand",  detail:"Always <strong>stand</strong> on soft 19 or 20 — these are strong hands." },
+  { cat:"Soft Totals", q:"Soft 18\nDealer showing 19",  action:"HIT",    cls:"hit",    detail:"<strong>Hit</strong> soft 18 against dealer 19–20 or soft 21.<br>This is the trickiest rule - don't stand here!" },
+  { cat:"Soft Totals", q:"Soft 18\nDealer showing 20",  action:"HIT",    cls:"hit",    detail:"<strong>Hit</strong> soft 18 against dealer 19–20 or soft 21.<br>This is the trickiest rule - don't stand here!" },
+  { cat:"Soft Totals", q:"Soft 19\nDealer showing 20",  action:"STAND",  cls:"stand",  detail:"Always <strong>stand</strong> on soft 19 or 20 - these are strong hands." },
+  { cat:"Soft Totals", q:"Soft 20\nDealer showing 21",  action:"STAND",  cls:"stand",  detail:"Always <strong>stand</strong> on soft 19 or 20 - these are strong hands." },
 
-  // ── PAIRS ──
+  // -- PAIRS --
   { cat:"Splits", q:"Hard 4 (equal cards)\nDealer showing 12", action:"SPLIT",  cls:"split",  detail:"<strong>Split</strong> hard 4 against dealer hard 12–17.<br>Hit against dealer 18 or higher." },
   { cat:"Splits", q:"Hard 4 (equal cards)\nDealer showing 17", action:"SPLIT",  cls:"split",  detail:"<strong>Split</strong> hard 4 against dealer hard 12–17.<br>Hit against dealer 18 or higher." },
   { cat:"Splits", q:"Hard 4 (equal cards)\nDealer showing 18", action:"HIT",    cls:"hit",    detail:"<strong>Hit</strong> hard 4 against dealer 18 or higher.<br>Only split against dealer 12–17." },
@@ -839,8 +860,8 @@ const ALL_CARDS = [
   { cat:"Splits", q:"Hard 8 (equal cards)\n Dealer showing 15",     action:"SPLIT",  cls:"split",  detail:"<strong>Split</strong> hard 8 against dealer soft 15–16 only.<br>Hit against all other dealer totals." },
   { cat:"Splits", q:"Hard 8 (equal cards)\n Dealer showing 16",     action:"SPLIT",  cls:"split",  detail:"<strong>Split</strong> hard 8 against dealer soft 15–16 only.<br>Hit against all other dealer totals." },
   { cat:"Splits", q:"Hard 8 (equal cards)\n Dealer showing 17",     action:"HIT",    cls:"hit",    detail:"<strong>Hit</strong> hard 8 against dealer 17 or higher.<br>Only split against dealer soft 15–16." },
-  { cat:"Splits", q:"Hard 10 (equal cards)\n Dealer showing 15",    action:"DOUBLE", cls:"double", detail:"<strong>Never split — treat as Hard 10.</strong><br>Double against dealer 12–19. Hit against dealer 20 or soft 21." },
-  { cat:"Splits", q:"Hard 10 (equal cards)\n Dealer showing 20",    action:"HIT",    cls:"hit",    detail:"<strong>Never split — treat as Hard 10.</strong><br>Hit against dealer hard 20 or soft 21." },
+  { cat:"Splits", q:"Hard 10 (equal cards)\n Dealer showing 15",    action:"DOUBLE", cls:"double", detail:"<strong>Never split - treat as Hard 10.</strong><br>Double against dealer 12–19. Hit against dealer 20 or soft 21." },
+  { cat:"Splits", q:"Hard 10 (equal cards)\n Dealer showing 20",    action:"HIT",    cls:"hit",    detail:"<strong>Never split - treat as Hard 10.</strong><br>Hit against dealer hard 20 or soft 21." },
   { cat:"Splits", q:"Hard 12 (equal cards)\n Dealer showing 12",    action:"SPLIT",  cls:"split",  detail:"<strong>Split</strong> hard 12 against dealer soft 12–16.<br>Hit against dealer hard 17 or higher." },
   { cat:"Splits", q:"Hard 12 (equal cards)\n Dealer showing 16",    action:"SPLIT",  cls:"split",  detail:"<strong>Split</strong> hard 12 against dealer soft 12–16.<br>Hit against dealer hard 17 or higher." },
   { cat:"Splits", q:"Hard 12 (equal cards)\n Dealer showing 17",    action:"HIT",    cls:"hit",    detail:"<strong>Hit</strong> hard 12 against dealer hard 17 or higher.<br>Only split against dealer soft 12–16." },
@@ -848,23 +869,23 @@ const ALL_CARDS = [
   { cat:"Splits", q:"Hard 14 (equal cards)\n Dealer showing 17",    action:"SPLIT",  cls:"split",  detail:"<strong>Split</strong> hard 14 against dealer hard 12–17.<br>Hit against dealer 18 or higher." },
   { cat:"Splits", q:"Hard 14 (equal cards)\n Dealer showing 18",    action:"HIT",    cls:"hit",    detail:"<strong>Hit</strong> hard 14 against dealer 18 or higher.<br>Only split against dealer 12–17." },
   { cat:"Splits", q:"Hard 16 (equal cards)\n Dealer showing 14",    action:"SPLIT",  cls:"split",  detail:"<strong>Always split hard 16.</strong> It is the worst hand in blackjack.<br>Splitting gives you two chances to improve." },
-  { cat:"Splits", q:"Hard 16 (equal cards)\n Dealer showing 20",    action:"SPLIT",  cls:"split",  detail:"<strong>Always split hard 16</strong> — even against dealer 20.<br>Hard 16 is the worst hand. Always split." },
+  { cat:"Splits", q:"Hard 16 (equal cards)\n Dealer showing 20",    action:"SPLIT",  cls:"split",  detail:"<strong>Always split hard 16</strong> - even against dealer 20.<br>Hard 16 is the worst hand. Always split." },
   { cat:"Splits", q:"Hard 18 (equal cards)\n Dealer showing 13",    action:"SPLIT",  cls:"split",  detail:"<strong>Split</strong> hard 18 against dealer soft 12–16 and hard 18–19.<br>Stand against dealer hard 17, 20, or soft 21." },
   { cat:"Splits", q:"Hard 18 (equal cards)\n Dealer showing 17",    action:"STAND",  cls:"stand",  detail:"<strong>Stand</strong> hard 18 against dealer hard 17.<br>Split against soft 12–16 and hard 18–19. Stand against 20 and soft 21 too." },
   { cat:"Splits", q:"Hard 18 (equal cards)\n Dealer showing 19",    action:"SPLIT",  cls:"split",  detail:"<strong>Split</strong> hard 18 against dealer hard 18–19.<br>Stand against dealer hard 17, 20, or soft 21." },
   { cat:"Splits", q:"Hard 18 (equal cards)\n Dealer showing 20",    action:"STAND",  cls:"stand",  detail:"<strong>Stand</strong> hard 18 against dealer hard 20 or soft 21.<br>Split against soft 12–16 and hard 18–19." },
   { cat:"Splits", q:"Hard 20 (equal cards)\n Dealer showing 19",    action:"STAND",  cls:"stand",  detail:"<strong>Never split hard 20.</strong> Always stand.<br>Splitting 20 is one of the biggest mistakes at the table." },
-  { cat:"Splits", q:"Soft 12 (two Aces)\nDealer showing 15",           action:"SPLIT",  cls:"split",  detail:"<strong>Always split Aces</strong> — no exceptions, any dealer total.<br>You receive only one card on each Ace after splitting." },
-  { cat:"Splits", q:"Soft 12 (two Aces)\nDealer showing 20",           action:"SPLIT",  cls:"split",  detail:"<strong>Always split Aces</strong> — even against dealer 20.<br>You receive only one card on each Ace after splitting." },
+  { cat:"Splits", q:"Soft 12 (two Aces)\nDealer showing 15",           action:"SPLIT",  cls:"split",  detail:"<strong>Always split Aces</strong> - no exceptions, any dealer total.<br>You receive only one card on each Ace after splitting." },
+  { cat:"Splits", q:"Soft 12 (two Aces)\nDealer showing 20",           action:"SPLIT",  cls:"split",  detail:"<strong>Always split Aces</strong> - even against dealer 20.<br>You receive only one card on each Ace after splitting." },
 
-  // ── SURRENDER ──
+  // -- SURRENDER --
   { cat:"Surrender", q:"Hard 16\nDealer showing 19",  action:"SURRENDER", cls:"surrender", detail:"<strong>Surrender</strong> hard 16 against dealer 19–21 if allowed.<br>Hit if surrender is unavailable.<br>Exception: if your 16 is two 8s, always split instead." },
   { cat:"Surrender", q:"Hard 16\nDealer showing 20",  action:"SURRENDER", cls:"surrender", detail:"<strong>Surrender</strong> hard 16 against dealer 19–21 if allowed.<br>Hit if surrender is unavailable.<br>Exception: if your 16 is two 8s, always split instead." },
   { cat:"Surrender", q:"Hard 16\nDealer showing 21",  action:"SURRENDER", cls:"surrender", detail:"<strong>Surrender</strong> hard 16 against dealer 19–21 if allowed.<br>Hit if surrender is unavailable." },
   { cat:"Surrender", q:"Hard 15\nDealer showing 20",  action:"SURRENDER", cls:"surrender", detail:"<strong>Surrender</strong> hard 15 against dealer hard 20.<br>Hit if surrender is not available." },
 ];
 
-// Pair actions need SPLIT button — add it dynamically
+// Pair actions need SPLIT button - add it dynamically
 const CATEGORIES = ["All", ...new Set(ALL_CARDS.map(c => c.cat))];
 
 let currentCat = "All";
@@ -897,8 +918,7 @@ function shuffle() {
   statsByCat = {}; statsByAction = {}; statsByDealer = {}; missedCards = {};
   streakCurrent = 0; streakBest = 0; totalAnswered = 0; totalCorrect = 0;
   history = [];
-  document.getElementById('backBtn').style.display = 'none';
-  // Don't reset doublesOn — keep user's choice
+  // Don't reset doublesOn - keep user's choice
   document.getElementById('endScreen').classList.remove('visible');
   document.getElementById('cardScene').style.display = '';
   document.getElementById('actionButtons').style.display = '';
@@ -927,7 +947,7 @@ function render() {
   setButtonsDisabled(false);
   document.getElementById('tapHint').style.display = 'none';
 
-  // Pre-load front face before flip — it's hidden so no jump
+  // Pre-load front face before flip - hidden so no jump
   const qParts = card.q.split('\n');
   document.getElementById('questionText').innerHTML = '<span class="q-hand">' + qParts[0] + '</span>' + (qParts[1] ? '<span class="q-dealer">' + qParts[1] + '</span>' : '');
   const pct = ((idx + 1) / deck.length) * 100;
@@ -1028,7 +1048,7 @@ function cardTapped() {
     // Tap the front face to peek at the rule without answering
     const ci = document.getElementById('cardInner');
     if (ci.classList.contains('flipped')) {
-      // Already peeking — tap again to flip back to question
+      // Already peeking - tap again to flip back to question
       ci.classList.remove('flipped');
     } else {
       // Flip to show the rule
@@ -1044,14 +1064,12 @@ function nextCard() {
     history.push(idx);
     idx++;
     render();
-    document.getElementById('backBtn').style.display = history.length ? '' : 'none';
   }
 }
 
 function goBack() {
   if (!history.length) return;
   idx = history.pop();
-  document.getElementById('backBtn').style.display = history.length ? '' : 'none';
   // Show the card flipped to the answer so they can read the rule
   const card = deck[idx];
   const qParts = card.q.split('\n');
@@ -1107,20 +1125,17 @@ function showEnd() {
   document.getElementById('endScreen').classList.add('visible');
 }
 
-// Multi-select category state — all on by default
+// Multi-select category state - all on by default
 const REAL_CATS = ["Hard Totals", "Soft Totals", "Splits"];
 const activeCats = new Set([...REAL_CATS, "Surrender"]);
 
 function getFilteredDeck() {
+  const source = expandOn ? EXPANDED_CARDS : ALL_CARDS;
   let cards;
   if (doublesOn && activeCats.size === 0) {
-    // Doubles alone — show all double cards
-    cards = ALL_CARDS.filter(c => c.action === 'DOUBLE');
-  } else if (doublesOn) {
-    // Doubles + categories — full category deck, no extra filter
-    cards = ALL_CARDS.filter(c => activeCats.has(c.cat));
+    cards = source.filter(c => c.action === 'DOUBLE');
   } else {
-    cards = ALL_CARDS.filter(c => activeCats.has(c.cat));
+    cards = source.filter(c => activeCats.has(c.cat));
   }
   if (!splitOn)     cards = cards.filter(c => c.action !== 'SPLIT');
   if (!surrenderOn) cards = cards.filter(c => c.action !== 'SURRENDER');
@@ -1129,7 +1144,7 @@ function getFilteredDeck() {
 
 const tabsEl = document.getElementById('tabs');
 
-// ALL button — selects all or deselects all
+// ALL button - selects all or deselects all
 const allBtn = document.createElement('button');
 allBtn.className = 'tab all-btn';
 allBtn.textContent = 'All';
@@ -1305,6 +1320,101 @@ function flipTable() {
   };
 }
 
+// ── EXPANDED DECK ──
+const EXPANDED_CARDS = [];
+(function() {
+  const D = [2,3,4,5,6,7,8,9,10,11];
+  function dLabel(d) { return d === 11 ? 'Ace' : String(d); }
+
+  function hardAction(p, d) {
+    if (p <= 8)  return 'HIT';
+    if (p === 9)  return (d>=3&&d<=6) ? 'DOUBLE' : 'HIT';
+    if (p === 10) return (d>=2&&d<=9) ? 'DOUBLE' : 'HIT';
+    if (p === 11) return 'DOUBLE';
+    if (p === 12) return (d>=4&&d<=6) ? 'STAND' : 'HIT';
+    if (p>=13&&p<=16) return (d>=2&&d<=6) ? 'STAND' : 'HIT';
+    return 'STAND';
+  }
+  function hardCls(a) { return a==='HIT'?'hit':a==='STAND'?'stand':a==='DOUBLE'?'double':'hit'; }
+  function hardDetail(a) {
+    if (a==='DOUBLE') return '<strong>Double down.</strong> You have the edge here.';
+    if (a==='STAND') return '<strong>Stand.</strong> Dealer is in bust range or you have a strong total.';
+    return '<strong>Hit.</strong> Your total is too low to stand.';
+  }
+
+  for (let p = 5; p <= 17; p++) {
+    D.forEach(d => {
+      const a = hardAction(p, d);
+      EXPANDED_CARDS.push({ cat:'Hard Totals', q:'Hard '+p+'\nDealer showing '+dLabel(d), action:a, cls:hardCls(a), detail:hardDetail(a) });
+    });
+  }
+
+  function softAction(c, d) {
+    if (c===2||c===3) return (d>=5&&d<=6)?'DOUBLE':'HIT';
+    if (c===4||c===5) return (d>=4&&d<=6)?'DOUBLE':'HIT';
+    if (c===6) return (d>=2&&d<=6)?'DOUBLE':'HIT';
+    if (c===7) { if(d>=2&&d<=6)return'DOUBLE'; if(d===7||d===8)return'STAND'; return'HIT'; }
+    if (c===8) return (d===6)?'DOUBLE':'STAND';
+    return 'STAND';
+  }
+  function softCls(a) { return a==='HIT'?'hit':a==='STAND'?'stand':'double'; }
+  function softDetail(a) {
+    if (a==='DOUBLE') return '<strong>Double down.</strong> Soft hand with dealer in bust range.';
+    if (a==='STAND') return '<strong>Stand.</strong> Soft total is strong enough.';
+    return '<strong>Hit.</strong> Not enough edge to double or stand.';
+  }
+
+  for (let c = 2; c <= 9; c++) {
+    D.forEach(d => {
+      const a = softAction(c, d);
+      EXPANDED_CARDS.push({ cat:'Soft Totals', q:'Soft '+(11+c)+' (A,'+c+')\nDealer showing '+dLabel(d), action:a, cls:softCls(a), detail:softDetail(a) });
+    });
+  }
+
+  const pairRules = {
+    2:  d=>(d>=2&&d<=7)?'SPLIT':'HIT',
+    3:  d=>(d>=2&&d<=7)?'SPLIT':'HIT',
+    4:  d=>(d>=5&&d<=6)?'SPLIT':'HIT',
+    5:  d=>(d>=2&&d<=9)?'DOUBLE':'HIT',
+    6:  d=>(d>=2&&d<=6)?'SPLIT':'HIT',
+    7:  d=>(d>=2&&d<=7)?'SPLIT':'HIT',
+    8:  d=>'SPLIT',
+    9:  d=>(d===7||d===10||d===11)?'STAND':'SPLIT',
+    10: d=>'STAND',
+    11: d=>'SPLIT',
+  };
+  function pairCls(a) { return a==='SPLIT'?'split':a==='DOUBLE'?'double':a==='STAND'?'stand':'hit'; }
+  function pairLabel(c) { return c===11?'A,A':c+','+c; }
+  function pairDetail(a) {
+    if(a==='SPLIT')return'<strong>Split.</strong>';
+    if(a==='DOUBLE')return"<strong>Double - never split 5's.</strong>";
+    if(a==='STAND')return'<strong>Stand.</strong>';
+    return'<strong>Hit.</strong>';
+  }
+
+  [2,3,4,5,6,7,8,9,10,11].forEach(c => {
+    D.forEach(d => {
+      const a = pairRules[c](d);
+      const label = c===11?'Soft 12':'Hard '+(c*2);
+      EXPANDED_CARDS.push({ cat:'Splits', q:label+' ('+pairLabel(c)+')\nDealer showing '+dLabel(d), action:a, cls:pairCls(a), detail:pairDetail(a) });
+    });
+  });
+
+  [{p:'Hard 16',d:9},{p:'Hard 16',d:10},{p:'Hard 16',d:11},{p:'Hard 15',d:10}].forEach(s => {
+    EXPANDED_CARDS.push({ cat:'Surrender', q:s.p+'\nDealer showing '+dLabel(s.d), action:'SURRENDER', cls:'surrender', detail:'<strong>Surrender</strong> if available. Hit if not.' });
+  });
+})();
+
+let expandOn = false;
+
+function toggleExpand() {
+  expandOn = !expandOn;
+  const btn = document.getElementById('expandBtn');
+  btn.classList.toggle('active', expandOn);
+  btn.classList.toggle('toggle-off', !expandOn);
+  shuffle();
+}
+
 shuffle();
 
 function showRules() {
@@ -1335,35 +1445,35 @@ function hideRules() {
 
 function buildRules() {
   const rules = [
-    { title: "Dealer always goes last", body: "If you bust, you lose immediately — even if the dealer would have busted too. This is the house edge. Play tight." },
+    { title: "Dealer always goes last", body: "If you bust, you lose immediately - even if the dealer would have busted too. This is the house edge. Play tight." },
     { title: "Never bust a good hand", body: "Standing on 17 or more is almost always correct. The risk of busting outweighs the chance of improving." },
     { title: "Dealer bust range is 12 to 16", body: "When the dealer shows a soft 12 through 16, they are likely to bust. Stand on your stiff hands and let them destroy themselves." },
     { title: "Always split Ace's and 8's", body: "Two Ace's as soft 12 is weak. Two 8's as hard 16 is the worst hand in blackjack. Splitting both gives you two better starting points." },
     { title: "Never split 10's or 5's", body: "Hard 20 is near-perfect. Hard 10 doubles well. Breaking either hand up is one of the most common mistakes at the table." },
     { title: "Double when you have the edge", body: "Hard 10's and 11's are your best doubling hands. The dealer is giving you a chance to put more money out when you are likely to win." },
     { title: "Surrender saves money", body: "Surrendering hard 15 or 16 against a strong dealer gives you half your bet back. Against a dealer 20, losing half is better than almost certainly losing all of it." },
-    { title: "Soft 18 is not always a stand", body: "A,7 looks strong but hit's against dealer 9's, 10's, or Ace's. Your 18 loses to those totals — hitting gives you a chance to improve." },
+    { title: "Soft 18 is not always a stand", body: "A,7 looks strong but hit's against dealer 9's, 10's, or Ace's. Your 18 loses to those totals - hitting gives you a chance to improve." },
     { title: "Basic strategy is long game math", body: "No single hand proves or disproves the strategy. Over thousands of hands, playing correctly reduces the house edge to around 0.5%." },
-    { title: "Hitting multiple times — follow the total not the count", body: "Each hit creates a new hard or soft total. Ignore how many card's you have drawn and just apply basic strategy to whatever your new total is. A hand of 4+3+5 is just hard 12. Play it the same as any hard 12." },
-    { title: "Soft hands can harden mid-hand", body: "If you hold A,6 (soft 17) and hit an 8, your Ace now counts as 1 — you have hard 15. The hand has hardened. From that point treat it as a hard total and apply hard strategy. When in doubt, count the Ace as 1 and play the hard number." },
+    { title: "Hitting multiple times - follow the total not the count", body: "Each hit creates a new hard or soft total. Ignore how many card's you have drawn and just apply basic strategy to whatever your new total is. A hand of 4+3+5 is just hard 12. Play it the same as any hard 12." },
+    { title: "Soft hands can harden mid-hand", body: "If you hold A,6 (soft 17) and hit an 8, your Ace now counts as 1 - you have hard 15. The hand has hardened. From that point treat it as a hard total and apply hard strategy. When in doubt, count the Ace as 1 and play the hard number." },
   ];
 
   const advanced = [
-    { title: "Count the bust cards", body: "Card's 2 through 6 are the dealer bust cards. The more of them showing across the table, the weaker the remaining shoe is for the dealer — and the stronger your doubles and splits become." },
-    { title: "Table conditions matter", body: "A 6-deck shoe with dealer hitting soft 17 is the most common Strip game. Avoid tables that pay 6:5 on blackjack instead of 3:2 — that single rule doubles the house edge." },
+    { title: "Count the bust cards", body: "Card's 2 through 6 are the dealer bust cards. The more of them showing across the table, the weaker the remaining shoe is for the dealer - and the stronger your doubles and splits become." },
+    { title: "Table conditions matter", body: "A 6-deck shoe with dealer hitting soft 17 is the most common Strip game. Avoid tables that pay 6:5 on blackjack instead of 3:2 - that single rule doubles the house edge." },
     { title: "Position at the table is irrelevant", body: "Third base does not affect your odds. The cards are random. Do not let other players pressure you into changing your strategy based on their hunches." },
     { title: "Insurance is a losing bet", body: "Insurance pays 2:1 but the true odds of the dealer having blackjack are roughly 9:4 against. Over time insurance costs you money every time you take it." },
-    { title: "Doubling after a split", body: "When allowed, you can double down after splitting. This matters most with 2's, 3's, and 6's against weak dealer cards — you can end up with a strong hand on each side." },
+    { title: "Doubling after a split", body: "When allowed, you can double down after splitting. This matters most with 2's, 3's, and 6's against weak dealer cards - you can end up with a strong hand on each side." },
     { title: "Composition-dependent exceptions", body: "Advanced players adjust a handful of decisions based on exact card composition, not just totals. Example: hard 16 made of 8,8 should always split, but 10,6 against dealer 10 is a closer surrender call." },
-    { title: "Running count basics", body: "Hi-Lo card counting assigns +1 to card's 2-6 and -1 to 10's and Ace's. A high positive count means the shoe is rich in 10's — favorable for you. Basic strategy stays the foundation; the count tells you when to size up." },
+    { title: "Running count basics", body: "Hi-Lo card counting assigns +1 to card's 2-6 and -1 to 10's and Ace's. A high positive count means the shoe is rich in 10's - favorable for you. Basic strategy stays the foundation; the count tells you when to size up." },
     { title: "Bet sizing discipline", body: "Even with perfect strategy the swings are real. A common rule is never bet more than 2% of your session bankroll on a single hand. This keeps you alive long enough for the math to work." },
   ];
 
   const top5 = [
-    "Always split Ace's and 8's — no exceptions.",
-    "Never split 10's or 5's — ever.",
+    "Always split Ace's and 8's - no exceptions.",
+    "Never split 10's or 5's - ever.",
     "Stand when the dealer is in bust range (12–16). Let them destroy themselves.",
-    "Double hard 10's and 11's — you have the edge, put more money out.",
+    "Double hard 10's and 11's - you have the edge, put more money out.",
     "Soft 18 (A,7) hits against dealer 9's, 10's, and Ace's. It is not a stand.",
   ];
 
@@ -1491,7 +1601,7 @@ function buildStats() {
       + '</div></div>';
   });
 
-  // By dealer strength — group into bust (12-16), neutral (17-18), strong (19-21)
+  // By dealer strength - group into bust (12-16), neutral (17-18), strong (19-21)
   const bust = ['12','13','14','15','16'];
   const neutral = ['17','18'];
   const strong = ['19','20','21'];
@@ -1638,5 +1748,356 @@ function buildChart() {
   /* Override tap hint font */
   #tapHint { font-family: 'Gill Sans Nova','Gill Sans',Optima,sans-serif !important; color: rgba(232,228,216,0.2) !important; letter-spacing: 3px !important; }
 </style>
+
+<!-- TUTORIAL OVERLAY -->
+<div id="tutorialOverlay" style="display:none;">
+  <div id="tutorialDim"></div>
+  <div id="tutorialSpotlight"></div>
+  <div id="tutorialBox">
+    <div id="tutorialText"></div>
+    <div id="tutorialStep"></div>
+    <button id="tutorialBtn" onclick="tutorialNext()">Continue</button>
+  </div>
+</div>
+
+<style>
+  #tutorialOverlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    pointer-events: all;
+  }
+  #tutorialDim {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.78);
+    transition: opacity 0.3s;
+    pointer-events: none;
+  }
+  #tutorialSpotlight {
+    position: fixed;
+    border: 2px solid var(--orange);
+    box-shadow: 0 0 16px rgba(232,69,10,0.3);
+    border-radius: 4px;
+    transition: all 0.4s cubic-bezier(0.4,0,0.2,1);
+    pointer-events: none;
+    z-index: 10001;
+    background: transparent;
+  }
+  #tutorialBox {
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(340px, 90vw);
+    background: var(--panel);
+    border: 1px solid var(--orange);
+    padding: 20px 22px 16px;
+    z-index: 10001;
+    transition: top 0.4s cubic-bezier(0.4,0,0.2,1);
+  }
+  #tutorialText {
+    font-family: 'Gill Sans Nova', 'Gill Sans', Optima, sans-serif;
+    font-weight: 300;
+    font-size: 1rem;
+    color: var(--bone);
+    line-height: 1.65;
+    letter-spacing: 0.3px;
+    margin-bottom: 14px;
+    text-align: center;
+  }
+  #tutorialText strong {
+    color: var(--orange);
+    font-weight: 400;
+  }
+  #tutorialStep {
+    font-family: 'Gill Sans Nova', 'Gill Sans', Optima, sans-serif;
+    font-weight: 300;
+    font-size: 0.5rem;
+    letter-spacing: 3px;
+    color: var(--dim);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    opacity: 0.5;
+  }
+  #tutorialBtn {
+    font-family: 'Gill Sans Nova', 'Gill Sans', Optima, sans-serif;
+    font-weight: 300;
+    font-size: 0.6rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    background: transparent;
+    color: var(--orange);
+    border: 1px solid var(--orange);
+    padding: 8px 20px;
+    cursor: pointer;
+    border-radius: 0;
+    display: block;
+    margin: 0 auto;
+    transition: all 0.2s;
+  }
+  #tutorialBtn:hover { background: rgba(232,69,10,0.08); }
+  #tutorialBtn.last { color: var(--bone); border-color: var(--bone); }
+</style>
+
+<script>
+const TUTORIAL_STEPS = [
+  {
+    target: null,
+    text: 'Welcome to Blackjack Flashcards',
+    box: 'center',
+    btnText: 'Start Tutorial'
+  },
+  {
+    target: '.card-scene',
+    text: 'Flashcard shows a hand\'s total value as well as the dealer\'s hand\n\nTap flashcard to cheat',
+    box: 'bottom'
+  },
+  {
+    target: '#actionButtons',
+    text: 'Select your action here\n\nKaomoji shuffles the deck\n\n(╯°□°）╯︵ ┻━┻',
+    box: 'top'
+  },
+  {
+    target: '#tabs',
+    text: 'Deselect categories you don\'t wish to be drilled on',
+    box: 'bottom'
+  },
+  {
+    target: '.bottom-nav',
+    text: null,
+    box: 'top',
+    custom: true,
+    btnText: 'Start Playing!'
+  }
+];
+
+let tutStep = 0;
+
+function buildBottomNavAnnotation() {
+  // This step uses a custom full-screen overlay drawn in showStep5Annotation()
+  return '';
+}
+
+function showStep5Annotation() {
+  document.getElementById('tutorialBox').style.display = 'none';
+  const existing = document.getElementById('step5Overlay');
+  if (existing) existing.remove();
+
+  const nav = document.querySelector('.bottom-nav');
+  const btns = nav ? Array.from(nav.querySelectorAll('button')) : [];
+  const btnData = btns.map(b => ({ label: b.textContent.trim(), r: b.getBoundingClientRect() }));
+
+  const W = window.innerWidth;
+  const H = window.innerHeight;
+
+  const ov = document.createElement('div');
+  ov.id = 'step5Overlay';
+  ov.style.cssText = 'position:fixed;inset:0;z-index:10002;pointer-events:none;';
+
+  const boxW = 148, boxH = 52;
+  const centerX = W / 2;
+  const gap = 12;
+
+  // Full text for each box
+  const boxes = [
+    { label: 'Expand', desc: 'Increases the flashcard deck to quiz all possible hand combinations', color: '#e8450a', btnIdx: 0, side: 'left' },
+    { label: 'Chart',  desc: 'Shows a reference table', color: '#eceae4', btnIdx: 1, side: 'right' },
+    { label: 'Stats',  desc: 'Tracks your progress, revealing weak areas', color: '#eceae4', btnIdx: 2, side: 'left' },
+    { label: 'Tips',   desc: 'Will help with your overall strategy', color: '#eceae4', btnIdx: 3, side: 'right' },
+  ];
+
+  // Two columns, staggered, centered on screen — start at 30% down
+  const midY = H * 0.28;
+  const colL = centerX - boxW - 8;
+  const colR = centerX + 8;
+  let leftY = midY, rightY = midY + boxH/2 + gap/2;
+
+  const positions = boxes.map(b => {
+    if (b.side === 'left') {
+      const pos = { x: colL, y: leftY };
+      leftY += boxH + gap;
+      return pos;
+    } else {
+      const pos = { x: colR, y: rightY };
+      rightY += boxH + gap;
+      return pos;
+    }
+  });
+
+  // Lines:
+  // Top-left box (Expand, i=0) -> line goes left to screen edge
+  // Top-right box (Chart, i=1) -> line goes right to screen edge
+  // Bottom-left box (Stats, i=2) -> line goes straight down to button
+  // Bottom-right box (Tips, i=3) -> line goes straight down to button
+  let svgLines = '';
+
+  boxes.forEach((b, i) => {
+    const btn = btnData[b.btnIdx];
+    if (!btn) return;
+    const p = positions[i];
+    const boxCenterX = p.x + boxW / 2;
+    const boxBottom = p.y + boxH;
+    const toX = btn.r.left + btn.r.width / 2;
+    const toY = btn.r.top + btn.r.height / 2;
+
+    const margin = 20;
+    const stroke = 'stroke="#c84040" stroke-width="1" fill="none"';
+
+    if (i === 0) {
+      // Expand: left edge of box -> left margin -> down -> to left border of button
+      const fromX = p.x;
+      const fromY = p.y + boxH / 2;
+      const edgeX = margin;
+      const endX = btn.r.left;
+      const endY = btn.r.top + btn.r.height / 2;
+      svgLines += '<polyline points="' + fromX + ',' + fromY + ' ' + edgeX + ',' + fromY + ' ' + edgeX + ',' + endY + ' ' + endX + ',' + endY + '" ' + stroke + '/>';
+      svgLines += '<circle cx="' + endX + '" cy="' + endY + '" r="3" fill="#c84040"/>';
+    } else if (i === 1) {
+      // Chart: right edge of box -> right margin -> down -> to right border of button
+      const fromX = p.x + boxW;
+      const fromY = p.y + boxH / 2;
+      const edgeX = W - margin;
+      const endX = btn.r.right;
+      const endY = btn.r.top + btn.r.height / 2;
+      svgLines += '<polyline points="' + fromX + ',' + fromY + ' ' + edgeX + ',' + fromY + ' ' + edgeX + ',' + endY + ' ' + endX + ',' + endY + '" ' + stroke + '/>';
+      svgLines += '<circle cx="' + endX + '" cy="' + endY + '" r="3" fill="#c84040"/>';
+    } else if (i === 2) {
+      // Stats: bottom-center of box -> down to button top-center
+      const endX = btn.r.left + btn.r.width / 2;
+      const endY = btn.r.top;
+      svgLines += '<polyline points="' + boxCenterX + ',' + boxBottom + ' ' + boxCenterX + ',' + endY + ' ' + endX + ',' + endY + '" ' + stroke + '/>';
+      svgLines += '<circle cx="' + endX + '" cy="' + endY + '" r="3" fill="#c84040"/>';
+    } else {
+      // Tips: bottom-center of box -> down to button top-center
+      const endX = btn.r.left + btn.r.width / 2;
+      const endY = btn.r.top;
+      svgLines += '<polyline points="' + boxCenterX + ',' + boxBottom + ' ' + boxCenterX + ',' + endY + ' ' + endX + ',' + endY + '" ' + stroke + '/>';
+      svgLines += '<circle cx="' + endX + '" cy="' + endY + '" r="3" fill="#c84040"/>';
+    }
+  });
+
+  // Box HTML
+  const boxHTML = boxes.map((b, i) => {
+    const p = positions[i];
+    return '<div style="position:absolute;left:' + p.x + 'px;top:' + p.y + 'px;width:' + boxW + 'px;min-height:' + boxH + 'px;border:1px solid ' + b.color + ';background:#111210;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:6px 6px;pointer-events:all;">' +
+      '<div style="font-family:Gill Sans Nova,Gill Sans,Optima,sans-serif;font-weight:400;font-size:0.72rem;letter-spacing:2px;text-transform:uppercase;color:' + b.color + ';margin-bottom:3px;">' + b.label + '</div>' +
+      '<div style="font-family:Gill Sans Nova,Gill Sans,Optima,sans-serif;font-weight:300;font-size:0.56rem;color:#c8c4b8;letter-spacing:0.3px;text-align:center;line-height:1.4;">' + b.desc + '</div>' +
+      '</div>';
+  }).join('');
+
+  // Start Playing button — above the boxes, top quarter of screen
+  const btnY = midY - 56;
+
+  ov.innerHTML =
+    '<svg style="position:absolute;inset:0;width:100%;height:100%;overflow:visible;">' + svgLines + '</svg>' +
+    boxHTML +
+    '<div style="position:absolute;left:50%;transform:translateX(-50%);top:' + btnY + 'px;pointer-events:all;">' +
+    '<button onclick="endStep5()" style="font-family:Gill Sans Nova,Gill Sans,Optima,sans-serif;font-weight:300;font-size:0.6rem;letter-spacing:3px;text-transform:uppercase;background:transparent;color:#eceae4;border:1px solid #eceae4;padding:8px 20px;cursor:pointer;border-radius:0;">Start Playing!</button>' +
+    '</div>';
+
+  document.body.appendChild(ov);
+}
+
+function endStep5() {
+  const ov = document.getElementById('step5Overlay');
+  if (ov) ov.remove();
+  document.getElementById('tutorialBox').style.display = '';
+  endTutorial();
+}
+
+function tutorialNext() {
+  tutStep++;
+  if (tutStep >= TUTORIAL_STEPS.length) {
+    endTutorial();
+    return;
+  }
+  showTutorialStep(tutStep);
+}
+
+function showTutorialStep(i) {
+  const step = TUTORIAL_STEPS[i];
+  if (step.custom) {
+    // Will be drawn after spotlight is set
+    document.getElementById('tutorialText').innerHTML = '';
+  } else {
+    document.getElementById('tutorialText').innerHTML = step.text ? step.text.replace(/\n/g, '<br>') : '';
+  }
+  document.getElementById('tutorialStep').textContent = '';
+  const btn = document.getElementById('tutorialBtn');
+  const isLast = i === TUTORIAL_STEPS.length - 1;
+  btn.textContent = step.btnText || (isLast ? 'Start Playing' : 'Continue');
+  btn.className = isLast ? 'last' : '';
+
+  const spotlight = document.getElementById('tutorialSpotlight');
+  const box = document.getElementById('tutorialBox');
+
+  if (!step.target) {
+    spotlight.style.opacity = '0';
+    spotlight.style.width = '0';
+    spotlight.style.height = '0';
+    document.getElementById('tutorialDim').style.clipPath = '';
+    box.style.top = '50%';
+    box.style.left = '50%';
+    box.style.transform = 'translate(-50%, -50%)';
+  } else {
+    const el = document.querySelector(step.target);
+    if (el) {
+      const r = el.getBoundingClientRect();
+      const pad = 8;
+      const l = r.left - pad, t = r.top - pad, w = r.width + pad*2, h = r.height + pad*2;
+      spotlight.style.opacity = '1';
+      spotlight.style.left = l + 'px';
+      spotlight.style.top = t + 'px';
+      spotlight.style.width = w + 'px';
+      spotlight.style.height = h + 'px';
+      // Cut out the spotlight area from the dim overlay
+      const W = window.innerWidth, H = window.innerHeight;
+      document.getElementById('tutorialDim').style.clipPath =
+        'polygon(0 0, '+W+'px 0, '+W+'px '+H+'px, 0 '+H+'px, 0 0, '+l+'px '+t+'px, '+l+'px '+(t+h)+'px, '+(l+w)+'px '+(t+h)+'px, '+(l+w)+'px '+t+'px, '+l+'px '+t+'px)';
+
+      if (step.custom) {
+        setTimeout(showStep5Annotation, 50);
+      }
+      if (step.box === 'bottom') {
+        box.style.top = (r.bottom + pad + 20) + 'px';
+        box.style.transform = 'translateX(-50%)';
+      } else {
+        box.style.top = Math.max(10, r.top - 200) + 'px';
+        box.style.transform = 'translateX(-50%)';
+      }
+    }
+  }
+}
+
+function endTutorial() {
+  document.getElementById('tutorialOverlay').style.display = 'none';
+  document.getElementById('tutorialBox').style.display = '';
+  const ov = document.getElementById('step5Overlay');
+  if (ov) ov.remove();
+  try { localStorage.setItem('bj_tutorial_done', '1'); } catch(e) {}
+}
+
+function startTutorial() {
+  tutStep = 0;
+  document.getElementById('tutorialOverlay').style.display = 'block';
+  document.getElementById('tutorialSpotlight').style.opacity = '0';
+  document.getElementById('tutorialDim').style.clipPath = '';
+  tutStarted = false;
+  // Show welcome screen first
+  const box = document.getElementById('tutorialBox');
+  document.getElementById('tutorialText').innerHTML = 'Welcome to<br><strong style="font-size:1.1rem;letter-spacing:4px;">Blackjack Flashcards</strong>';
+  document.getElementById('tutorialStep').textContent = '';
+  document.getElementById('tutorialBtn').textContent = 'Begin';
+  document.getElementById('tutorialBtn').className = '';
+  box.style.top = '50%';
+  box.style.transform = 'translate(-50%, -50%)';
+}
+
+// Show every time (testing mode)
+setTimeout(startTutorial, 600);
+
+// Proofreading editor
+
+</script>
 </body>
 </html>
