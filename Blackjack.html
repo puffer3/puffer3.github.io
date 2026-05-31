@@ -1996,7 +1996,9 @@ function showStep5Annotation() {
   // Build SVG lines using measured positions, 32px clearance
   const margin = 16;
   const stroke = 'stroke="#c84040" stroke-width="2" fill="none" marker-end="url(#arrowhead)"';
+  const strokeBg = 'stroke="#000000" stroke-width="12" fill="none" stroke-linecap="round" stroke-linejoin="round"';
   let svgLines = '';
+  let svgLinesBg = '';
 
   boxes.forEach((b, i) => {
     const r = btnByLabel[b.btn];
@@ -2008,30 +2010,36 @@ function showStep5Annotation() {
     const btnCY = r.top + r.height / 2;
     const btnTop = r.top;
     const gap = 8;
+    let pts = '';
 
     if (b.route === 'leftEdge') {
       const fromX = p.x;
       const fromY = p.y + p.h / 2;
       const endX = r.left - gap;
-      svgLines += '<polyline points="' + fromX + ',' + fromY + ' ' + margin + ',' + fromY + ' ' + margin + ',' + btnCY + ' ' + endX + ',' + btnCY + '" ' + stroke + '/>';
+      pts = fromX + ',' + fromY + ' ' + margin + ',' + fromY + ' ' + margin + ',' + btnCY + ' ' + endX + ',' + btnCY;
     } else if (b.route === 'rightEdge') {
       const fromX = p.x + boxW;
       const fromY = p.y + p.h / 2;
       const edgeX = W - margin;
       const endX = r.right + gap;
-      svgLines += '<polyline points="' + fromX + ',' + fromY + ' ' + edgeX + ',' + fromY + ' ' + edgeX + ',' + btnCY + ' ' + endX + ',' + btnCY + '" ' + stroke + '/>';
+      pts = fromX + ',' + fromY + ' ' + edgeX + ',' + fromY + ' ' + edgeX + ',' + btnCY + ' ' + endX + ',' + btnCY;
     } else {
       const turnY = boxBottom + vGap;
       const endY = btnTop - gap;
-      svgLines += '<polyline points="' + boxCX + ',' + boxBottom + ' ' + boxCX + ',' + turnY + ' ' + btnCX + ',' + turnY + ' ' + btnCX + ',' + endY + '" ' + stroke + '/>';
+      pts = boxCX + ',' + boxBottom + ' ' + boxCX + ',' + turnY + ' ' + btnCX + ',' + turnY + ' ' + btnCX + ',' + endY;
     }
+    svgLinesBg += '<polyline points="' + pts + '" ' + strokeBg + '/>';
+    svgLines += '<polyline points="' + pts + '" ' + stroke + '/>';
   });
 
   // Insert SVG behind boxes
   const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
   svg.setAttribute('style', 'position:absolute;inset:0;width:100%;height:100%;overflow:visible;');
-  svg.innerHTML = '<defs><marker id="arrowhead" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><polygon points="0 0, 7 3, 0 6" fill="#c84040"/></marker></defs>' + svgLines;
-  ov.insertBefore(svg, ov.firstChild);
+  svg.innerHTML = '<defs>'
+    + '<marker id="arrowhead" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><polygon points="0 0, 7 3, 0 6" fill="#c84040"/></marker>'
+    + '</defs>'
+    + svgLinesBg + svgLines;
+  // SVG inserted after container below - do not insert here yet
 
   // Continue button — centered where the bottom of the old chip border was
   const chipSize = 200;
@@ -2040,8 +2048,32 @@ function showStep5Annotation() {
   const contDiv = document.createElement('div');
   contDiv.style.cssText = 'position:absolute;left:50%;transform:translateX(-50%);top:' + continueY + 'px;pointer-events:all;';
   contDiv.innerHTML =
-    '<button onclick="showStep6()" style="font-family:Gill Sans Nova,Gill Sans,Optima,sans-serif;font-weight:300;font-size:0.6rem;letter-spacing:3px;text-transform:uppercase;background:transparent;color:#e8450a;border:1px solid #e8450a;padding:8px 20px;cursor:pointer;border-radius:0;transition:all 0.2s;" onmouseover="this.style.background=\'rgba(232,69,10,0.08)\';" onmouseout="this.style.background=\'transparent\';">Continue</button>';
+    '<button onclick="showStep6()" style="font-family:Gill Sans Nova,Gill Sans,Optima,sans-serif;font-weight:300;font-size:0.6rem;letter-spacing:3px;text-transform:uppercase;background:transparent;color:#d4621a;border:1px solid #d4621a;padding:8px 20px;cursor:pointer;border-radius:0;transition:all 0.2s;" onmouseover="this.style.background=\'rgba(212,98,26,0.08)\';" onmouseout="this.style.background=\'transparent\';">Continue</button>';
   ov.appendChild(contDiv);
+
+  // Container spanning from Continue button top to bottom of all tip boxes
+  const pad = 16;
+  const allBoxBottoms = boxes.map((b, i) => pos[i].y + pos[i].h);
+  const allBoxLefts = boxes.map((b, i) => pos[i].x);
+  const allBoxRights = boxes.map((b, i) => pos[i].x + boxW);
+  const containerTop = continueY - pad;
+  const containerBottom = Math.max(...allBoxBottoms) + pad;
+  const containerLeft = Math.min(...allBoxLefts) - pad;
+  const containerRight = Math.max(...allBoxRights) + pad;
+  const container = document.createElement('div');
+  container.style.cssText = 'position:absolute;'
+    + 'top:' + containerTop + 'px;'
+    + 'left:' + containerLeft + 'px;'
+    + 'width:' + (containerRight - containerLeft) + 'px;'
+    + 'height:' + (containerBottom - containerTop) + 'px;'
+    + 'border:1px solid #d4621a;'
+    + 'background:#111210;'
+    + 'pointer-events:none;'
+    + 'box-sizing:border-box;';
+  ov.insertBefore(container, ov.firstChild); // container lowest
+  ov.insertBefore(svg, container.nextSibling); // SVG above container
+  boxEls.forEach(el => ov.appendChild(el)); // tip boxes above SVG
+  ov.appendChild(contDiv); // Continue button topmost
 }
 
 function showStep6() {
@@ -2191,7 +2223,7 @@ function startTutorial() {
   tutStarted = false;
   // Show welcome screen first
   const box = document.getElementById('tutorialBox');
-  document.getElementById('tutorialText').innerHTML = 'Welcome to<br><strong style="font-size:1.1rem;letter-spacing:4px;">Blackjack Flashcards</strong>';
+  document.getElementById('tutorialText').innerHTML = '<div style="font-size:clamp(1.1rem,6vw,1.6rem);font-weight:200;letter-spacing:8px;text-transform:uppercase;color:#e8e4d8;line-height:1.1;margin-bottom:10px;">Blackjack<br>Flashcards</div><div style="font-size:0.6rem;font-weight:300;letter-spacing:6px;text-transform:uppercase;color:#d4621a;">Welcome</div>';
   document.getElementById('tutorialStep').textContent = '';
   document.getElementById('tutorialBtn').textContent = 'Begin';
   document.getElementById('tutorialBtn').className = '';
