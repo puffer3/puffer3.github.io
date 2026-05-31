@@ -1888,7 +1888,7 @@ const TUTORIAL_STEPS = [
   },
   {
     target: '.card-scene',
-    text: 'Read your total and the dealer\'s card, then make your play\n\nTap flashcard to view last hand\'s results',
+    text: 'Your hand and the Dealer\'s\n\nMake your play',
     box: 'bottom'
   },
   {
@@ -2016,12 +2016,13 @@ function showStep5Annotation() {
       const fromX = p.x;
       const fromY = p.y + p.h / 2;
       const endX = r.left - gap;
-      pts = fromX + ',' + fromY + ' ' + margin + ',' + fromY + ' ' + margin + ',' + btnCY + ' ' + endX + ',' + btnCY;
+      const edgeX = Math.max(p.x - 48, margin);
+      pts = fromX + ',' + fromY + ' ' + edgeX + ',' + fromY + ' ' + edgeX + ',' + btnCY + ' ' + endX + ',' + btnCY;
     } else if (b.route === 'rightEdge') {
       const fromX = p.x + boxW;
       const fromY = p.y + p.h / 2;
-      const edgeX = W - margin;
       const endX = r.right + gap;
+      const edgeX = Math.min(p.x + boxW + 48, W - margin);
       pts = fromX + ',' + fromY + ' ' + edgeX + ',' + fromY + ' ' + edgeX + ',' + btnCY + ' ' + endX + ',' + btnCY;
     } else {
       const turnY = boxBottom + vGap;
