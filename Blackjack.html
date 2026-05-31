@@ -164,24 +164,21 @@
     border: 1px solid var(--border);
     box-shadow:
       0 0 0 1px #1a1a18,
-      0 30px 60px rgba(0,0,0,0.7),
       inset 0 1px 0 rgba(255,255,255,0.03);
   }
   .card-back {
     background: var(--panel);
     border: 1px solid var(--orange);
     transform: rotateY(180deg);
-    box-shadow:
-      0 0 20px rgba(212,98,26,0.15),
-      0 30px 60px rgba(0,0,0,0.7);
+    box-shadow: 0 0 20px rgba(212,98,26,0.15);
   }
   .card-back.result-correct {
     border-color: var(--correct);
-    box-shadow: 0 0 20px rgba(74,154,106,0.2), 0 30px 60px rgba(0,0,0,0.7);
+    box-shadow: 0 0 20px rgba(74,154,106,0.2);
   }
   .card-back.result-wrong {
     border-color: var(--wrong);
-    box-shadow: 0 0 20px rgba(200,64,64,0.2), 0 30px 60px rgba(0,0,0,0.7);
+    box-shadow: 0 0 20px rgba(200,64,64,0.2);
   }
 
   .card-suit-corner {
@@ -207,7 +204,7 @@
     font-weight: 200;
     color: var(--bone);
     text-align: center;
-    letter-spacing: 2px;
+    letter-spacing: 1px;
     line-height: 1.35;
     text-transform: uppercase;
     display: flex;
@@ -217,8 +214,13 @@
     width: 100%;
   }
   .card-question .q-hand {
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: clamp(1rem, 3.3vw, 1.35rem);
+    min-height: 56px;
     border: 1px solid rgba(236,234,228,0.25);
+    border-radius: 5px;
     padding: 5px 14px;
     position: relative;
     width: 100%;
@@ -229,16 +231,20 @@
     position: absolute;
     top: -8px;
     left: 10px;
-    font-size: 0.42rem;
+    font-size: 0.5rem;
     letter-spacing: 2px;
     color: var(--orange);
     background: var(--panel);
-    padding: 0 4px;
+    padding: 0 5px;
   }
   .card-question .q-dealer {
-    display: block;
-    font-size: clamp(1rem, 3.5vw, 1.4rem);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: clamp(1rem, 3.3vw, 1.35rem);
+    min-height: 56px;
     border: 1px solid rgba(236,234,228,0.15);
+    border-radius: 5px;
     padding: 5px 14px;
     position: relative;
     width: 100%;
@@ -249,11 +255,11 @@
     position: absolute;
     top: -8px;
     left: 10px;
-    font-size: 0.42rem;
+    font-size: 0.5rem;
     letter-spacing: 2px;
     color: var(--dim);
     background: var(--panel);
-    padding: 0 4px;
+    padding: 0 5px;
   }
 
   /* back face */
@@ -289,16 +295,37 @@
     opacity: 0.7;
   }
   .card-answer-detail {
-    font-size: 0.68rem;
+    font-size: 0.72rem;
     font-weight: 300;
     color: rgba(236,234,228,0.9);
     text-align: center;
-    line-height: 1.7;
-    max-width: 300px;
-    letter-spacing: 1.5px;
+    line-height: 1.6;
+    max-width: 320px;
+    letter-spacing: 1px;
     text-transform: uppercase;
   }
-  .card-answer-detail strong { color: var(--bone); font-weight: 400; }
+  .card-answer-detail strong { font-weight: 600; }
+  .rule-primary {
+    background: #eceae4;
+    color: #111210;
+    font-weight: 500;
+    padding: 9px 14px;
+    margin-bottom: 14px;
+    border-radius: 4px;
+    line-height: 1.5;
+    letter-spacing: 1px;
+  }
+  .rule-primary strong { color: #111210; font-weight: 700; }
+  .rule-secondary {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .rule-line {
+    color: rgba(236,234,228,0.85);
+    line-height: 1.45;
+  }
+  .rule-line strong { color: var(--bone); font-weight: 600; }
   .hand-summary {
     margin-top: 0;
     margin-bottom: 12px;
@@ -393,6 +420,14 @@
   }
   .btn-chart:hover { color: var(--hal); border-color: var(--hal); }
   #startPlayingBtn:hover { color: var(--hal); border-color: var(--hal); }
+  @keyframes chipInnerPulse {
+    0%   { background: rgba(232,69,10,0); }
+    50%  { background: rgba(232,69,10,0.45); }
+    100% { background: rgba(232,69,10,0); }
+  }
+  .chip-inner-pulse {
+    animation: chipInnerPulse 2.75s ease-in-out infinite;
+  }
 
   /* CHART */
   .chart-view {
@@ -763,7 +798,7 @@
       <div class="hand-summary" id="handSummary"></div>
       <div class="action-badge" id="actionBadge"></div>
       <div class="card-answer-detail" id="answerDetail"></div>
-      <div class="tap-hint" id="tapHint" style="display:none;margin-top:14px;font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:2px;color:rgba(255,255,255,0.3);text-transform:uppercase;">tap to continue</div>
+      <div class="tap-hint" id="tapHint" style="display:none;margin-top:14px;font-family:'DM Mono',monospace;font-size:0.8rem;letter-spacing:2px;color:rgba(255,255,255,0.6);text-transform:uppercase;">tap to continue</div>
     </div>
   </div>
 </div>
@@ -919,7 +954,6 @@ function shuffle() {
   statsByCat = {}; statsByAction = {}; statsByDealer = {}; missedCards = {};
   streakCurrent = 0; streakBest = 0; totalAnswered = 0; totalCorrect = 0;
   history = [];
-  // Don't reset doublesOn - keep user's choice
   document.getElementById('endScreen').classList.remove('visible');
   document.getElementById('cardScene').style.display = '';
   document.getElementById('actionButtons').style.display = '';
@@ -932,6 +966,31 @@ function shuffle() {
   render();
   setButtonsDisabled(false);
   updateSplitButton();
+}
+
+function formatRuleDetail(detail) {
+  // Split on <br> first (existing line breaks), otherwise on sentence boundaries
+  let parts;
+  if (detail.indexOf('<br>') !== -1) {
+    parts = detail.split('<br>');
+  } else {
+    // split into sentences on period boundaries
+    parts = detail.split(/\.(?:\s+|$)/).filter(s => s.trim().length);
+  }
+  parts = parts.map(p => p.replace(/\.\s*$/, '').trim()).filter(p => p.length);
+  if (!parts.length) return '';
+
+  // First line goes in a solid white box with black text
+  let html = '<div class="rule-primary">' + parts[0] + '</div>';
+  // Remaining lines below, normal text, each on its own line
+  if (parts.length > 1) {
+    html += '<div class="rule-secondary">';
+    for (let i = 1; i < parts.length; i++) {
+      html += '<div class="rule-line">' + parts[i] + '</div>';
+    }
+    html += '</div>';
+  }
+  return html;
 }
 
 function render() {
@@ -959,7 +1018,7 @@ function render() {
   setTimeout(() => {
     document.getElementById('actionBadge').textContent = card.action;
     document.getElementById('actionBadge').className = 'action-badge ' + card.cls;
-    document.getElementById('answerDetail').innerHTML = card.detail;
+    document.getElementById('answerDetail').innerHTML = formatRuleDetail(card.detail);
     const qLines = card.q.split('\n');
     const hand = qLines[0].replace(/\s*\(.*?\)/, '').trim();
     const dealer = qLines[1] ? qLines[1].replace('Dealer showing ', '').trim() : '';
@@ -1077,7 +1136,7 @@ function goBack() {
   document.getElementById('questionText').innerHTML = '<span class="q-hand">' + qParts[0] + '</span>' + (qParts[1] ? '<span class="q-dealer">' + qParts[1] + '</span>' : '');
   document.getElementById('actionBadge').textContent = card.action;
   document.getElementById('actionBadge').className = 'action-badge ' + card.cls;
-  document.getElementById('answerDetail').innerHTML = card.detail;
+  document.getElementById('answerDetail').innerHTML = formatRuleDetail(card.detail);
   const qLines = card.q.split('\n');
   const hand = qLines[0].replace(/\s*\(.*?\)/, '').trim();
   const dealer = qLines[1] ? qLines[1].replace('Dealer showing ', '').trim() : '';
@@ -1132,12 +1191,7 @@ const activeCats = new Set([...REAL_CATS, "Surrender"]);
 
 function getFilteredDeck() {
   const source = expandOn ? EXPANDED_CARDS : ALL_CARDS;
-  let cards;
-  if (doublesOn && activeCats.size === 0) {
-    cards = source.filter(c => c.action === 'DOUBLE');
-  } else {
-    cards = source.filter(c => activeCats.has(c.cat));
-  }
+  let cards = source.filter(c => activeCats.has(c.cat));
   if (!splitOn)     cards = cards.filter(c => c.action !== 'SPLIT');
   if (!surrenderOn) cards = cards.filter(c => c.action !== 'SURRENDER');
   return cards;
@@ -1238,22 +1292,6 @@ surrenderTab.onclick = () => {
 };
 tabsEl.appendChild(surrenderTab);
 
-// Doubles filter tab
-const doublesTab = document.createElement('button');
-doublesTab.className = 'tab toggle-tab active';
-doublesTab.id = 'toggleDoubles';
-doublesTab.textContent = 'Doubles';
-doublesTab.onclick = () => {
-  doublesOn = !doublesOn;
-  doublesTab.classList.toggle('active', doublesOn);
-  doublesTab.classList.toggle('toggle-off', !doublesOn);
-  // When doublesOn alone with no other cats, filter to doubles only
-  // When alongside others, just keeps current deck
-  shuffle();
-};
-tabsEl.appendChild(doublesTab);
-
-
 // Add Split to action buttons grid
 const grid = document.getElementById('actionButtons');
 const splitBtn = document.createElement('button');
@@ -1269,7 +1307,6 @@ grid.style.gridTemplateColumns = '1fr 1fr';
 
 let splitOn = true;
 let surrenderOn = true;
-let doublesOn = true;
 
 
 function toggleMode(mode) {
@@ -1480,6 +1517,7 @@ function buildRules() {
 
   let html = '<div class="rules-view">'
     + '<button class="chart-back-btn" onclick="hideRules()">Back to Game</button>'
+    + '<button class="chart-back-btn" onclick="hideRules();setTimeout(startTutorial,150);" style="border-color:var(--orange);color:var(--orange);">Replay Tutorial</button>'
     + '<div class="top5-block">'
     + '<div class="top5-label">Five Things to Remember</div>';
 
@@ -1747,7 +1785,7 @@ function buildChart() {
   .action-btn.surrender { grid-column: span 1; }
   #actionButtons { grid-template-columns: 1fr 1fr; }
   /* Override tap hint font */
-  #tapHint { font-family: 'Gill Sans Nova','Gill Sans',Optima,sans-serif !important; color: rgba(232,228,216,0.2) !important; letter-spacing: 3px !important; }
+  #tapHint { font-family: 'Gill Sans Nova','Gill Sans',Optima,sans-serif !important; color: rgba(232,228,216,0.55) !important; letter-spacing: 3px !important; font-size: 0.8rem !important; }
 </style>
 
 <!-- TUTORIAL OVERLAY -->
@@ -1850,7 +1888,7 @@ const TUTORIAL_STEPS = [
   },
   {
     target: '.card-scene',
-    text: 'Read your total and the dealer\'s card, then make your play\n\nTap flashcard to cheat',
+    text: 'Read your total and the dealer\'s card, then make your play\n\nTap flashcard to view last hand\'s results',
     box: 'bottom'
   },
   {
@@ -1886,7 +1924,6 @@ function showStep5Annotation() {
 
   const nav = document.querySelector('.bottom-nav');
   const btns = nav ? Array.from(nav.querySelectorAll('button')) : [];
-  // Button order: Expand(0), Chart(1), Tips(2), Stats(3)
   const btnByLabel = {};
   btns.forEach(b => { btnByLabel[b.textContent.trim().toUpperCase()] = b.getBoundingClientRect(); });
 
@@ -1896,92 +1933,166 @@ function showStep5Annotation() {
   const ov = document.createElement('div');
   ov.id = 'step5Overlay';
   ov.style.cssText = 'position:fixed;inset:0;z-index:10002;pointer-events:none;';
+  document.body.appendChild(ov);
 
-  const boxW = 150, boxH = 56;
+  const boxW = 156;
   const centerX = W / 2;
   const colGap = 16;
-  const rowGap = 44;
-  const topY = H * 0.30;
-
-  // Layout: top row [Expand | Stats], bottom row [Chart | Tips]
+  const vGap = 32; // 32px vertical gap between boxes and between box and focus zone
+  const topY = H * 0.38;
   const colLX = centerX - boxW - colGap/2;
   const colRX = centerX + colGap/2;
-  const stagger = boxH / 2 + rowGap / 2;
-  const leftRow1Y = topY;
-  const leftRow2Y = topY + boxH + rowGap;
-  const rightRow1Y = topY + stagger;
-  const rightRow2Y = topY + stagger + boxH + rowGap;
 
   const boxes = [
-    { label: 'Expand', desc: 'Increases the flashcard deck to quiz all possible hand combinations', color: '#eceae4', x: colLX, y: leftRow1Y, btn: 'EXPAND', route: 'leftEdge' },
-    { label: 'Stats',  desc: 'Tracks your progress, revealing weak areas', color: '#eceae4', x: colRX, y: rightRow1Y, btn: 'STATS', route: 'rightEdge' },
-    { label: 'Chart',  desc: 'Shows a reference table', color: '#eceae4', x: colLX, y: leftRow2Y, btn: 'CHART', route: 'down' },
-    { label: 'Tips',   desc: 'Will help with your overall strategy', color: '#eceae4', x: colRX, y: rightRow2Y, btn: 'TIPS', route: 'down' },
+    { label: 'Expand', desc: 'Increases the flashcard deck to quiz all possible hand combinations', color: '#eceae4', col: 'L', btn: 'EXPAND', route: 'leftEdge' },
+    { label: 'Stats',  desc: 'Tracks your progress, revealing weak areas', color: '#eceae4', col: 'R', btn: 'STATS', route: 'rightEdge' },
+    { label: 'Chart',  desc: 'Shows a reference table', color: '#eceae4', col: 'L', btn: 'CHART', route: 'down' },
+    { label: 'Tips',   desc: 'Will help with your overall strategy', color: '#eceae4', col: 'R', btn: 'TIPS', route: 'down' },
   ];
 
+  // PASS 1: render the boxes (hidden lines) so we can measure their real heights
+  const boxEls = boxes.map(b => {
+    const el = document.createElement('div');
+    el.style.cssText = 'position:absolute;width:' + boxW + 'px;border:1px solid ' + b.color + ';background:#111210;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:9px 9px;pointer-events:all;box-sizing:border-box;visibility:hidden;';
+    el.innerHTML =
+      '<div style="font-family:Gill Sans Nova,Gill Sans,Optima,sans-serif;font-weight:400;font-size:0.72rem;letter-spacing:2px;text-transform:uppercase;color:' + b.color + ';margin-bottom:4px;">' + b.label + '</div>' +
+      '<div style="font-family:Gill Sans Nova,Gill Sans,Optima,sans-serif;font-weight:300;font-size:0.92rem;color:#d8d4c8;letter-spacing:0.3px;text-align:center;line-height:1.5;">' + b.desc + '</div>';
+    ov.appendChild(el);
+    return el;
+  });
+
+  // Measure heights
+  const heights = boxEls.map(el => el.getBoundingClientRect().height);
+
+  // PASS 2: position each column using real heights + 32px gaps
+  // Left column: Expand (row1), Chart (row2)
+  // Right column: Stats (row1), Tips (row2), staggered down
+  const leftIdx = boxes.map((b,i) => b.col === 'L' ? i : -1).filter(i => i >= 0);
+  const rightIdx = boxes.map((b,i) => b.col === 'R' ? i : -1).filter(i => i >= 0);
+
+  const pos = boxes.map(() => ({}));
+
+  // Left column stacks from topY
+  let ly = topY;
+  leftIdx.forEach(i => {
+    pos[i] = { x: colLX, y: ly, h: heights[i] };
+    ly += heights[i] + vGap;
+  });
+
+  // Right column staggered down by half the first left box height
+  let ry = topY + (heights[leftIdx[0]] / 2) + vGap/2;
+  rightIdx.forEach(i => {
+    pos[i] = { x: colRX, y: ry, h: heights[i] };
+    ry += heights[i] + vGap;
+  });
+
+  // Apply positions and reveal boxes
+  boxes.forEach((b, i) => {
+    boxEls[i].style.left = pos[i].x + 'px';
+    boxEls[i].style.top = pos[i].y + 'px';
+    boxEls[i].style.visibility = 'visible';
+  });
+
+  // Build SVG lines using measured positions, 32px clearance
   const margin = 16;
   const stroke = 'stroke="#c84040" stroke-width="2" fill="none" marker-end="url(#arrowhead)"';
   let svgLines = '';
 
-  boxes.forEach(b => {
+  boxes.forEach((b, i) => {
     const r = btnByLabel[b.btn];
     if (!r) return;
-    const boxCX = b.x + boxW / 2;
-    const boxBottom = b.y + boxH;
+    const p = pos[i];
+    const boxCX = p.x + boxW / 2;
+    const boxBottom = p.y + p.h;
     const btnCX = r.left + r.width / 2;
     const btnCY = r.top + r.height / 2;
     const btnTop = r.top;
+    const gap = 8;
 
-    const gap = 8; // stop short of border so arrow points at it
     if (b.route === 'leftEdge') {
-      // Expand: arrow points right into left border of button
-      const fromX = b.x;
-      const fromY = b.y + boxH / 2;
+      const fromX = p.x;
+      const fromY = p.y + p.h / 2;
       const endX = r.left - gap;
-      const pts = fromX + ',' + fromY + ' ' + margin + ',' + fromY + ' ' + margin + ',' + btnCY + ' ' + endX + ',' + btnCY;
-      svgLines += '<polyline points="' + pts + '" ' + stroke + '/>';
+      svgLines += '<polyline points="' + fromX + ',' + fromY + ' ' + margin + ',' + fromY + ' ' + margin + ',' + btnCY + ' ' + endX + ',' + btnCY + '" ' + stroke + '/>';
     } else if (b.route === 'rightEdge') {
-      // Stats: arrow points left into right border of button
-      const fromX = b.x + boxW;
-      const fromY = b.y + boxH / 2;
+      const fromX = p.x + boxW;
+      const fromY = p.y + p.h / 2;
       const edgeX = W - margin;
       const endX = r.right + gap;
-      const pts = fromX + ',' + fromY + ' ' + edgeX + ',' + fromY + ' ' + edgeX + ',' + btnCY + ' ' + endX + ',' + btnCY;
-      svgLines += '<polyline points="' + pts + '" ' + stroke + '/>';
+      svgLines += '<polyline points="' + fromX + ',' + fromY + ' ' + edgeX + ',' + fromY + ' ' + edgeX + ',' + btnCY + ' ' + endX + ',' + btnCY + '" ' + stroke + '/>';
     } else {
-      // Chart and Tips: down into top border of button
-      const turnY = boxBottom + 24;
+      const turnY = boxBottom + vGap;
       const endY = btnTop - gap;
-      const pts = boxCX + ',' + boxBottom + ' ' + boxCX + ',' + turnY + ' ' + btnCX + ',' + turnY + ' ' + btnCX + ',' + endY;
-      svgLines += '<polyline points="' + pts + '" ' + stroke + '/>';
+      svgLines += '<polyline points="' + boxCX + ',' + boxBottom + ' ' + boxCX + ',' + turnY + ' ' + btnCX + ',' + turnY + ' ' + btnCX + ',' + endY + '" ' + stroke + '/>';
     }
   });
 
-  const boxHTML = boxes.map(b => {
-    return '<div style="position:absolute;left:' + b.x + 'px;top:' + b.y + 'px;width:' + boxW + 'px;min-height:' + boxH + 'px;border:1px solid ' + b.color + ';background:#111210;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:7px 7px;pointer-events:all;">' +
-      '<div style="font-family:Gill Sans Nova,Gill Sans,Optima,sans-serif;font-weight:400;font-size:0.72rem;letter-spacing:2px;text-transform:uppercase;color:' + b.color + ';margin-bottom:3px;">' + b.label + '</div>' +
-      '<div style="font-family:Gill Sans Nova,Gill Sans,Optima,sans-serif;font-weight:300;font-size:0.78rem;color:#c8c4b8;letter-spacing:0.3px;text-align:center;line-height:1.45;">' + b.desc + '</div>' +
-      '</div>';
-  }).join('');
+  // Insert SVG behind boxes
+  const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  svg.setAttribute('style', 'position:absolute;inset:0;width:100%;height:100%;overflow:visible;');
+  svg.innerHTML = '<defs><marker id="arrowhead" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><polygon points="0 0, 7 3, 0 6" fill="#c84040"/></marker></defs>' + svgLines;
+  ov.insertBefore(svg, ov.firstChild);
 
-  const tabsEl2 = document.getElementById('tabs');
-  const tabsRect = tabsEl2 ? tabsEl2.getBoundingClientRect() : null;
-  const chipSize = 110;
-  const btnY = tabsRect ? (tabsRect.top + tabsRect.height/2 - chipSize/2) : H * 0.12;
+  // Continue button — centered where the bottom of the old chip border was
+  const chipSize = 200;
+  const oldChipTop = (topY / 2) - (chipSize / 2);
+  const continueY = oldChipTop + chipSize - 44; // bottom of where chip border was
+  const contDiv = document.createElement('div');
+  contDiv.style.cssText = 'position:absolute;left:50%;transform:translateX(-50%);top:' + continueY + 'px;pointer-events:all;';
+  contDiv.innerHTML =
+    '<button onclick="showStep6()" style="font-family:Gill Sans Nova,Gill Sans,Optima,sans-serif;font-weight:300;font-size:0.6rem;letter-spacing:3px;text-transform:uppercase;background:transparent;color:#e8450a;border:1px solid #e8450a;padding:8px 20px;cursor:pointer;border-radius:0;transition:all 0.2s;" onmouseover="this.style.background=\'rgba(232,69,10,0.08)\';" onmouseout="this.style.background=\'transparent\';">Continue</button>';
+  ov.appendChild(contDiv);
+}
 
-  ov.innerHTML =
-    '<svg style="position:absolute;inset:0;width:100%;height:100%;overflow:visible;"><defs><marker id="arrowhead" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><polygon points="0 0, 7 3, 0 6" fill="#c84040"/></marker></defs>' + svgLines + '</svg>' +
-    boxHTML +
-    '<div style="position:absolute;left:50%;transform:translateX(-50%);top:' + btnY + 'px;width:' + chipSize + 'px;height:' + chipSize + 'px;pointer-events:all;">' +
-    '<button id="startPlayingBtn" onclick="endStep5()" onmouseover="this.style.color=\'#eceae4\';" onmouseout="this.style.color=\'#e8450a\';" style="font-family:Gill Sans Nova,Gill Sans,Optima,sans-serif;font-weight:500;font-size:0.7rem;letter-spacing:2px;text-transform:uppercase;background:#111210;color:#e8450a;border:2px solid #eceae4;box-shadow:inset 0 0 0 8px #111210, inset 0 0 0 10px rgba(236,234,228,0.4);width:100%;height:100%;cursor:pointer;border-radius:50%;transition:color 0.2s;line-height:1.3;padding:0 14px;">Start Playing</button>' +
-    '</div>';
+function showStep6() {
+  // Remove the step5 annotation overlay
+  const ov5 = document.getElementById('step5Overlay');
+  if (ov5) ov5.remove();
+
+  const W = window.innerWidth;
+  const H = window.innerHeight;
+
+  const ov = document.createElement('div');
+  ov.id = 'step6Overlay';
+  ov.style.cssText = 'position:fixed;inset:0;z-index:10002;background:rgba(0,0,0,0.85);pointer-events:all;';
+
+  // Large centered Start Playing chip
+  const chipSize = 240;
+  const chipDiv = document.createElement('div');
+  chipDiv.style.cssText = 'position:absolute;left:50%;top:42%;transform:translate(-50%,-50%);width:' + chipSize + 'px;height:' + chipSize + 'px;pointer-events:all;';
+  chipDiv.innerHTML =
+    '<button id="startPlayingBtn" onclick="endStep5()" style="position:relative;font-family:Gill Sans Nova,Gill Sans,Optima,sans-serif;font-weight:600;font-size:1.35rem;letter-spacing:2px;text-transform:uppercase;background:#111210;color:#eceae4;border:3px solid #eceae4;width:100%;height:100%;cursor:pointer;border-radius:50%;line-height:1.3;padding:0 34px;overflow:hidden;">' +
+    '<span class="chip-inner-pulse" style="position:absolute;top:48px;left:48px;right:48px;bottom:48px;border-radius:50%;border:2px solid rgba(236,234,228,0.4);pointer-events:none;"></span>' +
+    '<span style="position:relative;z-index:2;">Start Playing</span>' +
+    '</button>';
+  ov.appendChild(chipDiv);
+
+  // Fully-red tutorial toggle below the chip
+  const cbDiv = document.createElement('div');
+  cbDiv.style.cssText = 'position:absolute;left:50%;top:42%;transform:translateX(-50%);margin-top:' + (chipSize/2 + 30) + 'px;pointer-events:all;';
+  cbDiv.innerHTML =
+    '<button id="tutorialToggle" onclick="toggleTutorialStartup()" style="background:#e8450a;border:1px solid #e8450a;color:#fff;font-family:Gill Sans Nova,Gill Sans,Optima,sans-serif;font-weight:400;font-size:0.66rem;letter-spacing:2px;text-transform:uppercase;padding:11px 20px;border-radius:0;cursor:pointer;white-space:nowrap;transition:all 0.2s;">' +
+    '<span id="tutorialCheckbox" style="margin-right:7px;font-weight:600;">✓</span>Show tutorial on startup</button>';
+  ov.appendChild(cbDiv);
 
   document.body.appendChild(ov);
+
+  // Sync toggle state
+  let showPref = '1';
+  try { showPref = localStorage.getItem('bj_show_tutorial') || '1'; } catch(e) {}
+  if (showPref === '0') {
+    const btn = document.getElementById('tutorialToggle');
+    const cb = document.getElementById('tutorialCheckbox');
+    if (btn) { btn.style.background = '#000'; btn.style.borderColor = '#444'; }
+    if (cb) cb.textContent = '';
+  }
 }
 
 function endStep5() {
   const ov = document.getElementById('step5Overlay');
   if (ov) ov.remove();
+  const ov6 = document.getElementById('step6Overlay');
+  if (ov6) ov6.remove();
   document.getElementById('tutorialBox').style.display = '';
   endTutorial();
 }
@@ -2049,8 +2160,10 @@ function showTutorialStep(i) {
         box.style.top = Math.min(r.bottom + pad + 12, H - 200) + 'px';
         box.style.transform = 'translateX(-50%)';
       } else if (step.box === 'forceTop') {
-        // Place box at very top of screen regardless of element position
-        box.style.top = '80px';
+        // Position just above the action buttons, close to them but not covering
+        const boxH2 = box.getBoundingClientRect().height || 200;
+        const desiredTop = r.top - boxH2 - 16;
+        box.style.top = Math.max(70, desiredTop) + 'px';
         box.style.transform = 'translateX(-50%)';
       } else {
         const boxHeight = 180;
@@ -2086,8 +2199,40 @@ function startTutorial() {
   box.style.transform = 'translate(-50%, -50%)';
 }
 
-// Show every time (testing mode)
-setTimeout(startTutorial, 600);
+// Tutorial startup toggle
+function toggleTutorialStartup() {
+  const btn = document.getElementById('tutorialToggle');
+  const cb = document.getElementById('tutorialCheckbox');
+  if (!btn) return;
+  let show = '1';
+  try { show = localStorage.getItem('bj_show_tutorial') || '1'; } catch(e) {}
+  if (show !== '0') {
+    // checked (fully red) -> unchecked (fully black)
+    btn.style.background = '#000';
+    btn.style.borderColor = '#444';
+    if (cb) cb.textContent = '';
+    try { localStorage.setItem('bj_show_tutorial', '0'); } catch(e) {}
+  } else {
+    // unchecked -> checked (fully red)
+    btn.style.background = '#e8450a';
+    btn.style.borderColor = '#e8450a';
+    if (cb) cb.textContent = '✓';
+    try { localStorage.setItem('bj_show_tutorial', '1'); } catch(e) {}
+  }
+}
+
+// Initialize checkbox state from storage (default: checked/on)
+(function() {
+  let show = '1';
+  try { show = localStorage.getItem('bj_show_tutorial'); } catch(e) {}
+  if (show === null) show = '1'; // default on
+  const cb = document.getElementById('tutorialCheckbox');
+  if (cb && show === '0') cb.classList.add('unchecked');
+  // Show tutorial on startup if enabled
+  if (show !== '0') {
+    setTimeout(startTutorial, 600);
+  }
+})();
 
 // Proofreading editor
 
