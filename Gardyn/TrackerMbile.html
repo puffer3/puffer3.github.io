@@ -4502,9 +4502,9 @@
     <div id="add-pod-form" style="display:none;">
       <div id="tracker-error" style="display:none;background:#fde8e8;border-left:3px solid #b85c38;padding:8px 12px;border-radius:0 4px 4px 0;font-family:Jost,sans-serif;font-size:0.88rem;color:#b85c38;margin-bottom:10px;">Please select a plant and enter the date planted.</div>
     <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(90px,1fr));gap:10px;margin-bottom:10px;align-items:end;">
-      <div style="grid-column:span 2;min-width:180px;">
+      <div style="max-width:72px;">
         <label style="font-family:'Jost',sans-serif;font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:4px;">Pod #</label>
-        <input type="text" id="new-pod" placeholder="Pod # (1–30)" oninput="updateTrackerPlantOptions()" style="width:100%;padding:7px 9px;border:1.5px solid var(--divider);border-radius:4px;font-family:Jost,sans-serif;font-size:0.92rem;color:var(--ink);background:white;">
+        <input type="text" id="new-pod" inputmode="numeric" maxlength="2" placeholder="1–30" oninput="updateTrackerPlantOptions()" style="width:100%;padding:7px 9px;border:1.5px solid var(--divider);border-radius:4px;font-family:Jost,sans-serif;font-size:0.92rem;color:var(--ink);background:white;text-align:center;">
       </div>
       <div style="grid-column:span 2;min-width:180px;">
         <label style="font-family:'Jost',sans-serif;font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:4px;">Plant *</label>
@@ -4610,10 +4610,8 @@
         <label style="font-family:'Jost',sans-serif;font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:4px;">Notes</label>
         <input type="text" id="new-notes" placeholder="optional notes..." style="width:100%;padding:7px 9px;border:1.5px solid var(--divider);border-radius:4px;font-family:Jost,sans-serif;font-size:0.92rem;color:var(--ink);background:white;">
       </div>
-      <div style="display:flex;align-items:flex-end;">
-        <button id="add-pod-btn" onclick="doAddPlant()" style="width:100%;padding:9px 14px;background:var(--moss);color:white;border:none;border-radius:4px;font-family:'Jost',sans-serif;font-size:0.68rem;letter-spacing:0.12em;text-transform:uppercase;cursor:pointer;">Finish Pod</button>
-      </div>
     </div>
+      <button id="add-pod-btn" onclick="doAddPlant()" style="width:100%;padding:11px 14px;background:var(--moss);color:white;border:none;border-radius:6px;font-family:'Jost',sans-serif;font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;cursor:pointer;margin-bottom:8px;">Finish Pod</button>
       <div style="text-align:center;margin-bottom:6px;">
         <button onclick="cancelAddPod()" style="background:none;border:none;color:var(--muted);font-family:'Jost',sans-serif;font-size:0.7rem;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;text-decoration:underline;">Cancel</button>
       </div>
@@ -5135,7 +5133,14 @@
     var html = '';
     var PLANT_NAMES = Object.keys(PLANT_DATA);
 
-    trackerPlants.forEach(function(p) {
+    // Display in pod-number order; pods without a number sort to the end.
+    var ordered = trackerPlants.slice().sort(function(a, b) {
+      var pa = parseInt(a.pod, 10); if (isNaN(pa)) pa = Infinity;
+      var pb = parseInt(b.pod, 10); if (isNaN(pb)) pb = Infinity;
+      return pa - pb;
+    });
+
+    ordered.forEach(function(p) {
       var planted     = new Date(p.date + 'T12:00:00');
       var sproutDate  = addDays(planted, p.s2sp);
       var harvestDate = addDays(planted, p.s2sp + p.sp2h);
