@@ -603,6 +603,19 @@
     margin-bottom: 14px;
   }
 
+  /* ─── ADD-POD FORM GRID ─────────────────────────────────────────────────────
+     Intentional 12-col layout (desktop). Row 1: Pod# · Plant · Date.
+     Row 2: Qty · Sprouted · Notes. Spans sum to 12 per row, so no ragged gaps.
+     Mobile collapses to a 4-col grid (see media block below).
+  ─────────────────────────────────────────────────────────────────────────── */
+  .pod-form-grid { display:grid; grid-template-columns:repeat(12,1fr); gap:14px; margin-bottom:14px; align-items:end; }
+  .pf-pod      { grid-column:span 1; min-width:62px; }
+  .pf-plant    { grid-column:span 7; }
+  .pf-date     { grid-column:span 4; }
+  .pf-qty      { grid-column:span 2; }
+  .pf-sprouted { grid-column:span 3; }
+  .pf-notes    { grid-column:span 7; }
+
   /* ─── MOBILE (≤600px) ──────────────────────────────────────────────────────
      These rules OVERRIDE the desktop base values above.
      Page fills the full screen width on mobile, so panels need their own inset.
@@ -614,6 +627,15 @@
     #today.tab-panel, #general.tab-panel, #tracker.tab-panel { padding: 0 16px; }
     .logo-svg { height: 64px; }
     .settings-btn { top: 10px; right: 8px; }
+
+    /* add-pod form: collapse 12-col → 4-col, fields stack into tidy rows */
+    .pod-form-grid { grid-template-columns:repeat(4,1fr); gap:12px; }
+    .pf-pod      { grid-column:span 1; }
+    .pf-plant    { grid-column:span 3; }
+    .pf-date     { grid-column:span 2; }
+    .pf-qty      { grid-column:span 1; }
+    .pf-sprouted { grid-column:span 1; }
+    .pf-notes    { grid-column:span 4; }
 
     /* BOTTOM TAB BAR — fixed to bottom edge */
     .tab-nav {
@@ -4501,12 +4523,12 @@
     <button id="add-pod-toggle" onclick="showAddPodForm()" style="width:100%;padding:11px 14px;background:var(--moss);color:white;border:none;border-radius:6px;font-family:'Jost',sans-serif;font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;cursor:pointer;margin-bottom:10px;">+ Add Pod</button>
     <div id="add-pod-form" style="display:none;">
       <div id="tracker-error" style="display:none;background:#fde8e8;border-left:3px solid #b85c38;padding:8px 12px;border-radius:0 4px 4px 0;font-family:Jost,sans-serif;font-size:0.88rem;color:#b85c38;margin-bottom:10px;">Please select a plant and enter the date planted.</div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(90px,1fr));gap:10px;margin-bottom:10px;align-items:end;">
-      <div style="max-width:72px;">
+    <div class="pod-form-grid">
+      <div class="pf-pod">
         <label style="font-family:'Jost',sans-serif;font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:4px;">Pod #</label>
-        <input type="text" id="new-pod" inputmode="numeric" maxlength="2" placeholder="1–30" oninput="updateTrackerPlantOptions()" style="width:100%;padding:7px 9px;border:1.5px solid var(--divider);border-radius:4px;font-family:Jost,sans-serif;font-size:0.92rem;color:var(--ink);background:white;text-align:center;">
+        <input type="text" id="new-pod" inputmode="numeric" maxlength="2" placeholder="" oninput="clampPod(this);updateTrackerPlantOptions()" style="width:100%;padding:7px 9px;border:1.5px solid var(--divider);border-radius:4px;font-family:Jost,sans-serif;font-size:0.92rem;color:var(--ink);background:white;text-align:center;">
       </div>
-      <div style="grid-column:span 2;min-width:180px;">
+      <div class="pf-plant">
         <label style="font-family:'Jost',sans-serif;font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:4px;">Plant *</label>
         <select id="new-plant" style="width:100%;padding:7px 9px;border:1.5px solid var(--divider);border-radius:4px;background:white;font-family:Jost,sans-serif;font-size:0.92rem;color:var(--ink);">
           <option value="">— Select plant —</option>
@@ -4591,22 +4613,22 @@
           </optgroup>
         </select>
       </div>
-      <div>
+      <div class="pf-date">
         <label style="font-family:'Jost',sans-serif;font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:4px;">Date Planted *</label>
         <input type="date" id="new-date" style="width:100%;padding:7px 9px;border:1.5px solid var(--divider);border-radius:4px;font-family:Jost,sans-serif;font-size:0.92rem;color:var(--ink);background:white;">
       </div>
-      <div>
-        <label style="font-family:'Jost',sans-serif;font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:4px;">Qty</label>
+      <div class="pf-qty">
+        <label style="font-family:'Jost',sans-serif;font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:4px;">Seed Quantity</label>
         <input type="number" id="new-qty" min="1" max="30" value="1" style="width:100%;padding:7px 9px;border:1.5px solid var(--divider);border-radius:4px;font-family:Jost,sans-serif;font-size:0.92rem;color:var(--ink);background:white;">
       </div>
-      <div>
+      <div class="pf-sprouted">
         <label style="font-family:'Jost',sans-serif;font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:4px;">Sprouted?</label>
         <select id="new-sprouted" style="width:100%;padding:7px 9px;border:1.5px solid var(--divider);border-radius:4px;background:white;font-family:Jost,sans-serif;font-size:0.92rem;color:var(--ink);">
           <option value="No">No</option>
           <option value="Yes">Yes</option>
         </select>
       </div>
-      <div style="grid-column:span 2;">
+      <div class="pf-notes">
         <label style="font-family:'Jost',sans-serif;font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:4px;">Notes</label>
         <input type="text" id="new-notes" placeholder="optional notes..." style="width:100%;padding:7px 9px;border:1.5px solid var(--divider);border-radius:4px;font-family:Jost,sans-serif;font-size:0.92rem;color:var(--ink);background:white;">
       </div>
@@ -5000,6 +5022,13 @@
     editingId = null;
     resetPodForm();
     collapsePodForm();
+  }
+
+  // ── Pod # input: digits only, never above 30 ──
+  function clampPod(el) {
+    var v = el.value.replace(/\D/g, '');
+    if (v && parseInt(v, 10) > 30) v = '30';
+    el.value = v;
   }
 
   // ── Pod # drives the plant list: mirror that pod's recommended options ──
