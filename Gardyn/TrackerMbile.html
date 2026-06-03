@@ -5194,8 +5194,8 @@
       if (phParts.length === 2) { phMins.push(parseFloat(phParts[0])); phMaxs.push(parseFloat(phParts[1])); }
 
       var sproutedBtn = p.sprouted === 'Yes'
-        ? '<button onclick="toggleSprouted(' + p.id + ')" style="background:#d0f0d0;color:#2d6a2d;border:none;border-radius:3px;padding:1px 7px;font-size:0.7rem;cursor:pointer;">✓ Yes</button>'
-        : '<button onclick="toggleSprouted(' + p.id + ')" style="background:#f5edda;color:#c4962a;border:none;border-radius:3px;padding:1px 7px;font-size:0.7rem;cursor:pointer;">No</button>';
+        ? '<button onclick="toggleSprouted(' + p.id + ')" title="Sprouted — click to mark not sprouted" style="background:#d0f0d0;color:#2d6a2d;border:none;border-radius:3px;padding:2px 9px;font-size:0.7rem;cursor:pointer;white-space:nowrap;">🌱 Sprouted</button>'
+        : '<button onclick="toggleSprouted(' + p.id + ')" title="Not sprouted yet — click to mark sprouted" style="background:#f5edda;color:#c4962a;border:none;border-radius:3px;padding:2px 9px;font-size:0.7rem;cursor:pointer;white-space:nowrap;">Not Sprouted</button>';
 
       var plantOpts = PLANT_NAMES.map(function(n) {
         return '<option value="' + n + '"' + (n === p.name ? ' selected' : '') + '>' + n + '</option>';
