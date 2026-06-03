@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Thryve — Gardyn Care &amp; Cultivation</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@200;300;400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
     --cream: #f0faf0;
@@ -92,6 +92,7 @@
   }
   .tab-btn {
     flex: 1;
+    min-width: 0;
     padding: 16px 20px;
     border: none;
     background: transparent;
@@ -114,21 +115,33 @@
   .tab-btn.active {
     color: var(--moss);
     border-bottom-color: var(--moss);
-    font-weight: 500;
+    font-weight: 600;
     background: rgba(15,107,34,0.1);
   }
   .tab-btn .tab-icon { font-size: 1rem; }
+  /* Bold-on-active without layout shift: an invisible bold copy of each
+     label permanently reserves the bold width, so nothing moves when the
+     real text switches weight. Each .tab-label needs a matching data-text. */
+  .tab-label { text-align: center; }
+  .tab-label::after {
+    content: attr(data-text);
+    display: block;
+    height: 0;
+    overflow: hidden;
+    visibility: hidden;
+    font-weight: 600;
+  }
 
   /* ─── TAB PANELS ───────────────────────────────────────────────────────────
      DESKTOP (this block — no @media wrapper):
        Panels sit within the 780px page column with a small 16px side inset so
        content doesn't run flush to the column edge on wider viewports.
-       #layout is always edge-to-edge regardless of device.
+       #tower is always edge-to-edge regardless of device.
 
      MOBILE (see @media max-width:600px block below):
        Same 16px side inset — page fills full screen width so the inset prevents
        content from touching screen edges.
-       #layout keeps padding:0 there too.
+       #tower keeps padding:0 there too.
 
      Rule: side padding for panels lives ONLY in the correct block for each device.
      DO NOT put panel side padding on .page — that affects the header and nav bar too.
@@ -552,7 +565,7 @@
 
   /* ICON SYSTEM (extracted line icons) */
   .tab-icon-svg {
-    width: 22px; height: 22px;
+    width: 26px; height: 26px;
     color: currentColor;
     flex-shrink: 0;
   }
@@ -623,7 +636,7 @@
   /* ─── MOBILE (≤600px) ──────────────────────────────────────────────────────
      These rules OVERRIDE the desktop base values above.
      Page fills the full screen width on mobile, so panels need their own inset.
-     #layout stays at padding:0 — tower image + dropdowns stay edge-to-edge.
+     #tower stays at padding:0 — tower image + dropdowns stay edge-to-edge.
   ─────────────────────────────────────────────────────────────────────────── */
   @media (max-width: 600px) {
     .page { padding: 0 0 96px; }
@@ -631,6 +644,8 @@
     #today.tab-panel, #general.tab-panel, #tracker.tab-panel { padding: 0 16px; }
     .logo-svg { height: 64px; }
     .settings-btn { top: 10px; right: 8px; }
+    /* tighten the empty space above the logo on phones */
+    .header { padding: 10px 0 16px; }
 
     /* add-pod form: collapse 12-col → 4-col, fields stack into tidy rows */
     .pod-form-grid { grid-template-columns:repeat(4,1fr); gap:12px; }
@@ -668,7 +683,7 @@
       border-bottom-color: transparent;
       border-top-color: var(--moss);
     }
-    .tab-icon-svg { width: 24px; height: 24px; }
+    .tab-icon-svg { width: 28px; height: 28px; }
     .tab-label { display: block; }
 
     .layout-img-wrap { border-radius: 8px; }
@@ -725,7 +740,7 @@
   <rect fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" x="419.71" y="2353.84" width="91.83" height="101.75" rx="9.67" ry="9.67"/></symbol>
 <symbol id="ic-gardyn" viewBox="0 0 99.94 104.69"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path stroke-width="5" d="M89.21,76.23h-12.06V27.71c0-2.48-2.26-4.48-5.04-4.46-2.76,0-4.99,2-4.99,4.46v48.52h-12.11V27.71c0-2.48-2.26-4.48-5.04-4.46-2.76,0-4.99,2-4.99,4.46v48.52h-12.11V27.71c0-2.48-2.26-4.48-5.04-4.46-2.76,0-4.99,2-4.99,4.46v48.52h-12.06c-13.08,2.86,1.38,27.79,14.71,25.86,0,0,49.02,0,49.02,0,10.83,0,19.61-9.26,19.61-20.69,0-2.86-2.19-5.17-4.9-5.17Z"/><path stroke-width="3" d="M21.7,76.7c-20.31-2.13-28.36-26.18-9.7-35.84C-.57,28.13,14.52,10.29,31.75,13c9.02-15.59,28.56-15.1,36.57.05,17.26-2.73,32.28,15.14,19.75,27.86,16.66,8.85,12.32,30.97-6.52,34.66"/></g></symbol>
 <symbol id="ic-gardyn-fill" viewBox="0 0 99.94 104.69"><g stroke-linecap="round" stroke-linejoin="round"><path fill="currentColor" stroke="currentColor" stroke-width="3" d="M21.7,76.7c-20.31-2.13-28.36-26.18-9.7-35.84C-.57,28.13,14.52,10.29,31.75,13c9.02-15.59,28.56-15.1,36.57.05,17.26-2.73,32.28,15.14,19.75,27.86,16.66,8.85,12.32,30.97-6.52,34.66"/><path fill="none" stroke="#fff" stroke-width="5" d="M89.21,76.23h-12.06V27.71c0-2.48-2.26-4.48-5.04-4.46-2.76,0-4.99,2-4.99,4.46v48.52h-12.11V27.71c0-2.48-2.26-4.48-5.04-4.46-2.76,0-4.99,2-4.99,4.46v48.52h-12.11V27.71c0-2.48-2.26-4.48-5.04-4.46-2.76,0-4.99,2-4.99,4.46v48.52h-12.06c-13.08,2.86,1.38,27.79,14.71,25.86,0,0,49.02,0,49.02,0,10.83,0,19.61-9.26,19.61-20.69,0-2.86-2.19-5.17-4.9-5.17Z"/></g></symbol>
-<symbol id="ic-gardyn2" viewBox="0 0 109.69 116.08"><g stroke-linecap="round" stroke-linejoin="round"><path fill="#fff" stroke="currentColor" stroke-width="4" d="M91.55,84.91l-82.23-.1c-15.44,3.23,1.63,31.34,17.36,29.16,0,0,57.86,0,57.86,0,12.78,0,23.14-10.44,23.14-23.33,0-3.22-2.59-5.83-5.79-5.83h-14.23l3.88.1Z"/><path fill="none" stroke="currentColor" stroke-width="4" d="M23.69,84.83l-14.36-.02c-15.44,3.23,1.63,31.34,17.36,29.16,0,0,57.86,0,57.86,0,12.78,0,23.14-10.44,23.14-23.33,0-3.22-2.59-5.83-5.79-5.83h-14.23"/><rect fill="#fff" stroke="#fff" stroke-width="2" x="26.43" y="20.05" width="58.94" height="67.76"/><path fill="currentColor" stroke="currentColor" stroke-width="2" d="M50.09,85.81v-9.81l-6.75-8.13,6.75-6.03v6.03-14.42s-6.75-8.13-6.75-8.13l6.75,8.13-6.75-8.13,6.75-6.03v6.03-14.22c0-2.78,2.52-5.03,5.63-5.03,3.13-.02,5.68,2.24,5.68,5.03v23.75-4.86l7.35,6.74-7.35,8.79v20.3h14.1v-9.81l-6.75-8.13,6.75-6.03v6.03-14.42s-6.75-8.13-6.75-8.13l6.75,8.13-6.75-8.13,6.75-6.03v6.03-14.22c0-2.78,2.52-5.03,5.63-5.03,3.13-.02,5.68,2.24,5.68,5.03v23.75-4.86l7.35,6.74-7.35,8.79v20.3l-.08-.02c25.14-2.84,27.54-30.36,9.38-40.35,13.66-14.35-2.72-34.5-21.54-31.42-8.74-17.09-30.05-17.63-39.88-.06C15.89,10.91-2.04,30.95,11.67,45.31c-20.35,10.9-9.13,38.1,13.01,40.5v-9.81l-6.75-8.13,6.75-6.03v6.03-14.42s-6.75-8.13-6.75-8.13l6.75,8.13-6.75-8.13,6.75-6.03v6.03-14.22c0-2.78,2.52-5.03,5.63-5.03,3.13-.02,5.68,2.24,5.68,5.03v23.75-4.86l7.35,6.74-7.35,8.79v20.3h14.1Z"/></g></symbol>
+<symbol id="ic-gardyn2" viewBox="0 0 97.73 105.17"><g stroke-linecap="round" stroke-linejoin="round"><path fill="none" stroke="currentColor" stroke-width="4" d="M76.65,77.2l-.03-49.2c0-2.48-2.26-4.48-5.04-4.46-2.76,0-4.99,2-4.99,4.46v48.52h-12.11V28c0-2.48-2.26-4.48-5.04-4.46-2.76,0-4.99,2-4.99,4.46v48.52h-12.11V28c0-2.48-2.26-4.48-5.04-4.46-2.76,0-4.99,2-4.99,4.46v48.52l-.78.68c-19.64-2.13-27.42-26.18-9.38-35.84C0,28.63,14.59,10.79,31.25,13.5c8.72-15.59,27.62-15.1,35.37.05,16.69-2.73,31.21,15.14,19.1,27.86,16.11,8.85,11.91,30.97-6.3,34.66"/><path fill="none" stroke="currentColor" stroke-width="4" d="M21.53,77.2h-11.26c-13.08,2.86,1.38,27.79,14.71,25.86,0,0,49.02,0,49.02,0,10.83,0,19.61-9.26,19.61-20.69,0-2.86-2.19-5.17-4.9-5.17h-11.56"/><path fill="#fff" d="M27.27,59.13l-.98,7.51c-.14,1.04-1.36,1.54-2.18.88l-6.12-4.87c-.82-.65-.62-1.96.37-2.32l7.1-2.64c.95-.35,1.94.43,1.81,1.44Z"/><path fill="#fff" d="M27.27,35.13l-.98,7.51c-.14,1.04-1.36,1.54-2.18.88l-6.12-4.87c-.82-.65-.62-1.96.37-2.32l7.1-2.64c.95-.35,1.94.43,1.81,1.44Z"/><path fill="#fff" d="M48.41,59l-.98,7.51c-.14,1.04-1.36,1.54-2.18.88l-6.12-4.87c-.82-.65-.62-1.96.37-2.32l7.1-2.64c.95-.35,1.94.43,1.81,1.44Z"/><path fill="#fff" d="M48.41,35l-.98,7.51c-.14,1.04-1.36,1.54-2.18.88l-6.12-4.87c-.82-.65-.62-1.96.37-2.32l7.1-2.64c.95-.35,1.94.43,1.81,1.44Z"/><path fill="#fff" d="M70.51,59l-.98,7.51c-.14,1.04-1.36,1.54-2.18.88l-6.12-4.87c-.82-.65-.62-1.96.37-2.32l7.1-2.64c.95-.35,1.94.43,1.81,1.44Z"/><path fill="#fff" d="M70.51,35l-.98,7.51c-.14,1.04-1.36,1.54-2.18.88l-6.12-4.87c-.82-.65-.62-1.96.37-2.32l7.1-2.64c.95-.35,1.94.43,1.81,1.44Z"/><path fill="#fff" d="M28.48,48.15l.98,7.51c.14,1.04,1.36,1.54,2.18.88l6.12-4.87c.82-.65.62-1.96-.37-2.32l-7.1-2.64c-.95-.35-1.94.43-1.81,1.44Z"/><path fill="#fff" d="M50.04,48.15l.98,7.51c.14,1.04,1.36,1.54,2.18.88l6.12-4.87c.82-.65.62-1.96-.37-2.32l-7.1-2.64c-.95-.35-1.94.43-1.81,1.44Z"/><path fill="#fff" d="M72.21,48.15l.98,7.51c.14,1.04,1.36,1.54,2.18.88l6.12-4.87c.82-.65.62-1.96-.37-2.32l-7.1-2.64c-.95-.35-1.94.43-1.81,1.44Z"/></g></symbol>
 <symbol id="ic-tasks" viewBox="682.76 2341.63 126.19 126.19"><path fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" d="M795.71,2394.56c5.61,27.53-12.16,54.4-39.69,60.01-27.53,5.61-54.4-12.16-60.01-39.69-5.61-27.53,12.16-54.4,39.69-60.01,12.17-2.48,24.82-.42,35.58,5.78"/>
   <path fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" d="M730.59,2399.64l15.26,15.26,50.87-50.87"/></symbol>
 <symbol id="ic-info" viewBox="944.40 2350.95 126.18 126.18"><path fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" d="M1003.91,2436.03c-11.04.03-20.01-8.89-20.04-19.92-.03-9.76,7-18.12,16.62-19.76,16.27-3.14,20.55-4.62,26.26-11.7,2.85,5.71,5.71,11.93,5.71,22.84,0,15.7-13.65,28.55-28.55,28.55Z"/>
@@ -761,21 +776,21 @@
 
   <!-- TAB NAV -->
   <div class="tab-nav">
-    <button class="tab-btn active" onclick="switchTab('layout', this)">
+    <button class="tab-btn active" onclick="switchTab('tower', this)">
       <svg class="tab-icon-svg"><use href="#ic-gardyn2"></use></svg>
-      <span class="tab-label">Layout</span>
+      <span class="tab-label" data-text="Tower">Tower</span>
     </button>
     <button class="tab-btn" onclick="switchTab('tracker', this)">
       <svg class="tab-icon-svg"><use href="#ic-tracker"></use></svg>
-      <span class="tab-label">Tracker</span>
+      <span class="tab-label" data-text="Tracker">Tracker</span>
     </button>
     <button class="tab-btn" onclick="switchTab('today', this)">
       <svg class="tab-icon-svg"><use href="#ic-tasks"></use></svg>
-      <span class="tab-label">Tasks</span>
+      <span class="tab-label" data-text="Tasks">Tasks</span>
     </button>
     <button class="tab-btn" onclick="switchTab('general', this)">
       <svg class="tab-icon-svg"><use href="#ic-info"></use></svg>
-      <span class="tab-label">Info</span>
+      <span class="tab-label" data-text="Info">Info</span>
     </button>
   </div>
 
@@ -785,8 +800,8 @@
 
 
 
-  <!-- GARDEN LAYOUT TAB -->
-  <div id="layout" class="tab-panel active">
+  <!-- TOWER TAB -->
+  <div id="tower" class="tab-panel active">
     <style>
       .layout-outer { max-width:780px; margin:12px auto 0; }
       .layout-img-wrap { position:relative; width:100%; padding-bottom:129.41%; border-radius:14px; overflow:hidden; box-shadow:0 6px 24px rgba(0,0,0,0.18); }
@@ -3124,7 +3139,7 @@
         <div class="tt-card" onclick="this.classList.toggle('open')"><b>💡 Lighting</b><span>16 hrs on / 8 hrs off.<br>Don't reduce below 14 hrs or growth stalls.<br>Never break the dark cycle.</span></div>
       </div>
     </div>
-  <!-- END LAYOUT TAB -->
+  <!-- END TOWER TAB -->
 
   <!-- ═══════════════════════════════════════════ -->
   <!-- TODAY TAB -->
