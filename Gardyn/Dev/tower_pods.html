@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thryve — Tower Pods (compressed + slide-out)</title>
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1c1a14; --line:#616160; --paper:#fbfbf8; --muted:#8a8f86;
+    --mint:#affbc5; --yel:#e7fb96; --org:#f3c87e;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--paper);font-family:'Jost',sans-serif;color:var(--ink);}
+
+  .sb-bar{max-width:480px;margin:16px auto 0;padding:9px 14px;border-radius:10px;
+    background:rgba(97,97,96,0.08);color:#5d5d5b;font-size:0.72rem;line-height:1.5;text-align:center;}
+  .sb-bar b{letter-spacing:0.1em;color:#3a3a38;}
+
+  /* stage aspect-locked to the original layout (129.41%) so pod % coords match */
+  .stage{max-width:480px;margin:14px auto 28px;position:relative;width:100%;}
+  .spacer{padding-bottom:129.41%;}
+  .field{position:absolute;inset:0;}
+
+  .rod{position:absolute;top:3.5%;height:84%;width:1.5%;background:#fff;
+    border:1.5px solid var(--line);border-radius:999px;z-index:1;}
+  .base{position:absolute;left:15%;width:70%;top:85%;height:13.5%;background:#fff;
+    border:1.6px solid var(--line);border-radius:16px;z-index:0;box-shadow:0 6px 16px rgba(0,0,0,.08);}
+  .base::after{content:"";position:absolute;left:4%;right:4%;top:22%;height:0;
+    border-top:1.4px solid var(--line);opacity:.5;}
+
+  /* ── a pod = animated-width wrapper holding a sprout leaf + the capsule ── */
+  .pod{position:absolute;height:2.9%;min-height:18px;width:var(--cw,6.2%);z-index:3;
+    transition:width .34s cubic-bezier(.34,1.2,.5,1);}
+  .pod.open{--cw:17.3%;z-index:7;}
+
+  .leaf{position:absolute;height:74%;aspect-ratio:.8;bottom:-26%;z-index:1;
+    border-radius:52% 52% 52% 64%;border:1.4px solid var(--line);}
+  .leaf.mint{background:var(--mint);} .leaf.yel{background:var(--yel);} .leaf.org{background:var(--org);}
+  .side-R .leaf{left:1%;transform:rotate(10deg);}
+  .side-L .leaf{right:1%;transform:rotate(-10deg) scaleX(-1);}
+
+  .capsule{position:absolute;inset:0;background:#fff;border:1.5px solid var(--line);
+    border-radius:999px;overflow:hidden;z-index:2;box-shadow:0 1px 2px rgba(0,0,0,.06);}
+
+  /* dropdown fills the whole oval; its text is centered -> centered across the oval */
+  .sel{position:absolute;inset:0;width:100%;height:100%;border:none;background:transparent;outline:none;
+    cursor:pointer;appearance:none;-webkit-appearance:none;font-family:'Jost',sans-serif;font-size:.58rem;
+    color:var(--ink);text-align:center;text-align-last:center;z-index:1;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+    opacity:0;transition:opacity .18s .14s;}
+  /* reserve the number's zone (fixed px) on the rod side so the name centers in the open tube */
+  .side-R .sel{padding:0 11px 0 24px;}
+  .side-L .sel{padding:0 24px 0 11px;}
+  .pod.open .sel{opacity:1;}
+  .pod:not(.open) .sel{display:none;}
+
+  /* number: centered in the closed stub, parked at the rod-end once open */
+  .cap{position:absolute;top:0;bottom:0;left:0;right:0;display:grid;place-items:center;z-index:2;
+    cursor:pointer;border:none;background:transparent;padding:0;}
+  .pod.open.side-R .cap{right:auto;width:22px;}
+  .pod.open.side-L .cap{left:auto;width:22px;}
+  .cap>span{grid-area:1/1;font-weight:600;font-size:.6rem;line-height:1;transition:opacity .15s;}
+  .cap .num{color:#3a3a38;}
+  .cap .plus{opacity:0;color:#4f7a3f;font-size:.82rem;}
+
+  /* desktop: number by default, "+" on hover */
+  @media (hover:hover){
+    .pod:not(.open):hover{--cw:7%;}
+    .pod:not(.open):hover .num{opacity:0;}
+    .pod:not(.open):hover .plus{opacity:1;}
+  }
+  /* touch: the compressed stubs are all "+" */
+  @media (hover:none){
+    .pod:not(.open) .num{opacity:0;}
+    .pod:not(.open) .plus{opacity:1;}
+  }
+
+  .legend{max-width:480px;margin:0 auto 40px;text-align:center;font-size:.66rem;color:var(--muted);line-height:1.6;}
+</style>
+</head>
+<body>
+  <div class="sb-bar"><b>TOWER PODS</b> — all compressed, your sprout-leaf style. Hover → <b>+</b> · press the number → tube slides out, then the dropdown opens. On touch they’re all <b>+</b>.</div>
+
+  <div class="stage">
+    <div class="spacer"></div>
+    <div class="field" id="field"></div>
+  </div>
+
+  <div class="legend">3 rods · 10 pods each · numbers 1–30 · leaf colour cycles mint / yellow / orange like your graphic.</div>
+
+<script>
+  const OPTIONS = `<option value="">— select plant —</option><optgroup label="🟡 Recommended — Low Light"><option>Buttercrunch</option><option>Butterhead</option><option>Endive Lettuce</option><option>Lettuce</option><option>Nasturtium</option><option>Pink Petunia</option><option>Red Sails</option><option>Red Salad Bowl</option><option>Romaine</option><option>Torenia</option><option>Viola</option><option>White Petunia</option></optgroup><optgroup label="⚠️ Other Plants (not ideal here)"><option>Arugula</option><option>Banana Peppers</option><option>Basil</option><option>Borage</option><option>Bunching Onions</option><option>Celery</option><option>Chamomile</option><option>Cherry Tomatoes</option><option>Chervil</option><option>Chives</option><option>Cilantro</option><option>Classic Kale</option><option>Cucumbers</option><option>Dianthus</option><option>Dill</option><option>Dragon Beans</option><option>Fairytale Eggplant</option><option>Green Beans</option><option>Green Bok Choy</option><option>Green Mustard</option><option>Green Tatsoi</option><option>Hibiscus</option><option>Holy Basil</option><option>Italian Parsley</option><option>Jalapeños</option><option>Kale</option><option>Kale Lacinato</option><option>Lavender</option><option>Lemon Hot Pepper</option><option>Lemongrass</option><option>Marietta Marigold</option><option>Mini Cauliflower</option><option>Mini Strawberries</option><option>Mint</option><option>Oregano</option><option>Peas</option><option>Purple Basil</option><option>Purple Campanula</option><option>Purple Snapdragon</option><option>Radio Calendula</option><option>Red Amaranth</option><option>Red Sorrel</option><option>Red Swiss Chard</option><option>Red Tatsoi</option><option>Rosemary</option><option>Sage</option><option>Savory</option><option>Scarlet Snapdragon</option><option>Spinach</option><option>Stevia</option><option>Strawberries</option><option>Sweet Marjoram</option><option>Sweet Peppers</option><option>Sweet Thai Basil</option><option>Thyme</option><option>Watercress</option><option>Wheatgrass</option><option>Yellow Snapdragon</option></optgroup><optgroup label="Other"><option value="Seedless yCube">Seedless yCube (DIY)</option></optgroup>`;
+
+  const RODS = [22.0, 50.3, 78.4];                                   // rod centre x (%)
+  const ROWS = [8.7, 16.4, 23.7, 31.2, 37.3, 45.0, 52.2, 59.8, 66.7, 74.4]; // row tops (%)
+  const LEAF = ['mint','yel','org','yel','org'];                     // ~6 mint / 12 yel / 12 org over 30
+  const field = document.getElementById('field');
+
+  // ── oval sizing: basic width for normal names, oversized (capped) for long ones ──
+  const meas = document.createElement('canvas').getContext('2d');
+  function sizePod(pod, sel){
+    const stage = field.clientWidth || 480;
+    const basic = 0.173 * stage;          // your standard expanded oval
+    const max   = 0.36  * stage;          // ceiling for the oversized oval
+    let cw = basic;
+    if(sel.value){
+      meas.font = '400 ' + (0.58*16).toFixed(1) + 'px Jost, sans-serif';
+      const need = 24 /*number zone*/ + meas.measureText(sel.value).width + 14 /*pads+buffer*/;
+      cw = Math.min(max, Math.max(basic, need));
+    }
+    pod.style.setProperty('--cw', cw + 'px');
+  }
+
+  RODS.forEach(x=>{ const r=document.createElement('div'); r.className='rod'; r.style.left=(x-0.75)+'%'; field.appendChild(r); });
+  const base=document.createElement('div'); base.className='base'; field.appendChild(base);
+
+  let n=0;
+  RODS.forEach(rodX=>{
+    ROWS.forEach((top,ri)=>{
+      n++;
+      const right=(ri%2===0);
+      const pod=document.createElement('div');
+      pod.className='pod '+(right?'side-R':'side-L');
+      pod.style.top=top+'%';
+      if(right) pod.style.left=rodX+'%'; else pod.style.right=(100-rodX)+'%';
+      pod.innerHTML =
+        '<span class="leaf '+LEAF[(n-1)%LEAF.length]+'"></span>'+
+        '<div class="capsule">'+
+          '<button class="cap" type="button"><span class="num">'+n+'</span><span class="plus">＋</span></button>'+
+          '<select class="sel">'+OPTIONS+'</select>'+
+        '</div>';
+      field.appendChild(pod);
+
+      const cap=pod.querySelector('.cap');
+      const sel=pod.querySelector('.sel');
+      cap.addEventListener('click',e=>{
+        e.stopPropagation();
+        if(pod.classList.contains('open')){ pod.classList.remove('open'); pod.style.removeProperty('--cw'); return; }
+        closeEmpty();
+        pod.classList.add('open'); sizePod(pod, sel);   // stage 1: tube slides out (sized to the name)
+        setTimeout(()=>{                                 // stage 2: open the dropdown after it expands
+          try{ sel.showPicker(); }catch(_){ sel.focus(); }
+        }, 340);
+      });
+      sel.addEventListener('click',e=>e.stopPropagation());
+      sel.addEventListener('change',()=>{ pod.classList.toggle('filled', sel.value!==''); sizePod(pod, sel); });
+    });
+  });
+
+  function closeEmpty(){
+    document.querySelectorAll('.pod.open').forEach(p=>{ if(p.querySelector('.sel').value===''){ p.classList.remove('open'); p.style.removeProperty('--cw'); } });
+  }
+  document.addEventListener('click',closeEmpty);
+</script>
+</body>
+</html>

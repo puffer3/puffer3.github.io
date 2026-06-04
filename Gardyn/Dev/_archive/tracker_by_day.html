@@ -406,10 +406,11 @@ function scopeUntil(){
   if(s==='month') return startOfDay(new Date(view.getFullYear(), view.getMonth(), daysInMonth(view.getFullYear(),view.getMonth())));
   return startOfDay(new Date(Date.now()+365*DAY));
 }
-/* reminder = single checkbox, fires on the day of */
-function alarmBlock(){
+/* reminder = single checkbox; for all-day items it fires at 9am ON the day of.
+   related='START' for VEVENT (relative to DTSTART midnight), 'END' for VTODO (relative to DUE). */
+function alarmBlock(related){
   if(!document.getElementById('reminder').checked) return '';
-  return 'BEGIN:VALARM\r\nACTION:DISPLAY\r\nDESCRIPTION:Thryve care reminder\r\nTRIGGER:-PT0M\r\nEND:VALARM\r\n';
+  return 'BEGIN:VALARM\r\nACTION:DISPLAY\r\nDESCRIPTION:Thryve care reminder\r\nTRIGGER;RELATED='+related+':PT9H\r\nEND:VALARM\r\n';
 }
 function tasksInScope(){
   if(document.getElementById('scope').value==='day'){
@@ -428,13 +429,14 @@ function buildICS(kind){
     if(kind==='vtodo'){
       out+='BEGIN:VTODO\r\nUID:'+uid+'\r\nDTSTAMP:'+stamp()+'\r\n'
          + 'DUE;VALUE=DATE:'+fmtDT(start,false)+'\r\nSUMMARY:'+t.label+' (Thryve)\r\n'
-         + 'DESCRIPTION:'+t.tip.replace(/,/g,'\\,')+'\r\n'+alarmBlock()+'END:VTODO\r\n';
+         + 'DESCRIPTION:'+t.tip.replace(/,/g,'\\,')+'\r\n'+alarmBlock('END')+'END:VTODO\r\n';
     } else {
       const recur = (scope==='day') ? '' : 'RRULE:'+rrule(t.every)+';UNTIL='+fmtDT(until,false)+'\r\n';
+      const end = new Date(startOfDay(start).getTime()+DAY);   // all-day event: DTEND is exclusive (next day)
       out+='BEGIN:VEVENT\r\nUID:'+uid+'\r\nDTSTAMP:'+stamp()+'\r\n'
-         + 'DTSTART:'+fmtDT(start,true)+'\r\nDURATION:PT15M\r\n'+recur
+         + 'DTSTART;VALUE=DATE:'+fmtDT(start,false)+'\r\nDTEND;VALUE=DATE:'+fmtDT(end,false)+'\r\n'+recur
          + 'SUMMARY:'+t.label+' (Thryve)\r\nDESCRIPTION:'+t.tip.replace(/,/g,'\\,')+'\r\n'
-         + alarmBlock()+'END:VEVENT\r\n';
+         + alarmBlock('START')+'END:VEVENT\r\n';
     }
   });
   out+='END:VCALENDAR\r\n';
@@ -447,7 +449,8 @@ function download(name,text){
 }
 function gcalLink(){
   const t=tasksInScope()[0]; if(!t) return null;
-  const start=nextDue(t); const s=fmtDT(start,true), e=s.replace(/T0900/,'T0915');
+  const start=nextDue(t); const end=new Date(startOfDay(start).getTime()+DAY);
+  const s=fmtDT(start,false), e=fmtDT(end,false);   // all-day: YYYYMMDD/YYYYMMDD
   const p=new URLSearchParams({action:'TEMPLATE', text:t.label+' (Thryve)', details:t.tip, dates:s+'/'+e});
   if(document.getElementById('scope').value!=='day') p.set('recur','RRULE:'+rrule(t.every));
   return 'https://calendar.google.com/calendar/render?'+p.toString();

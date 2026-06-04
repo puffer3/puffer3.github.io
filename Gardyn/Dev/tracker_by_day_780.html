@@ -9,7 +9,7 @@
     --cream:#f0faf0; --parch:#dff0da; --ink:#0f1a0f; --moss:#0f6b22;
     --muted:#4a6b52; --divider:#9cc49c;
     --done:#86cc78; --overdue:#f0cd8a; --sched:#e6f1e6;
-    --cell:20px; --gap:4px; --labelw:70px; --rowh:24px; --headh:50px;
+    --cell:22px; --gap:4px; --labelw:70px; --rowh:24px; --headh:50px;
   }
   *{box-sizing:border-box;}
   body{margin:0 auto; max-width:832px; background:var(--cream); color:var(--ink);
@@ -57,21 +57,25 @@
   .sowprint{margin-left:auto; font-size:.72rem; color:var(--muted); font-style:italic;}
 
   /* tooltip = Henry's TaskTipBubble.svg shapes, filled with recipe-card content */
-  .tlabel .tip{visibility:hidden; opacity:0; position:absolute; left:-2px; top:50%; transform:translateY(-71%);
+  .tlabel .tip{visibility:hidden; opacity:0; position:absolute; left:-2px; top:50%; transform:translateY(-58.5%);
     z-index:40; width:360px; pointer-events:none; transition:opacity .15s;}
   .tlabel:hover .tip{visibility:visible; opacity:1;}
-  .tlabel:hover{color:#406c50; font-weight:700;}
+  /* faux-bold: thickens the glyphs without widening them, so the label never reflows/moves on hover */
+  .tlabel:hover{color:#406c50; text-shadow:0 0 .4px currentColor, 0 0 .4px currentColor;}
   .tip .tipsvg{display:block; width:100%; height:auto; overflow:visible;}
-  .tip .tippilltext{fill:#406c50; font-family:'Avenir Next',sans-serif; font-weight:700; font-size:14px;}
-  .tip .tiphead{position:absolute; left:26%; right:7%; top:11%; height:17%;
-    display:flex; align-items:center; justify-content:center; text-align:center; overflow:hidden;
-    font-family:'Avenir Next',sans-serif; font-weight:700; font-size:14px; line-height:1.1; color:#2f5a30;}
-  .tip .tipbody{position:absolute; left:31%; right:12.5%; top:32%; bottom:9%;
-    display:flex; flex-direction:column; justify-content:flex-start; overflow:hidden; white-space:normal;}
-  .tip .tr{display:flex; gap:8px; padding:6px 0;}
-  .tip .tr + .tr{border-top:1px dotted #d8ead8;}
-  .tip .tk{flex:0 0 56px; font-size:8.5px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:#8aa893; padding-top:1px;}
-  .tip .tv{flex:1; font-size:11px; line-height:1.32; color:#2f4a38;}
+  /* title in the green strip — light/minimal weight to match the identifier oval, not bold */
+  .tip .tiphead{position:absolute; left:31%; right:7%; top:8.6%; height:8.6%;
+    display:flex; align-items:center; justify-content:flex-start; overflow:hidden;
+    font-family:'Avenir Next',sans-serif; font-weight:500; font-size:13px; letter-spacing:.01em; line-height:1; color:#406c50;}
+  /* content inset from ALL bubble edges (consistent margin), vertically centered in the white body */
+  .tip .tipbody{position:absolute; left:32%; right:9%; top:22%; bottom:14%;
+    display:flex; flex-direction:column; justify-content:center; overflow:hidden; white-space:normal;}
+  .tip .tiptable{border:1px solid #dce9dc; border-radius:8px; overflow:hidden; background:#fbfffb;}
+  .tip .tr{display:flex; gap:9px; padding:7px 11px; border-bottom:1px dotted #d8ead8;}
+  .tip .tr:last-child{border-bottom:none;}
+  /* roomier bubble → relaxed letter-spacing + line-height; medium weights for clarity */
+  .tip .tk{flex:0 0 54px; font-size:8px; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:#8aa893; padding-top:1px;}
+  .tip .tv{flex:1; font-size:10.5px; font-weight:500; letter-spacing:.015em; line-height:1.4; color:#2f4a38;}
 
   /* legend */
   .legend{display:flex;gap:16px;align-items:center;flex-wrap:wrap;margin:14px 0 4px;font-size:.72rem;color:var(--muted);}
@@ -90,6 +94,9 @@
   .ebtn .ic{color:#fff;}          /* white icons on teal (Google keeps its colors) */
   .exp-panel{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:12px;}
   .exp-panel[hidden]{display:none;}
+  /* reminder = plain toggle: keep the outline, drop the filled background */
+  .remind{background:transparent;color:var(--muted);box-shadow:none;}
+  .remind:hover{background:transparent;}
   .remind input{width:16px;height:16px;accent-color:#0f6b22;cursor:pointer;}
   .hint{font-size:.7rem;color:var(--muted);font-style:italic;margin-top:10px;}
 
@@ -153,10 +160,10 @@
 
 <!-- glow filters lifted from Henry's TaskTipBubble.svg -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
-  <filter id="tip-glow-1" x="79.65" y="0" width="335" height="239" filterUnits="userSpaceOnUse">
+  <filter id="tip-glow-1" x="99.65" y="0" width="334" height="290" filterUnits="userSpaceOnUse">
     <feOffset dx="0" dy="0"/><feGaussianBlur result="blur" stdDeviation="8"/><feFlood flood-color="#5c605d" flood-opacity=".34"/><feComposite in2="blur" operator="in"/><feComposite in="SourceGraphic"/>
   </filter>
-  <filter id="tip-glow-2" x="57.65" y="44" width="357" height="195" filterUnits="userSpaceOnUse">
+  <filter id="tip-glow-2" x="90.65" y="24" width="343" height="266" filterUnits="userSpaceOnUse">
     <feOffset dx="0" dy="0"/><feGaussianBlur result="blur2" stdDeviation="8"/><feFlood flood-color="#5c605d" flood-opacity=".34"/><feComposite in2="blur2" operator="in"/><feComposite in="SourceGraphic"/>
   </filter>
 </defs></svg>
@@ -188,10 +195,9 @@
     <button class="ebtn" id="exp-toggle"><svg class="ic"><use href="#ic-export"/></svg>Export</button>
     <div class="exp-panel" id="exp-panel" hidden>
       <button class="ebtn" id="exp-ical"><svg class="ic"><use href="#ic-apple"/></svg>iCal</button>
-      <button class="ebtn" id="exp-rem"><svg class="ic"><use href="#ic-apple"/></svg>Reminders</button>
-      <button class="ebtn" id="exp-gcal"><svg class="ic"><use href="#ic-google"/></svg>Google Calendar</button>
+      <button class="ebtn" id="exp-gcal"><svg class="ic" viewBox="25 25 21 21" xmlns="http://www.w3.org/2000/svg"><defs><filter id="gcal-glow" x="0" y="0" width="71" height="71" filterUnits="userSpaceOnUse"><feOffset dx="0" dy="0"/><feGaussianBlur result="blur" stdDeviation="9"/><feFlood flood-color="#5d605d" flood-opacity=".6"/><feComposite in2="blur" operator="in"/><feComposite in="SourceGraphic"/></filter></defs><g filter="url(#gcal-glow)"><rect x="30.57" y="30.57" width="10.18" height="10.18" fill="#fff"/><polygon points="36.44 34.23 36.91 34.9 37.63 34.37 37.63 38.23 38.44 38.23 38.44 33.17 37.77 33.17 36.44 34.23" fill="#69887d"/><path d="M35.17,35.54c.29-.27.47-.63.47-1.04,0-.81-.71-1.46-1.58-1.46-.74,0-1.37.47-1.54,1.13l.77.19c.08-.31.4-.53.78-.53.43,0,.79.3.79.67s-.36.67-.79.67h-.46v.8h.46c.5,0,.92.35.92.76s-.4.76-.89.76c-.45,0-.82-.28-.89-.65l-.78.13c.12.76.84,1.33,1.66,1.33.93,0,1.68-.7,1.68-1.56,0-.47-.23-.9-.6-1.18h0Z" fill="#69887d"/><polygon points="40.29 43.99 31.03 43.99 30.57 42.14 31.03 40.28 40.29 40.28 40.75 42.14 40.29 43.99" fill="#83b29e"/><polygon points="42.13 40.75 43.99 40.28 43.99 31.03 42.13 30.57 40.29 31.03 40.29 40.28 42.13 40.75" fill="#83b29e"/><path d="M40.29,31.03l.46-1.85-.46-1.85h-11.57c-.77,0-1.39.62-1.39,1.39v11.57l1.85.46,1.85-.46v-9.25h9.26Z" fill="#69887d"/><polygon points="40.29 40.28 40.29 43.99 43.99 40.28 40.29 40.28" fill="#5b605d"/><path d="M42.6,27.34h-2.31v3.7h3.7v-2.31c0-.77-.62-1.39-1.39-1.39Z" fill="#5b605d"/><path d="M28.72,43.99h2.31v-3.7h-3.7v2.31c0,.77.62,1.39,1.39,1.39Z" fill="#5b605d"/></g></svg>Google</button>
       <select class="esel" id="scope">
-        <option value="day" selected>Export Day</option>
+        <option value="week" selected>Export Week</option>
         <option value="month">Export Month</option>
         <option value="year">Export Year</option>
       </select>
@@ -213,7 +219,7 @@ const TASKS = [
    steps:['Top up with plain water if below the minimum line','Check the Gardyn app for water level','Confirm water trickles down through all pods']},
   {id:'food', label:'Food', every:7, full:'Add Plant Food',
    desc:'Leafy greens need a lighter, nitrogen-forward feed than fruiting plants',
-   tip:'Add nutrients weekly from week 3 after transplant — half dose wk3, full dose wk4+.',
+   tip:'Add nutrients weekly from week 3 after transplant — half dose week 3, full dose week 4+.',
    steps:['Weeks 1–2 after transplant: plain water only','Week 3 half dose · Week 4+ full dose weekly','Target EC 1.0–1.6 · pH 5.5–6.5']},
   {id:'ph', label:'pH', every:7, full:'Check & Adjust pH',
    desc:'Nutrients and evaporation both shift reservoir pH over the week',
@@ -303,7 +309,7 @@ function cellState(task,date){
 }
 
 /* ════════ MOBILE TRACKER — all geometry dials in ONE place ════════ */
-const M = { cell:20, gap:6, labelW:64, rowH:34, headH:48 };
+const M = { cell:22, gap:6, labelW:64, rowH:28, headH:48 };   // matches the pasted mockup: 22px cells, 28px pitch both ways
 const CELL=M.cell, GAP=M.gap, LABELW=M.labelW, ROWH=M.rowH, HEADH=M.headH;
 const grid=document.getElementById('grid');
 const MONTHS=['January','February','March','April','May','June','July','August','September','October','November','December'];
@@ -325,21 +331,23 @@ function dayWindow(y,m,n,today){
 function toggleDone(taskId,date){ const k=key(taskId,date); if(store.done[k]) delete store.done[k]; else store.done[k]=1; save(); }
 
 function tipMarkup(task){
-  const nd=nextDue(task), ndTxt=MONTHS[nd.getMonth()].slice(0,3)+' '+nd.getDate();
+  const nd=nextDue(task), ndTxt=MONTHS[nd.getMonth()]+' '+nd.getDate();   // full month name, e.g. "June 6"
   const freqTxt = task.every%30===0 ? 'Monthly'
                 : task.every%7===0 ? (task.every===7?'Weekly':'Every '+(task.every/7)+' weeks')
                 : 'Every '+task.every+' days';
   return '<div class="tip">'+
-      '<svg class="tipsvg" viewBox="0 0 414.65 239" xmlns="http://www.w3.org/2000/svg">'+
-        '<g filter="url(#tip-glow-1)"><rect x="105.16" y="25.26" width="284.05" height="188.82" rx="9" ry="9" fill="#d5f4d0" stroke="#90c497" stroke-width="1.5"/></g>'+
-        '<g filter="url(#tip-glow-2)"><path d="M105.16,69.24v50.32l-.08-.06s.05.09.08.13v36.71c-5.9,12.16-15.7,21.15-20.73,25.35,7.4.5,14.35.34,20.73-.35v23.72c0,4.97,4.03,9,9,9h266.05c4.97,0,9-4.03,9-9V69.24H105.16Z" fill="#fff" stroke="#9ac29a" stroke-width="1.5"/></g>'+
+      '<svg class="tipsvg" viewBox="0 0 433.65 290" xmlns="http://www.w3.org/2000/svg">'+
+        '<rect x=".75" y="157.29" width="228.04" height="24.76" rx="10" ry="10" fill="#d5f4d0" stroke="#90c497" stroke-width="1.5"/>'+
+        '<text transform="translate(11.51 174.43)" fill="#406c50" font-family="\'Avenir Next\',sans-serif" font-size="14px" font-weight="500">'+task.label+'</text>'+
+        '<g filter="url(#tip-glow-1)"><path d="M399.87,264.48H133.81c-4.97,0-9-4.03-9-10V33.66c0-3.97,4.03-8,9-8h266.05c4.97,0,9,4.03,9,8v220.82c0,5.97-4.03,10-9,10Z" fill="#d5f4d0" stroke="#90c497" stroke-width="1.5"/></g>'+
+        '<g filter="url(#tip-glow-2)"><path d="M124.81,181.76v73.72c0,4.97,4.03,9,9,9h266.05c4.97,0,9-4.03,9-9V49.65H124.81v70.32l-.08-.06s.05.09.08.13v36.71c0,8.7-7.94,12.91-7.94,12.91,0,0,7.94,3.47,7.94,12.09Z" fill="#fff" stroke="#9ac29a" stroke-width="1.5"/></g>'+
       '</svg>'+
       '<div class="tiphead">'+task.full+'</div>'+
-      '<div class="tipbody">'+
+      '<div class="tipbody"><div class="tiptable">'+
         '<div class="tr"><span class="tk">Method</span><span class="tv">'+task.tip+'</span></div>'+
         '<div class="tr"><span class="tk">Next due</span><span class="tv">'+ndTxt+'</span></div>'+
         '<div class="tr"><span class="tk">Frequency</span><span class="tv">'+freqTxt+'</span></div>'+
-      '</div>'+
+      '</div></div>'+
     '</div>';
 }
 
@@ -413,39 +421,44 @@ function stamp(){ const x=new Date();
   return x.getUTCFullYear()+pad(x.getUTCMonth()+1)+pad(x.getUTCDate())+'T'+pad(x.getUTCHours())+pad(x.getUTCMinutes())+pad(x.getUTCSeconds())+'Z'; }
 function scopeUntil(){
   const s=document.getElementById('scope').value;
-  if(s==='day')   return startOfDay(new Date());
+  if(s==='week')  return startOfDay(new Date(Date.now()+6*DAY));   // through the end of a 7-day window
   if(s==='month') return startOfDay(new Date(view.getFullYear(), view.getMonth(), daysInMonth(view.getFullYear(),view.getMonth())));
   return startOfDay(new Date(Date.now()+365*DAY));
 }
-/* reminder = single checkbox, fires on the day of */
-function alarmBlock(){
+/* reminder = single checkbox; for all-day items it fires at 9am ON the day of.
+   related='START' for VEVENT (relative to DTSTART midnight), 'END' for VTODO (relative to DUE). */
+function alarmBlock(related){
   if(!document.getElementById('reminder').checked) return '';
-  return 'BEGIN:VALARM\r\nACTION:DISPLAY\r\nDESCRIPTION:Thryve care reminder\r\nTRIGGER:-PT0M\r\nEND:VALARM\r\n';
+  return 'BEGIN:VALARM\r\nACTION:DISPLAY\r\nDESCRIPTION:Thryve care reminder\r\nTRIGGER;RELATED='+related+':PT9H\r\nEND:VALARM\r\n';
 }
 function tasksInScope(){
-  if(document.getElementById('scope').value==='day'){
-    const today=startOfDay(new Date());
-    return TASKS.filter(t=>isDue(t,today));
+  if(document.getElementById('scope').value==='week'){
+    const t0=startOfDay(new Date());                                // only tasks that come due in the next 7 days
+    return TASKS.filter(t=>{ for(let i=0;i<7;i++){ if(isDue(t,new Date(t0.getTime()+i*DAY))) return true; } return false; });
   }
   return TASKS.slice();
 }
 function buildICS(kind){
   const scope=document.getElementById('scope').value;
   const until=scopeUntil();
-  let out='BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//Thryve//Tracker//EN\r\nCALSCALE:GREGORIAN\r\n';
+  // X-WR-CALNAME makes the import land in its own "Thryve" calendar (user can color it) →
+  // every entry shows that calendar's colored dot, so titles need only a quiet "·" bullet.
+  let out='BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//Thryve//Tracker//EN\r\nCALSCALE:GREGORIAN\r\n'
+        + 'X-WR-CALNAME:Thryve\r\nX-WR-CALDESC:Gardyn care schedule\r\n';
   tasksInScope().forEach((t,i)=>{
     const start=nextDue(t);
     const uid='thryve-'+t.id+'-'+Date.now()+'-'+i+'@thryve';
     if(kind==='vtodo'){
       out+='BEGIN:VTODO\r\nUID:'+uid+'\r\nDTSTAMP:'+stamp()+'\r\n'
-         + 'DUE;VALUE=DATE:'+fmtDT(start,false)+'\r\nSUMMARY:'+t.label+' (Thryve)\r\n'
-         + 'DESCRIPTION:'+t.tip.replace(/,/g,'\\,')+'\r\n'+alarmBlock()+'END:VTODO\r\n';
+         + 'DUE;VALUE=DATE:'+fmtDT(start,false)+'\r\nSUMMARY:· '+t.label+'\r\n'
+         + 'DESCRIPTION:'+t.tip.replace(/,/g,'\\,')+'\r\n'+alarmBlock('END')+'END:VTODO\r\n';
     } else {
-      const recur = (scope==='day') ? '' : 'RRULE:'+rrule(t.every)+';UNTIL='+fmtDT(until,false)+'\r\n';
+      const recur = 'RRULE:'+rrule(t.every)+';UNTIL='+fmtDT(until,false)+'\r\n';   // week/month/year are all ranges
+      const end = new Date(startOfDay(start).getTime()+DAY);   // all-day event: DTEND is exclusive (next day)
       out+='BEGIN:VEVENT\r\nUID:'+uid+'\r\nDTSTAMP:'+stamp()+'\r\n'
-         + 'DTSTART:'+fmtDT(start,true)+'\r\nDURATION:PT15M\r\n'+recur
-         + 'SUMMARY:'+t.label+' (Thryve)\r\nDESCRIPTION:'+t.tip.replace(/,/g,'\\,')+'\r\n'
-         + alarmBlock()+'END:VEVENT\r\n';
+         + 'DTSTART;VALUE=DATE:'+fmtDT(start,false)+'\r\nDTEND;VALUE=DATE:'+fmtDT(end,false)+'\r\n'+recur
+         + 'SUMMARY:· '+t.label+'\r\nDESCRIPTION:'+t.tip.replace(/,/g,'\\,')+'\r\n'
+         + alarmBlock('START')+'END:VEVENT\r\n';
     }
   });
   out+='END:VCALENDAR\r\n';
@@ -458,9 +471,10 @@ function download(name,text){
 }
 function gcalLink(){
   const t=tasksInScope()[0]; if(!t) return null;
-  const start=nextDue(t); const s=fmtDT(start,true), e=s.replace(/T0900/,'T0915');
-  const p=new URLSearchParams({action:'TEMPLATE', text:t.label+' (Thryve)', details:t.tip, dates:s+'/'+e});
-  if(document.getElementById('scope').value!=='day') p.set('recur','RRULE:'+rrule(t.every));
+  const start=nextDue(t); const end=new Date(startOfDay(start).getTime()+DAY);
+  const s=fmtDT(start,false), e=fmtDT(end,false);   // all-day: YYYYMMDD/YYYYMMDD
+  const p=new URLSearchParams({action:'TEMPLATE', text:'· '+t.label, details:t.tip, dates:s+'/'+e});
+  p.set('recur','RRULE:'+rrule(t.every));   // week/month/year all recur
   return 'https://calendar.google.com/calendar/render?'+p.toString();
 }
 
@@ -486,7 +500,7 @@ function cardHTML(task){
 function renderCards(){
   const wrap=document.getElementById('cards'); if(!wrap) return;
   const today=startOfDay(new Date());
-  const due=TASKS.filter(function(t){ return isDue(t,today) && !store.done[key(t.id,today)]; });   // only incomplete (orange) cards
+  const due=TASKS.filter(function(t){ return isDue(t,today); });   // all of today's tasks — completed ones stay, just go green
   wrap.innerHTML = due.length ? due.map(cardHTML).join('') : '<p class="nocards">Nothing due today — enjoy the day off.</p>';
   wrap.querySelectorAll('.rc-check').forEach(function(el){
     el.onclick=function(){ const k=key(el.getAttribute('data-id'), today);
@@ -501,7 +515,6 @@ document.getElementById('nextM').onclick=()=>{ view=new Date(view.getFullYear(),
 window.addEventListener('resize', function(){ render(); });   // re-fit day columns on resize / orientation change
 document.getElementById('exp-toggle').onclick=()=>{ const p=document.getElementById('exp-panel'); p.hidden=!p.hidden; };
 document.getElementById('exp-ical').onclick =()=>download('thryve-care.ics', buildICS('vevent'));
-document.getElementById('exp-rem').onclick  =()=>download('thryve-reminders.ics', buildICS('vtodo'));
 document.getElementById('exp-gcal').onclick =()=>{ const u=gcalLink(); if(u) window.open(u,'_blank');
   download('thryve-care.ics', buildICS('vevent'));
   document.getElementById('hint').textContent='Opened a Google quick-add for the first task; the full recurring set downloaded as .ics — import via Google Calendar → Settings → Import.'; };

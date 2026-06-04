@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 414.65 289">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #fff;
+        stroke: #9ac29a;
+      }
+
+      .cls-1, .cls-2 {
+        stroke-width: 1.5px;
+      }
+
+      .cls-3 {
+        filter: url(#outer-glow-2);
+      }
+
+      .cls-4 {
+        filter: url(#outer-glow-1);
+      }
+
+      .cls-5 {
+        fill: #406c50;
+        font-family: AvenirNext-DemiBold, 'Avenir Next';
+        font-size: 14px;
+        font-weight: 300;
+        isolation: isolate;
+      }
+
+      .cls-6 {
+        letter-spacing: 0em;
+      }
+
+      .cls-2 {
+        fill: #d5f4d0;
+        stroke: #90c497;
+      }
+
+      .cls-7 {
+        letter-spacing: -.05em;
+      }
+    </style>
+    <filter id="outer-glow-1" x="79.65" y="0" width="335" height="289" filterUnits="userSpaceOnUse">
+      <feOffset dx="0" dy="0"/>
+      <feGaussianBlur result="blur" stdDeviation="8"/>
+      <feFlood flood-color="#5c605d" flood-opacity=".34"/>
+      <feComposite in2="blur" operator="in"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <filter id="outer-glow-2" x="57.65" y="44" width="357" height="245" filterUnits="userSpaceOnUse">
+      <feOffset dx="0" dy="0"/>
+      <feGaussianBlur result="blur-2" stdDeviation="8"/>
+      <feFlood flood-color="#5c605d" flood-opacity=".34"/>
+      <feComposite in2="blur-2" operator="in"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <rect class="cls-2" x=".75" y="157.29" width="228.04" height="24.76" rx="10" ry="10"/>
+  <text class="cls-5" transform="translate(11.51 174.43)"><tspan class="cls-7" x="0" y="0">P</tspan><tspan class="cls-6" x="7.9" y="0">rune</tspan></text>
+  <g>
+    <g class="cls-4">
+      <rect class="cls-2" x="105.16" y="25.26" width="284.05" height="238.82" rx="9" ry="9"/>
+    </g>
+    <g class="cls-3">
+      <path class="cls-1" d="M105.16,69.24v50.32l-.08-.06s.05.09.08.13v36.71c-5.9,12.16-15.7,21.15-20.73,25.35,7.4.5,14.35.34,20.73-.35v73.72c0,4.97,4.03,9,9,9h266.05c4.97,0,9-4.03,9-9V69.24H105.16Z"/>
+    </g>
+  </g>
+</svg>

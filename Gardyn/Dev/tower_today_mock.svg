@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="776" height="932" viewBox="0 0 776 932">
+<defs><filter id="sh" x="-60%" y="-60%" width="220%" height="220%"><feDropShadow dx="0" dy="6" stdDeviation="9" flood-color="#000" flood-opacity="0.18"/></filter></defs>
+<rect width="776" height="932" fill="#f0faf0"/>
+<rect x="426" y="48" width="92" height="896" rx="14" fill="#fff" filter="url(#sh)"/>
+<text x="160" y="70" font-family="Avenir Next, sans-serif" font-size="18" fill="#9cc49c" text-anchor="middle">1</text>
+<text x="212" y="70" font-family="Avenir Next, sans-serif" font-size="18" fill="#9cc49c" text-anchor="middle">2</text>
+<text x="264" y="70" font-family="Avenir Next, sans-serif" font-size="18" fill="#9cc49c" text-anchor="middle">3</text>
+<text x="316" y="70" font-family="Avenir Next, sans-serif" font-size="18" fill="#9cc49c" text-anchor="middle">4</text>
+<text x="368" y="70" font-family="Avenir Next, sans-serif" font-size="18" fill="#9cc49c" text-anchor="middle">5</text>
+<text x="420" y="70" font-family="Avenir Next, sans-serif" font-size="18" fill="#9cc49c" text-anchor="middle">6</text>
+<text x="524" y="70" font-family="Avenir Next, sans-serif" font-size="18" fill="#9cc49c" text-anchor="middle">8</text>
+<text x="576" y="70" font-family="Avenir Next, sans-serif" font-size="18" fill="#9cc49c" text-anchor="middle">9</text>
+<text x="628" y="70" font-family="Avenir Next, sans-serif" font-size="18" fill="#9cc49c" text-anchor="middle">10</text>
+<text x="680" y="70" font-family="Avenir Next, sans-serif" font-size="18" fill="#9cc49c" text-anchor="middle">11</text>
+<text x="732" y="70" font-family="Avenir Next, sans-serif" font-size="18" fill="#9cc49c" text-anchor="middle">12</text>
+<text x="472" y="74" font-family="Avenir Next, sans-serif" font-size="30" font-weight="800" fill="#0f6b22" text-anchor="middle">7</text>
+<text x="0" y="117" font-family="Avenir Next, sans-serif" font-size="24" fill="#4a6b52">Water</text>
+<text x="0" y="185" font-family="Avenir Next, sans-serif" font-size="24" fill="#4a6b52">Food</text>
+<text x="0" y="253" font-family="Avenir Next, sans-serif" font-size="24" fill="#4a6b52">pH</text>
+<text x="0" y="321" font-family="Avenir Next, sans-serif" font-size="24" fill="#4a6b52">Tank</text>
+<text x="0" y="389" font-family="Avenir Next, sans-serif" font-size="24" fill="#4a6b52">Deadhead</text>
+<text x="0" y="457" font-family="Avenir Next, sans-serif" font-size="24" fill="#4a6b52">Harvest</text>
+<text x="0" y="525" font-family="Avenir Next, sans-serif" font-size="24" fill="#4a6b52">Prune</text>
+<text x="0" y="593" font-family="Avenir Next, sans-serif" font-size="24" fill="#4a6b52">Tower</text>
+<text x="0" y="661" font-family="Avenir Next, sans-serif" font-size="24" fill="#4a6b52">Tray</text>
+<text x="0" y="729" font-family="Avenir Next, sans-serif" font-size="24" fill="#4a6b52">Mildew</text>
+<text x="0" y="797" font-family="Avenir Next, sans-serif" font-size="24" fill="#4a6b52">Pests</text>
+<text x="0" y="865" font-family="Avenir Next, sans-serif" font-size="24" fill="#4a6b52">Roots</text>
+<rect x="140" y="92" width="40" height="40" rx="5" fill="#f0cd8a"/>
+<rect x="348" y="92" width="40" height="40" rx="5" fill="#f0cd8a"/>
+<rect x="556" y="92" width="40" height="40" rx="5" fill="#d4d4d4"/>
+<rect x="296" y="160" width="40" height="40" rx="5" fill="#f0cd8a"/>
+<rect x="504" y="160" width="40" height="40" rx="5" fill="#d4d4d4"/>
+<rect x="712" y="160" width="40" height="40" rx="5" fill="#d4d4d4"/>
+<rect x="244" y="228" width="40" height="40" rx="5" fill="#f0cd8a"/>
+<rect x="660" y="228" width="40" height="40" rx="5" fill="#d4d4d4"/>
+<rect x="192" y="296" width="40" height="40" rx="5" fill="#f0cd8a"/>
+<rect x="400" y="296" width="40" height="40" rx="5" fill="#f0cd8a"/>
+<rect x="608" y="296" width="40" height="40" rx="5" fill="#d4d4d4"/>
+<rect x="140" y="364" width="40" height="40" rx="5" fill="#f0cd8a"/>
+<rect x="348" y="364" width="40" height="40" rx="5" fill="#f0cd8a"/>
+<rect x="556" y="364" width="40" height="40" rx="5" fill="#d4d4d4"/>
+<rect x="296" y="432" width="40" height="40" rx="5" fill="#f0cd8a"/>
+<rect x="504" y="432" width="40" height="40" rx="5" fill="#d4d4d4"/>
+<rect x="712" y="432" width="40" height="40" rx="5" fill="#d4d4d4"/>
+<rect x="244" y="500" width="40" height="40" rx="5" fill="#f0cd8a"/>
+<rect x="660" y="500" width="40" height="40" rx="5" fill="#d4d4d4"/>
+<rect x="192" y="568" width="40" height="40" rx="5" fill="#f0cd8a"/>
+<rect x="400" y="568" width="40" height="40" rx="5" fill="#f0cd8a"/>
+<rect x="608" y="568" width="40" height="40" rx="5" fill="#d4d4d4"/>
+<rect x="140" y="636" width="40" height="40" rx="5" fill="#f0cd8a"/>
+<rect x="348" y="636" width="40" height="40" rx="5" fill="#f0cd8a"/>
+<rect x="556" y="636" width="40" height="40" rx="5" fill="#d4d4d4"/>
+<rect x="296" y="704" width="40" height="40" rx="5" fill="#f0cd8a"/>
+<rect x="504" y="704" width="40" height="40" rx="5" fill="#d4d4d4"/>
+<rect x="712" y="704" width="40" height="40" rx="5" fill="#d4d4d4"/>
+<rect x="244" y="772" width="40" height="40" rx="5" fill="#f0cd8a"/>
+<rect x="660" y="772" width="40" height="40" rx="5" fill="#d4d4d4"/>
+<rect x="192" y="840" width="40" height="40" rx="5" fill="#f0cd8a"/>
+<rect x="400" y="840" width="40" height="40" rx="5" fill="#f0cd8a"/>
+<rect x="608" y="840" width="40" height="40" rx="5" fill="#d4d4d4"/>
+<rect x="440" y="80" width="64" height="64" rx="7" fill="#f0cd8a"/>
+<rect x="440" y="148" width="64" height="64" rx="7" fill="#f0cd8a"/>
+<rect x="440" y="216" width="64" height="64" rx="7" fill="#f0cd8a"/>
+<rect x="440" y="352" width="64" height="64" rx="7" fill="#f0cd8a"/>
+<rect x="440" y="420" width="64" height="64" rx="7" fill="#86cc78"/>
+<rect x="440" y="488" width="64" height="64" rx="7" fill="#f0cd8a"/>
+<rect x="440" y="624" width="64" height="64" rx="7" fill="#86cc78"/>
+<rect x="440" y="692" width="64" height="64" rx="7" fill="#f0cd8a"/>
+<rect x="440" y="760" width="64" height="64" rx="7" fill="#f0cd8a"/>
+</svg>
