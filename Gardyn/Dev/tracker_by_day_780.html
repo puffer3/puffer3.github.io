@@ -47,15 +47,13 @@
   .cell.sched{background:#d4d4d4;}                       /* upcoming (future, not yet due) — grey */
   .cell.overdue{background:#f0cd8a;}                     /* incomplete — today or earlier, not done — dull orange */
   .cell.done{background:var(--done);}                    /* completed (any day) — green */
-  .cell.none:hover{background:rgba(0,0,0,.05);}          /* faint — off-day logging is still possible */
-  .cell.sched:hover,.cell.overdue:hover,.cell.done:hover{transform:scale(1.18); box-shadow:0 1px 4px rgba(0,0,0,.18); z-index:2;}
+  @media (hover:hover){   /* size-bump only on real-hover (mouse) devices — not sticky on touch */
+    .cell.none:hover{background:rgba(0,0,0,.05);}
+    .cell.sched:hover,.cell.overdue:hover,.cell.done:hover{transform:scale(1.18); box-shadow:0 1px 4px rgba(0,0,0,.18); z-index:2;}
+  }
   .dnum.dtoday{color:var(--moss); font-weight:700;}
   .todaybar{position:absolute; background:#fff; border-radius:7px; z-index:0; pointer-events:none;
     box-shadow:0 5px 22px rgba(0,0,0,.18), 0 0 0 1px rgba(0,0,0,.04);}
-  /* ── MOBILE: enlarged TODAY column ── */
-  .dnum.dbig{font-size:17px; font-weight:800; color:var(--moss);}
-  .cell.cellbig{border-radius:7px;}
-  .todaybar.todaybig{box-shadow:0 6px 26px rgba(0,0,0,.20), 0 0 0 1px rgba(0,0,0,.05);}
   .sowprint{margin-left:auto; font-size:.72rem; color:var(--muted); font-style:italic;}
 
   /* tooltip = Henry's TaskTipBubble.svg shapes, filled with recipe-card content */
@@ -298,14 +296,14 @@ function cellState(task,date){
   const today=startOfDay(new Date()).getTime();
   const t=startOfDay(date).getTime();
   const due=isDue(task,date), done=store.done[key(task.id,date)];
-  if(t===today) return due ? (done?'done':'overdue') : 'none';    // today column: only scheduled tasks colour; rest stay white
-  if(done) return 'done';                                          // green — completed (history)
+  if(done) return 'done';                                          // green — completed any day (incl. off-schedule clicks)
+  if(t===today) return due ? 'overdue' : 'none';                   // today: due = orange, otherwise stays white
   if(due) return (t<today) ? 'overdue' : 'sched';                 // orange = past incomplete; grey = upcoming
   return 'none';
 }
 
 /* ════════ MOBILE TRACKER — all geometry dials in ONE place ════════ */
-const M = { cell:20, gap:6, labelW:64, rowH:34, headH:48, todayScale:1.6, barTop:24 };
+const M = { cell:20, gap:6, labelW:64, rowH:34, headH:48 };
 const CELL=M.cell, GAP=M.gap, LABELW=M.labelW, ROWH=M.rowH, HEADH=M.headH;
 const grid=document.getElementById('grid');
 const MONTHS=['January','February','March','April','May','June','July','August','September','October','November','December'];
@@ -359,21 +357,29 @@ function render(){
   grid.style.width  = (colX(win.count-1)+CELL+4)+'px';
   grid.style.height = (rowY(TASKS.length)+8)+'px';
 
-  // day numbers (today drawn enlarged below)
+  // TODAY white column (normal width, drop shadow) — behind the cells
+  if(todayCol>=0){
+    const bar=document.createElement('div'); bar.className='todaybar';
+    const barTop=24;
+    bar.style.left=(colX(todayCol)-3)+'px'; bar.style.top=barTop+'px';
+    bar.style.width=(CELL+6)+'px';
+    bar.style.height=((TASKS.length-1)*ROWH+CELL+12+(rowY(0)-6-barTop))+'px';
+    grid.appendChild(bar);
+  }
+
+  // day numbers (today = bold green)
   for(let i=0;i<win.count;i++){
-    if(i===todayCol) continue;
-    const dn=document.createElement('div'); dn.className='dnum';
+    const dn=document.createElement('div'); dn.className='dnum'+(i===todayCol?' dtoday':'');
     dn.style.left=colX(i)+'px'; dn.style.top='30px'; dn.textContent=win.start+i; grid.appendChild(dn);
   }
 
-  // task rows + base cells (today column drawn enlarged below)
+  // task rows + cells (every column the same size)
   TASKS.forEach((task,r)=>{
     const lab=document.createElement('div'); lab.className='tlabel';
     lab.style.top=(rowY(r)+CELL/2-7)+'px';
     lab.innerHTML = task.label + tipMarkup(task);
     grid.appendChild(lab);
     for(let i=0;i<win.count;i++){
-      if(i===todayCol) continue;
       const date=startOfDay(new Date(y,m,win.start+i));
       const cell=document.createElement('div'); cell.className='cell '+cellState(task,date);
       cell.style.left=colX(i)+'px'; cell.style.top=rowY(r)+'px';
@@ -382,31 +388,7 @@ function render(){
       grid.appendChild(cell);
     }
   });
-
-  if(todayCol>=0) renderTodayColumn(todayCol, y, m, today);
   renderCards();
-}
-
-// enlarged, clickable TODAY column — drawn on top, so base layout math stays simple
-function renderTodayColumn(i, y, m, today){
-  const big=Math.round(CELL*M.todayScale), cx=colX(i)+CELL/2, day=today.getDate();
-  const bar=document.createElement('div'); bar.className='todaybar todaybig';
-  const barW=big+14;
-  bar.style.left=(cx-barW/2)+'px'; bar.style.top=M.barTop+'px';
-  bar.style.width=barW+'px';
-  bar.style.height=((TASKS.length-1)*ROWH + big + 22 + (rowY(0)-M.barTop))+'px';
-  grid.appendChild(bar);
-  const dn=document.createElement('div'); dn.className='dnum dtoday dbig';
-  dn.style.left=(cx-big/2)+'px'; dn.style.width=big+'px'; dn.style.top='22px'; dn.textContent=day; grid.appendChild(dn);
-  TASKS.forEach((task,r)=>{
-    const date=startOfDay(new Date(y,m,day));
-    const cell=document.createElement('div'); cell.className='cell cellbig '+cellState(task,date);
-    cell.style.left=(cx-big/2)+'px'; cell.style.top=(rowY(r)+CELL/2-big/2)+'px';
-    cell.style.width=big+'px'; cell.style.height=big+'px';
-    cell.title=task.label+' · '+iso(date);
-    cell.onclick=()=>{ toggleDone(task.id,date); render(); };
-    grid.appendChild(cell);
-  });
 }
 
 /* ───────────────────────── .ics export ───────────────────────── */

@@ -41,8 +41,10 @@
   .cell.sched{background:#d4d4d4;}                       /* upcoming (future, not yet due) — grey */
   .cell.overdue{background:#f0cd8a;}                     /* incomplete — today or earlier, not done — dull orange */
   .cell.done{background:var(--done);}                    /* completed (any day) — green */
-  .cell.none:hover{background:rgba(0,0,0,.05);}          /* faint — off-day logging is still possible */
-  .cell.sched:hover,.cell.overdue:hover,.cell.done:hover{transform:scale(1.18); box-shadow:0 1px 4px rgba(0,0,0,.18); z-index:2;}
+  @media (hover:hover){   /* size-bump only on real-hover (mouse) devices — not sticky on touch */
+    .cell.none:hover{background:rgba(0,0,0,.05);}
+    .cell.sched:hover,.cell.overdue:hover,.cell.done:hover{transform:scale(1.18); box-shadow:0 1px 4px rgba(0,0,0,.18); z-index:2;}
+  }
   .dnum.dtoday{color:var(--moss); font-weight:700;}
   .todaybar{position:absolute; background:#fff; border-radius:7px; z-index:0; pointer-events:none;
     box-shadow:0 5px 22px rgba(0,0,0,.18), 0 0 0 1px rgba(0,0,0,.04);}
@@ -287,8 +289,8 @@ function cellState(task,date){
   const today=startOfDay(new Date()).getTime();
   const t=startOfDay(date).getTime();
   const due=isDue(task,date), done=store.done[key(task.id,date)];
-  if(t===today) return due ? (done?'done':'overdue') : 'none';    // today column: only scheduled tasks colour; rest stay white
-  if(done) return 'done';                                          // green — completed (history)
+  if(done) return 'done';                                          // green — completed any day (incl. off-schedule clicks)
+  if(t===today) return due ? 'overdue' : 'none';                   // today: due = orange, otherwise stays white
   if(due) return (t<today) ? 'overdue' : 'sched';                 // orange = past incomplete; grey = upcoming
   return 'none';
 }
