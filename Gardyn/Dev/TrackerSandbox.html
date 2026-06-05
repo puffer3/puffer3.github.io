@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tracker Sandbox — Archive interaction</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #f0faf0;
+    --parchment: #dff0da;
+    --ink: #0f1a0f;
+    --moss: #0f6b22;
+    --sage: #6aaa50;
+    --terracotta: #b85c38;
+    --gold: #c4962a;
+    --muted: #4a6b52;
+    --divider: #9cc49c;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: linear-gradient(165deg, #f6fdf4 0%, #e6f4e2 50%, #d4eccf 100%);
+    background-attachment: fixed;
+    color: var(--ink);
+    font-family: 'Jost', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+  /* same column width as the real page */
+  .page { max-width: 780px; margin: 0 auto; padding: 40px 0 64px; }
+  h1 { font-family: 'Cormorant Garamond', serif; font-weight: 600; color: var(--moss); font-size: 1.9rem; margin-bottom: 4px; }
+  .sub { color: var(--muted); font-size: 0.85rem; font-style: italic; margin-bottom: 24px; }
+
+  /* ── health labels ── */
+  .health-good { color: #2d6a2d; font-weight: 600; }
+  .health-check { color: #b7770d; font-weight: 600; }
+  .health-harvest { color: #1a5fa8; font-weight: 600; }
+  .health-replace { color: var(--terracotta); font-weight: 600; }
+  .health-sprout { color: var(--muted); font-style: italic; }
+
+  /* ── buttons ── */
+  .del-btn { background: #fde8e8; border: 1px solid #f0c0b0; color: var(--terracotta); cursor: pointer; font-size: 0.7rem; padding: 4px 10px; border-radius: 3px; font-family: 'Jost', sans-serif; letter-spacing: 0.08em; text-transform: uppercase; white-space: nowrap; }
+  .del-btn:hover { background: var(--terracotta); color: white; }
+  .edit-btn { background: #eaf2fb; border: 1px solid #b8d4ee; color: #2a6496; cursor: pointer; font-size: 0.7rem; padding: 4px 10px; border-radius: 3px; font-family: 'Jost', sans-serif; letter-spacing: 0.08em; text-transform: uppercase; white-space: nowrap; }
+  .edit-btn:hover { background: #2a6496; color: white; }
+  .archive-btn { background: #f9f0d3; border: 1px solid #e2c878; color: #8f6a12; cursor: pointer; font-size: 0.7rem; padding: 4px 10px; border-radius: 3px; font-family: 'Jost', sans-serif; letter-spacing: 0.08em; text-transform: uppercase; white-space: nowrap; }
+  .archive-btn:hover { background: var(--gold); color: white; }
+  .undo-btn { background: #e2f1ec; border: 1px solid #78b39c; color: #2e7d68; cursor: pointer; font-size: 0.7rem; padding: 4px 10px; border-radius: 3px; font-family: 'Jost', sans-serif; letter-spacing: 0.08em; text-transform: uppercase; white-space: nowrap; }
+  .undo-btn:hover { background: #54ac9b; color: white; }
+
+  /* ── archived (tombstone) card ── */
+  .tk-archived {
+    position: relative;
+    background: var(--cream);
+    border: 1.5px solid var(--divider);
+    border-radius: 8px;
+    margin-bottom: 12px;
+    padding: 16px 20px 16px 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    overflow: hidden;
+    animation: tomb 0.32s ease;
+  }
+  @keyframes tomb { from { opacity: 0.2; } to { opacity: 1; } }
+  .tk-archived .accent { position: absolute; left: 0; top: 0; bottom: 0; width: 5px; }
+  .tk-archived .arc-body { flex: 1; min-width: 0; }
+  .tk-archived .eyebrow { font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin-bottom: 6px; }
+  .tk-archived .eyebrow .cat { color: var(--moss); }
+  .tk-archived .headline { font-size: 1.4rem; color: var(--ink); font-weight: 700; line-height: 1.15; }
+  .tk-archived .headline .arc { color: var(--muted); font-weight: 500; }
+  .tk-archived .phrase { font-size: 0.92rem; font-style: italic; color: #3a5240; margin-top: 6px; }
+</style>
+</head>
+<body>
+<div class="page">
+  <h1>Tracker Sandbox</h1>
+  <p class="sub">Real page width and card data. Archive a card &rarr; it collapses in place. Undo restores it. Funny line is random per family.</p>
+  <div id="cards"></div>
+</div>
+
+<script>
+  // ── real plant data (subset of TrackerMbile.html PLANT_DATA) ──
+  var PLANT_DATA = {
+    "Buttercrunch":   {s2sp:5,  sp2h:21, gf:60,  thin:1, ph:"6.0-7.0", light:"low",    pets:"Safe"},
+    "Kale":           {s2sp:7,  sp2h:35, gf:90,  thin:1, ph:"5.5-6.5", light:"high",   pets:"Safe"},
+    "Cherry Tomatoes":{s2sp:7,  sp2h:60, gf:90,  thin:1, ph:"5.5-6.5", light:"high",   pets:"Toxic to cats/dogs"},
+    "Chervil":        {s2sp:7,  sp2h:28, gf:60,  thin:1, ph:"6.0-6.8", light:"low",    pets:"Safe"},
+    "Basil":          {s2sp:7,  sp2h:28, gf:120, thin:1, ph:"5.5-6.5", light:"high",   pets:"Mildly toxic"},
+    "Marigold":       {s2sp:5,  sp2h:28, gf:90,  thin:1, ph:"6.0-7.5", light:"high",   pets:"Safe"},
+    "Pink Petunia":   {s2sp:10, sp2h:42, gf:90,  thin:1, ph:"6.0-7.0", light:"low",    pets:"Safe"}
+  };
+
+  // ── plant family map (drives the funny line). In the real page this is derived
+  //    from the PLANT_DATA comment sections: leafy + fruiting = edible. ──
+  var CATEGORY = {
+    "Buttercrunch":'edible', "Kale":'edible', "Cherry Tomatoes":'edible',
+    "Chervil":'herb', "Basil":'herb',
+    "Marigold":'flower', "Pink Petunia":'flower'
+  };
+  var CAT_META = {
+    flower: { label:'Flower', accent:'#c2557f' },
+    herb:   { label:'Herb',   accent:'#2e8b57' },
+    edible: { label:'Edible', accent:'#b85c38' }
+  };
+
+  // ── funny lines, 5 per family — tweak freely ──
+  var PHRASES = {
+    flower: [
+      'Off to the great vase in the sky.',
+      'Pushing up daisies — ironically.',
+      'Pressed into the scrapbook of memory.',
+      'Bloomed, boomed, and bowed out.',
+      'Gone to seed in the sky garden.'
+    ],
+    herb: [
+      'Hung up to dry — permanently.',
+      'Resting in the spice cabinet of eternity.',
+      'Seasoned its last dish.',
+      'Now garnishing the great kitchen beyond.',
+      'Dried, crushed, and dearly departed.'
+    ],
+    edible: [
+      'Gone to the great salad bowl in the sky.',
+      'Composted dreams, crisp memories.',
+      'Harvested by history.',
+      'Tossed into the eternal mixing bowl.',
+      'Off to feed the worms — full circle.'
+    ]
+  };
+
+  // ── sample tracker (mirrors the real trackerPlants shape) ──
+  function mk(id, pod, name, date, qty, sprouted, notes){
+    var d = PLANT_DATA[name];
+    return { id:id, pod:pod, name:name, date:date, qty:qty, sprouted:sprouted, notes:notes||'',
+             s2sp:d.s2sp, sp2h:d.sp2h, gf:d.gf, thin:d.thin, ph:d.ph, light:d.light, pets:d.pets, archived:false };
+  }
+  var plants = [
+    mk(1, '14', 'Marigold',       '2026-04-22', 1, 'Yes', 'corner pod, full sun'),
+    mk(2, '3',  'Chervil',        '2026-05-12', 1, 'No',  ''),
+    mk(3, '7',  'Buttercrunch',   '2026-04-18', 2, 'Yes', 'second sowing'),
+    mk(4, '11', 'Cherry Tomatoes','2026-03-30', 1, 'Yes', 'staked')
+  ];
+  var archiveLine = {};
+  var archiveHeight = {};   // remembers the replaced card's height so the tombstone matches it
+
+  // ── helpers (copied from the real page) ──
+  function addDays(date, days){ var d=new Date(date); d.setDate(d.getDate()+days); return d; }
+  function fmtDate(d){ return d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}); }
+  function getHealth(planted, s2sp, sp2h, gf, sprouted){
+    var now=new Date();
+    var sproutDate=addDays(planted,s2sp), harvestDate=addDays(planted,s2sp+sp2h), dieDate=addDays(planted,s2sp+sp2h+gf);
+    if(sprouted==='No' && now<sproutDate) return {label:'Germinating', cls:'health-sprout'};
+    if(sprouted==='No' && now>=sproutDate) return {label:'Check Plant', cls:'health-check'};
+    if(now<harvestDate) return {label:'Growing', cls:'health-good'};
+    if(now<dieDate) return {label:'Ready to Harvest', cls:'health-harvest'};
+    return {label:'Time to Replace', cls:'health-replace'};
+  }
+
+  function catOf(name){ return CATEGORY[name] || 'edible'; }
+  function rollPhrase(cat){ var p=PHRASES[cat]; return p[Math.floor(Math.random()*p.length)]; }
+
+  function doArchive(id){
+    var el=document.getElementById('card-'+id);
+    if(el) archiveHeight[id]=el.offsetHeight;   // match the tombstone to the card it replaces
+    plants.forEach(function(p){ if(p.id===id){ p.archived=true; archiveLine[id]=rollPhrase(catOf(p.name)); } });
+    render();
+  }
+  function doUndo(id){ plants.forEach(function(p){ if(p.id===id){ p.archived=false; delete archiveLine[id]; delete archiveHeight[id]; } }); render(); }
+  function doRemove(id){ plants=plants.filter(function(p){ return p.id!==id; }); render(); }
+
+  var lbl  = "font-family:Jost,sans-serif;font-size:0.48rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:2px;";
+  var val  = 'font-size:0.82rem;color:var(--ink);';
+  var valm = 'font-size:0.78rem;color:var(--muted);';
+
+  function activeCard(p){
+    var planted=new Date(p.date+'T12:00:00');
+    var sproutDate=addDays(planted,p.s2sp);
+    var harvestDate=addDays(planted,p.s2sp+p.sp2h);
+    var dieDate=addDays(planted,p.s2sp+p.sp2h+p.gf);
+    var replantDate=addDays(dieDate,-(p.s2sp+p.sp2h));
+    var health=getHealth(planted,p.s2sp,p.sp2h,p.gf,p.sprouted);
+    var petColor=p.pets==='Safe'?'#2d6a2d':'#b85c38';
+    var lightDot=p.light==='high'?'#e8a020':p.light==='medium'?'#6aaa50':'#5a8abf';
+    var sproutedBtn = p.sprouted==='Yes'
+      ? '<button style="background:#d0f0d0;color:#2d6a2d;border:none;border-radius:3px;padding:2px 9px;font-size:0.7rem;cursor:pointer;white-space:nowrap;">Sprouted</button>'
+      : '<button style="background:#f5edda;color:#c4962a;border:none;border-radius:3px;padding:2px 9px;font-size:0.7rem;cursor:pointer;white-space:nowrap;">Not Sprouted</button>';
+
+    return '<div class="tk-card" id="card-'+p.id+'" style="background:var(--cream);border:1.5px solid var(--divider);border-radius:8px;margin-bottom:12px;overflow:hidden;">'
+      + '<div class="tk-top" style="display:flex;align-items:center;gap:10px;padding:8px 12px;background:#eaf7ea;flex-wrap:wrap;">'
+        + '<span style="font-size:0.7rem;color:var(--muted);font-family:Jost,sans-serif;text-transform:uppercase;letter-spacing:0.1em;">Pod</span>'
+        + '<span style="font-size:0.85rem;font-weight:600;color:var(--ink);">'+p.pod+'</span>'
+        + '<span style="color:var(--divider);">|</span>'
+        + '<span style="font-size:0.9rem;font-weight:600;color:var(--ink);">'+p.name+'</span>'
+        + '<span style="color:var(--divider);">|</span>'
+        + '<span style="font-size:0.8rem;color:var(--muted);">'+p.date+'</span>'
+        + '<span style="color:var(--divider);">|</span>'
+        + sproutedBtn
+        + '<span style="margin-left:auto;display:flex;gap:6px;">'
+          + '<button class="edit-btn">✎ Edit</button>'
+          + '<button class="archive-btn" onclick="doArchive('+p.id+')" title="Archive — keep in memory, hide from active tracker">⌗ Archive</button>'
+          + '<button class="del-btn" onclick="doRemove('+p.id+')">✕</button>'
+        + '</span>'
+      + '</div>'
+      + '<div class="tk-grid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:0;">'
+        + '<div style="padding:8px 12px;border-right:1px solid var(--divider);border-bottom:1px solid var(--divider);"><span style="'+lbl+'">Seed → Sprout</span><span style="'+val+'">'+p.s2sp+' days</span></div>'
+        + '<div style="padding:8px 12px;border-right:1px solid var(--divider);border-bottom:1px solid var(--divider);"><span style="'+lbl+'">Sprout → Harvest</span><span style="'+val+'">'+p.sp2h+' days</span></div>'
+        + '<div style="padding:8px 12px;border-right:1px solid var(--divider);border-bottom:1px solid var(--divider);"><span style="'+lbl+'">Good For</span><span style="'+val+'">'+p.gf+' days</span></div>'
+        + '<div style="padding:8px 12px;border-bottom:1px solid var(--divider);"><span style="'+lbl+'">Health</span><span class="'+health.cls+'" style="font-size:0.82rem;">'+health.label+'</span></div>'
+        + '<div style="padding:8px 12px;border-right:1px solid var(--divider);border-bottom:1px solid var(--divider);"><span style="'+lbl+'">Expected Sprout</span><span style="'+valm+'">'+fmtDate(sproutDate)+'</span></div>'
+        + '<div style="padding:8px 12px;border-right:1px solid var(--divider);border-bottom:1px solid var(--divider);"><span style="'+lbl+'">1st Harvest</span><span style="font-size:0.82rem;color:#2d6a2d;font-weight:600;">'+fmtDate(harvestDate)+'</span></div>'
+        + '<div style="padding:8px 12px;border-right:1px solid var(--divider);border-bottom:1px solid var(--divider);"><span style="'+lbl+'">Est. Die-Off</span><span style="font-size:0.82rem;color:#b85c38;">'+fmtDate(dieDate)+'</span></div>'
+        + '<div style="padding:8px 12px;border-bottom:1px solid var(--divider);"><span style="'+lbl+'">Replant By</span><span style="font-size:0.82rem;color:#c4962a;">'+fmtDate(replantDate)+'</span></div>'
+        + '<div style="padding:8px 12px;border-right:1px solid var(--divider);"><span style="'+lbl+'">Light · Pets · pH</span><span style="'+valm+'"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:'+lightDot+';margin-right:3px;vertical-align:middle;"></span>'+p.light+' · <span style="color:'+petColor+';">'+p.pets+'</span> · pH '+p.ph+'</span></div>'
+        + '<div style="padding:8px 12px;border-right:1px solid var(--divider);"><span style="'+lbl+'">Qty · Thin To</span><span style="'+valm+'">'+p.qty+' · →'+p.thin+'</span></div>'
+        + '<div style="padding:8px 12px;grid-column:span 2;"><span style="'+lbl+'">Notes</span><span style="font-size:0.78rem;color:var(--muted);">'+(p.notes||'—')+'</span></div>'
+      + '</div>'
+    + '</div>';
+  }
+
+  function archivedCard(p){
+    var cat=catOf(p.name), m=CAT_META[cat];
+    var line=archiveLine[p.id] || rollPhrase(cat);
+    var hStyle = archiveHeight[p.id] ? 'min-height:'+archiveHeight[p.id]+'px;' : '';
+    return '<div class="tk-archived" style="'+hStyle+'">'
+      + '<span class="accent" style="background:'+m.accent+';"></span>'
+      + '<div class="arc-body">'
+        + '<div class="eyebrow">Pod '+p.pod+' &nbsp;·&nbsp; <span class="cat" style="color:'+m.accent+';">'+m.label+'</span></div>'
+        + '<div class="headline">'+p.name+' <span class="arc">archived</span></div>'
+        + '<div class="phrase" style="color:'+m.accent+';">'+line+'</div>'
+      + '</div>'
+      + '<button class="undo-btn" onclick="doUndo('+p.id+')">↩ Undo</button>'
+    + '</div>';
+  }
+
+  function render(){
+    var html='';
+    plants.forEach(function(p){ html += p.archived ? archivedCard(p) : activeCard(p); });
+    document.getElementById('cards').innerHTML = html;
+  }
+  render();
+</script>
+</body>
+</html>

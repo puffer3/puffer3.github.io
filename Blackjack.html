@@ -6,6 +6,8 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Basic Strategy">
+<meta name="theme-color" content="#080808">
+<meta name="color-scheme" content="dark">
 <title>Blackjack Basic Strategy - HAL</title>
 <link href="https://fonts.googleapis.com/css2?family=Gill+Sans+Nova:wght@200;300;400;600&display=swap" rel="stylesheet">
 <style>
@@ -15,6 +17,7 @@
     Gill Sans Light - clean, institutional, slightly cold
   */
   :root {
+    color-scheme: dark;
     --black:    #080808;
     --panel:    #111210;
     --border:   #888880;
@@ -28,6 +31,10 @@
     --wrong:    #c84040;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html {
+    background: var(--black);
+  }
 
   body {
     background: var(--black);
@@ -867,16 +874,16 @@ const ALL_CARDS = [
   { cat:"Hard Totals", q:"Hard 19\nDealer showing Ace", action:"STAND", cls:"stand", detail:"Always <strong>stand</strong> on hard 17 or more." },
 
   // -- SOFT TOTALS --
-  { cat:"Soft Totals", q:"Soft 13 (A,2)\nDealer showing 5", action:"DOUBLE", cls:"double", detail:"<strong>Double</strong> vs dealer 5-6.<br>Otherwise hit." },
-  { cat:"Soft Totals", q:"Soft 13 (A,2)\nDealer showing 6", action:"DOUBLE", cls:"double", detail:"<strong>Double</strong> vs dealer 5-6.<br>Otherwise hit." },
-  { cat:"Soft Totals", q:"Soft 13 (A,2)\nDealer showing 7", action:"HIT", cls:"hit", detail:"<strong>Double</strong> vs dealer 5-6.<br>Otherwise hit." },
-  { cat:"Soft Totals", q:"Soft 14 (A,3)\nDealer showing 5", action:"DOUBLE", cls:"double", detail:"<strong>Double</strong> vs dealer 5-6.<br>Otherwise hit." },
-  { cat:"Soft Totals", q:"Soft 14 (A,3)\nDealer showing 4", action:"HIT", cls:"hit", detail:"<strong>Double</strong> vs dealer 5-6.<br>Otherwise hit." },
-  { cat:"Soft Totals", q:"Soft 15 (A,4)\nDealer showing 4", action:"DOUBLE", cls:"double", detail:"<strong>Double</strong> vs dealer 4-6.<br>Otherwise hit." },
-  { cat:"Soft Totals", q:"Soft 15 (A,4)\nDealer showing 6", action:"DOUBLE", cls:"double", detail:"<strong>Double</strong> vs dealer 4-6.<br>Otherwise hit." },
-  { cat:"Soft Totals", q:"Soft 15 (A,4)\nDealer showing 7", action:"HIT", cls:"hit", detail:"<strong>Double</strong> vs dealer 4-6.<br>Otherwise hit." },
-  { cat:"Soft Totals", q:"Soft 16 (A,5)\nDealer showing 4", action:"DOUBLE", cls:"double", detail:"<strong>Double</strong> vs dealer 4-6.<br>Otherwise hit." },
-  { cat:"Soft Totals", q:"Soft 16 (A,5)\nDealer showing 8", action:"HIT", cls:"hit", detail:"<strong>Double</strong> vs dealer 4-6.<br>Otherwise hit." },
+  { cat:"Soft Totals", q:"Soft 13 (A,2)\nDealer showing 5", action:"DOUBLE", cls:"double", detail:"<strong>Double</strong> vs dealer 5-6.<br>Hit vs 2-4 or 7 and up." },
+  { cat:"Soft Totals", q:"Soft 13 (A,2)\nDealer showing 6", action:"DOUBLE", cls:"double", detail:"<strong>Double</strong> vs dealer 5-6.<br>Hit vs 2-4 or 7 and up." },
+  { cat:"Soft Totals", q:"Soft 13 (A,2)\nDealer showing 7", action:"HIT", cls:"hit", detail:"<strong>Double</strong> vs dealer 5-6.<br>Hit vs 2-4 or 7 and up." },
+  { cat:"Soft Totals", q:"Soft 14 (A,3)\nDealer showing 5", action:"DOUBLE", cls:"double", detail:"<strong>Double</strong> vs dealer 5-6.<br>Hit vs 2-4 or 7 and up." },
+  { cat:"Soft Totals", q:"Soft 14 (A,3)\nDealer showing 4", action:"HIT", cls:"hit", detail:"<strong>Double</strong> vs dealer 5-6.<br>Hit vs 2-4 or 7 and up." },
+  { cat:"Soft Totals", q:"Soft 15 (A,4)\nDealer showing 4", action:"DOUBLE", cls:"double", detail:"<strong>Double</strong> vs dealer 4-6.<br>Hit vs 2, 3, or 7 and up." },
+  { cat:"Soft Totals", q:"Soft 15 (A,4)\nDealer showing 6", action:"DOUBLE", cls:"double", detail:"<strong>Double</strong> vs dealer 4-6.<br>Hit vs 2, 3, or 7 and up." },
+  { cat:"Soft Totals", q:"Soft 15 (A,4)\nDealer showing 7", action:"HIT", cls:"hit", detail:"<strong>Double</strong> vs dealer 4-6.<br>Hit vs 2, 3, or 7 and up." },
+  { cat:"Soft Totals", q:"Soft 16 (A,5)\nDealer showing 4", action:"DOUBLE", cls:"double", detail:"<strong>Double</strong> vs dealer 4-6.<br>Hit vs 2, 3, or 7 and up." },
+  { cat:"Soft Totals", q:"Soft 16 (A,5)\nDealer showing 8", action:"HIT", cls:"hit", detail:"<strong>Double</strong> vs dealer 4-6.<br>Hit vs 2, 3, or 7 and up." },
   { cat:"Soft Totals", q:"Soft 17 (A,6)\nDealer showing 3", action:"DOUBLE", cls:"double", detail:"<strong>Double</strong> vs dealer 2-6.<br>Hit vs 7 or higher." },
   { cat:"Soft Totals", q:"Soft 17 (A,6)\nDealer showing 6", action:"DOUBLE", cls:"double", detail:"<strong>Double</strong> vs dealer 2-6.<br>Hit vs 7 or higher." },
   { cat:"Soft Totals", q:"Soft 17 (A,6)\nDealer showing 7", action:"HIT", cls:"hit", detail:"<strong>Double</strong> vs dealer 2-6.<br>Hit vs 7 or higher." },
@@ -886,26 +893,26 @@ const ALL_CARDS = [
   { cat:"Soft Totals", q:"Soft 18 (A,7)\nDealer showing 8", action:"STAND", cls:"stand", detail:"<strong>Double</strong> vs dealer 2-6.<br>Stand vs 7-8.<br>Hit vs 9, 10, or Ace." },
   { cat:"Soft Totals", q:"Soft 18 (A,7)\nDealer showing 9", action:"HIT", cls:"hit", detail:"<strong>Double</strong> vs dealer 2-6.<br>Stand vs 7-8.<br>Hit vs 9, 10, or Ace." },
   { cat:"Soft Totals", q:"Soft 18 (A,7)\nDealer showing 10", action:"HIT", cls:"hit", detail:"<strong>Double</strong> vs dealer 2-6.<br>Stand vs 7-8.<br>Hit vs 9, 10, or Ace." },
-  { cat:"Soft Totals", q:"Soft 19 (A,8)\nDealer showing 10", action:"STAND", cls:"stand", detail:"<strong>Double</strong> vs dealer 6.<br>Otherwise stand." },
+  { cat:"Soft Totals", q:"Soft 19 (A,8)\nDealer showing 10", action:"STAND", cls:"stand", detail:"<strong>Double</strong> vs dealer 6.<br>Stand vs 2-5 or 7 and up." },
   { cat:"Soft Totals", q:"Soft 20 (A,9)\nDealer showing Ace", action:"STAND", cls:"stand", detail:"Always <strong>stand</strong> on soft 20." },
 
   // -- PAIRS --
-  { cat:"Splits", q:"Hard 4 (equal cards)\nDealer showing 2", action:"SPLIT", cls:"split", detail:"<strong>Split</strong> vs dealer 2-7.<br>Otherwise hit." },
-  { cat:"Splits", q:"Hard 4 (equal cards)\nDealer showing 7", action:"SPLIT", cls:"split", detail:"<strong>Split</strong> vs dealer 2-7.<br>Otherwise hit." },
-  { cat:"Splits", q:"Hard 4 (equal cards)\nDealer showing 8", action:"HIT", cls:"hit", detail:"<strong>Split</strong> vs dealer 2-7.<br>Otherwise hit." },
-  { cat:"Splits", q:"Hard 6 (equal cards)\nDealer showing 3", action:"SPLIT", cls:"split", detail:"<strong>Split</strong> vs dealer 2-7.<br>Otherwise hit." },
-  { cat:"Splits", q:"Hard 6 (equal cards)\nDealer showing 9", action:"HIT", cls:"hit", detail:"<strong>Split</strong> vs dealer 2-7.<br>Otherwise hit." },
-  { cat:"Splits", q:"Hard 8 (equal cards)\nDealer showing 5", action:"SPLIT", cls:"split", detail:"<strong>Split</strong> vs dealer 5-6.<br>Otherwise hit." },
-  { cat:"Splits", q:"Hard 8 (equal cards)\nDealer showing 6", action:"SPLIT", cls:"split", detail:"<strong>Split</strong> vs dealer 5-6.<br>Otherwise hit." },
-  { cat:"Splits", q:"Hard 8 (equal cards)\nDealer showing 7", action:"HIT", cls:"hit", detail:"<strong>Split</strong> vs dealer 5-6.<br>Otherwise hit." },
+  { cat:"Splits", q:"Hard 4 (equal cards)\nDealer showing 2", action:"SPLIT", cls:"split", detail:"<strong>Split</strong> vs dealer 2-7.<br>Hit vs 8 or higher." },
+  { cat:"Splits", q:"Hard 4 (equal cards)\nDealer showing 7", action:"SPLIT", cls:"split", detail:"<strong>Split</strong> vs dealer 2-7.<br>Hit vs 8 or higher." },
+  { cat:"Splits", q:"Hard 4 (equal cards)\nDealer showing 8", action:"HIT", cls:"hit", detail:"<strong>Split</strong> vs dealer 2-7.<br>Hit vs 8 or higher." },
+  { cat:"Splits", q:"Hard 6 (equal cards)\nDealer showing 3", action:"SPLIT", cls:"split", detail:"<strong>Split</strong> vs dealer 2-7.<br>Hit vs 8 or higher." },
+  { cat:"Splits", q:"Hard 6 (equal cards)\nDealer showing 9", action:"HIT", cls:"hit", detail:"<strong>Split</strong> vs dealer 2-7.<br>Hit vs 8 or higher." },
+  { cat:"Splits", q:"Hard 8 (equal cards)\nDealer showing 5", action:"SPLIT", cls:"split", detail:"<strong>Split</strong> vs dealer 5-6.<br>Hit vs 2-4 or 7 and up." },
+  { cat:"Splits", q:"Hard 8 (equal cards)\nDealer showing 6", action:"SPLIT", cls:"split", detail:"<strong>Split</strong> vs dealer 5-6.<br>Hit vs 2-4 or 7 and up." },
+  { cat:"Splits", q:"Hard 8 (equal cards)\nDealer showing 7", action:"HIT", cls:"hit", detail:"<strong>Split</strong> vs dealer 5-6.<br>Hit vs 2-4 or 7 and up." },
   { cat:"Splits", q:"Hard 10 (equal cards)\nDealer showing 5", action:"DOUBLE", cls:"double", detail:"<strong>Never split.</strong> Treat as hard 10.<br>Double vs 2-9, hit vs 10 or Ace." },
   { cat:"Splits", q:"Hard 10 (equal cards)\nDealer showing 10", action:"HIT", cls:"hit", detail:"<strong>Never split.</strong> Treat as hard 10.<br>Double vs 2-9, hit vs 10 or Ace." },
-  { cat:"Splits", q:"Hard 12 (equal cards)\nDealer showing 2", action:"SPLIT", cls:"split", detail:"<strong>Split</strong> vs dealer 2-6.<br>Otherwise hit." },
-  { cat:"Splits", q:"Hard 12 (equal cards)\nDealer showing 6", action:"SPLIT", cls:"split", detail:"<strong>Split</strong> vs dealer 2-6.<br>Otherwise hit." },
-  { cat:"Splits", q:"Hard 12 (equal cards)\nDealer showing 7", action:"HIT", cls:"hit", detail:"<strong>Split</strong> vs dealer 2-6.<br>Otherwise hit." },
-  { cat:"Splits", q:"Hard 14 (equal cards)\nDealer showing 3", action:"SPLIT", cls:"split", detail:"<strong>Split</strong> vs dealer 2-7.<br>Otherwise hit." },
-  { cat:"Splits", q:"Hard 14 (equal cards)\nDealer showing 7", action:"SPLIT", cls:"split", detail:"<strong>Split</strong> vs dealer 2-7.<br>Otherwise hit." },
-  { cat:"Splits", q:"Hard 14 (equal cards)\nDealer showing 8", action:"HIT", cls:"hit", detail:"<strong>Split</strong> vs dealer 2-7.<br>Otherwise hit." },
+  { cat:"Splits", q:"Hard 12 (equal cards)\nDealer showing 2", action:"SPLIT", cls:"split", detail:"<strong>Split</strong> vs dealer 2-6.<br>Hit vs 7 or higher." },
+  { cat:"Splits", q:"Hard 12 (equal cards)\nDealer showing 6", action:"SPLIT", cls:"split", detail:"<strong>Split</strong> vs dealer 2-6.<br>Hit vs 7 or higher." },
+  { cat:"Splits", q:"Hard 12 (equal cards)\nDealer showing 7", action:"HIT", cls:"hit", detail:"<strong>Split</strong> vs dealer 2-6.<br>Hit vs 7 or higher." },
+  { cat:"Splits", q:"Hard 14 (equal cards)\nDealer showing 3", action:"SPLIT", cls:"split", detail:"<strong>Split</strong> vs dealer 2-7.<br>Hit vs 8 or higher." },
+  { cat:"Splits", q:"Hard 14 (equal cards)\nDealer showing 7", action:"SPLIT", cls:"split", detail:"<strong>Split</strong> vs dealer 2-7.<br>Hit vs 8 or higher." },
+  { cat:"Splits", q:"Hard 14 (equal cards)\nDealer showing 8", action:"HIT", cls:"hit", detail:"<strong>Split</strong> vs dealer 2-7.<br>Hit vs 8 or higher." },
   { cat:"Splits", q:"Hard 16 (equal cards)\nDealer showing 4", action:"SPLIT", cls:"split", detail:"<strong>Always split</strong> a pair of 8s." },
   { cat:"Splits", q:"Hard 16 (equal cards)\nDealer showing 10", action:"SPLIT", cls:"split", detail:"<strong>Always split</strong> a pair of 8s." },
   { cat:"Splits", q:"Hard 18 (equal cards)\nDealer showing 3", action:"SPLIT", cls:"split", detail:"<strong>Split</strong> vs dealer 2-6, 8, or 9.<br>Stand vs 7, 10, or Ace." },
@@ -973,7 +980,7 @@ function shuffle() {
   updateSplitButton();
 }
 
-function formatRuleDetail(detail) {
+function formatRuleDetail(detail, action) {
   // Split on <br> first (existing line breaks), otherwise on sentence boundaries
   let parts;
   if (detail.indexOf('<br>') !== -1) {
@@ -984,6 +991,26 @@ function formatRuleDetail(detail) {
   }
   parts = parts.map(p => p.replace(/\.\s*$/, '').trim()).filter(p => p.length);
   if (!parts.length) return '';
+
+  // Promote the line that pertains to THIS card's correct answer into the
+  // white box. Prefer a line that begins with the action word; fall back to
+  // any line that contains it. Single-line rules are left as-is.
+  if (action && parts.length > 1) {
+    const a = action.toLowerCase();
+    let bestIdx = -1, bestScore = 0;
+    parts.forEach((p, i) => {
+      const t = p.replace(/<[^>]+>/g, '').trim().toLowerCase();
+      const firstWord = t.split(/[\s,.]/)[0];
+      let score = 0;
+      if (firstWord === a) score = 2;
+      else if (new RegExp('\\b' + a + '\\b').test(t)) score = 1;
+      if (score > bestScore) { bestScore = score; bestIdx = i; }
+    });
+    if (bestIdx > 0) {
+      const [match] = parts.splice(bestIdx, 1);
+      parts.unshift(match);
+    }
+  }
 
   // First line goes in a solid white box with black text
   let html = '<div class="rule-primary">' + parts[0] + '</div>';
@@ -1101,7 +1128,7 @@ function answer(chosen) {
 function fillResultBack(r) {
   document.getElementById('actionBadge').textContent = r.action;
   document.getElementById('actionBadge').className = 'action-badge ' + r.cls;
-  document.getElementById('answerDetail').innerHTML = formatRuleDetail(r.detail);
+  document.getElementById('answerDetail').innerHTML = formatRuleDetail(r.detail, r.action);
   const qLines = r.q.split('\n');
   const hand = qLines[0].replace(/\s*\(.*?\)/, '').trim();
   const dealer = qLines[1] ? qLines[1].replace('Dealer showing ', '').trim() : '';
@@ -1117,7 +1144,7 @@ function fillResultBack(r) {
 function preloadBack(card) {
   document.getElementById('actionBadge').textContent = card.action;
   document.getElementById('actionBadge').className = 'action-badge ' + card.cls;
-  document.getElementById('answerDetail').innerHTML = formatRuleDetail(card.detail);
+  document.getElementById('answerDetail').innerHTML = formatRuleDetail(card.detail, card.action);
   const qLines = card.q.split('\n');
   const hand = qLines[0].replace(/\s*\(.*?\)/, '').trim();
   const dealer = qLines[1] ? qLines[1].replace('Dealer showing ', '').trim() : '';
@@ -1173,7 +1200,7 @@ function goBack() {
   document.getElementById('questionText').innerHTML = '<span class="q-hand">' + qParts[0] + '</span>' + (qParts[1] ? '<span class="q-dealer">' + qParts[1] + '</span>' : '');
   document.getElementById('actionBadge').textContent = card.action;
   document.getElementById('actionBadge').className = 'action-badge ' + card.cls;
-  document.getElementById('answerDetail').innerHTML = formatRuleDetail(card.detail);
+  document.getElementById('answerDetail').innerHTML = formatRuleDetail(card.detail, card.action);
   const qLines = card.q.split('\n');
   const hand = qLines[0].replace(/\s*\(.*?\)/, '').trim();
   const dealer = qLines[1] ? qLines[1].replace('Dealer showing ', '').trim() : '';
@@ -2031,7 +2058,7 @@ const TUTORIAL_STEPS = [
   },
   {
     target: '.card-scene',
-    text: 'Your hand and the Dealer\'s\n\nMake your play',
+    text: 'Your hand and the Dealer\'s\n\nMake your play\n\nTap to peek back at previous answer',
     box: 'bottom'
   },
   {
