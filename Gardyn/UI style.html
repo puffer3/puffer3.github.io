@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thryve · UI Style Reference</title>
+<style>
+  /* ───────── brand tokens (shared across the app) ───────── */
+  :root{
+    --cream:#f0faf0; --parch:#dff0da; --ink:#0f1a0f; --moss:#0f6b22;
+    --muted:#4a6b52; --divider:#9cc49c; --done:#86cc78;
+    --terracotta:#b85c38; --parchment:#dff0da; --sage:#6aaa50; --gold:#c4962a;
+  }
+  code{font-family:ui-monospace,'SF Mono',Menlo,monospace; background:#e6ede6; padding:1px 5px; border-radius:4px; font-size:.85em;}
+  .subhead{font-size:.66rem; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); margin:26px 0 2px; font-weight:700;}
+  .dupe{background:#fff7e6; border:1px solid #e9d49a; border-radius:8px; padding:10px 14px; margin:14px 0 0; font-size:.78rem; color:#7a5d12;}
+  .dupe b{color:#5c450a;}
+  *{box-sizing:border-box;}
+  body{margin:0; background:#eef4ee; color:var(--ink);
+    font-family:'Avenir Next','Segoe UI',system-ui,sans-serif; padding:0 0 60px;}
+
+  /* page chrome for THIS reference doc (not part of the design system) */
+  .ref-top{background:var(--ink); color:#dff0da; padding:22px 26px;}
+  .ref-top h1.doc{font-size:1.1rem; letter-spacing:.18em; text-transform:uppercase; margin:0; color:#a1ff7f;}
+  .ref-top p{margin:6px 0 0; font-size:.82rem; color:#9cc49c; font-style:italic; max-width:640px;}
+  .wrap{max-width:860px; margin:0 auto; padding:0 26px;}
+  .group{margin-top:34px;}
+  .group > h2.doc{font-size:.74rem; letter-spacing:.16em; text-transform:uppercase; color:var(--moss);
+    border-bottom:2px solid var(--divider); padding-bottom:8px; margin:0 0 4px;}
+  .spec{display:flex; align-items:center; gap:24px; padding:18px 4px; border-bottom:1px solid #dde6dd;}
+  .spec .demo{flex:0 0 300px; display:flex; align-items:center; gap:10px; flex-wrap:wrap;
+    background:var(--cream); border:1px solid #dbe7db; border-radius:10px; padding:16px; min-height:64px;}
+  .spec .meta{font-family:ui-monospace,'SF Mono',Menlo,monospace; font-size:.72rem; color:#5a6b5a; line-height:1.5;}
+  .spec .meta b{color:#143a1c; font-weight:700;}
+  .spec .meta .desc{display:block; color:#8a9a8a; margin-top:4px; font-family:'Avenir Next',sans-serif; font-size:.78rem; font-style:italic;}
+
+  /* ════════════════════════════════════════════════════════════════ */
+  /*  DESIGN SYSTEM — copy these blocks into sections as needed         */
+  /* ════════════════════════════════════════════════════════════════ */
+
+  /* — Text & headers — */
+  h1.ds{font-size:1rem; letter-spacing:.14em; text-transform:uppercase; color:var(--moss); margin:0;}
+  h2.ds{font-size:.8rem; letter-spacing:.12em; text-transform:uppercase; color:var(--moss); margin:0;}
+  .ds-sub{font-size:.78rem; color:var(--muted); margin:0; font-style:italic;}
+  .ds-card-title{font-weight:700; font-size:1.05rem; color:#2f4a38; margin:0;}
+  .ds-tray-name{font-weight:700; font-size:.92rem; color:#2f4a38;}
+  .ds-removed-title{font-weight:700; font-size:.95rem; color:var(--ink);}
+  .ds-removed-title span{color:var(--muted); font-weight:500;}
+
+  /* — Buttons — */
+  .btn{font-family:'Avenir Next',sans-serif; font-weight:700; font-size:.72rem; letter-spacing:.04em; text-transform:uppercase;
+    background:#78b39c; color:#fff; border:2px solid #54ac9b; border-radius:10px; padding:8px 14px; cursor:pointer;
+    box-shadow:0 4px 10px rgba(0,0,0,.14);}
+  .btn:hover{background:#6aa893;}
+  .btn.ghost{background:transparent; color:var(--muted); border-color:var(--divider); box-shadow:none;}
+  .btn.ghost:hover{background:rgba(120,179,156,.12);}
+  .btn.sm{padding:6px 10px; font-size:.66rem;}
+
+  .del-btn{background:#fde8e8; border:1px solid #f0c0b0; color:var(--terracotta); cursor:pointer; font-size:.6rem;
+    letter-spacing:.06em; text-transform:uppercase; font-weight:700; padding:5px 9px; border-radius:7px; white-space:nowrap;
+    font-family:'Avenir Next',sans-serif;}
+  .del-btn:hover{background:#f4ccbf; color:#9c4e30;}   /* paler, softer terracotta on hover */
+
+  .undo-btn{background:#e2f1ec; border:1px solid #78b39c; color:#2e7d68; cursor:pointer; font-size:.66rem;
+    letter-spacing:.06em; text-transform:uppercase; font-weight:700; padding:7px 12px; border-radius:8px; white-space:nowrap;
+    font-family:'Avenir Next',sans-serif;}
+  .undo-btn:hover{background:#54ac9b; color:#fff;}
+
+  /* — Status badges — */
+  .stage{font-size:.6rem; text-transform:uppercase; letter-spacing:.06em; padding:3px 9px; border-radius:11px; font-weight:700;
+    font-family:'Avenir Next',sans-serif;}
+  .stage.seeded{background:#fff3d6; color:#9a7b1f;}
+  .stage.sprouted{background:#e3f3df; color:#2f7d3a;}
+  .stage.tower{background:#d7f0d2; color:#0f6b22;}
+
+  /* ════════════════════════════════════════════════════════════════ */
+  /*  IMPORTED FROM TrackerMbile.html — app components pending review.   */
+  /*  `tm-` prefix only avoids clashing with the prototype classes      */
+  /*  above; the REAL class name + origin is listed beside each demo.    */
+  /* ════════════════════════════════════════════════════════════════ */
+
+  /* app tab-bar button (Jost) */
+  .tm-tab-btn{font-family:'Jost',sans-serif; font-weight:400; font-size:.72rem; letter-spacing:.18em; text-transform:uppercase;
+    color:var(--muted); background:transparent; border:none; border-bottom:3px solid transparent; padding:14px 20px; cursor:pointer; transition:all .2s;}
+  .tm-tab-btn:hover{color:var(--moss); background:rgba(15,107,34,.06);}
+  .tm-tab-btn.active{color:var(--moss); border-bottom-color:var(--moss); font-weight:600; background:rgba(15,107,34,.1);}
+
+  /* app section-nav pill (Info tab) */
+  .tm-acc-nav-btn{font-family:'Jost',sans-serif; font-size:.82rem; font-weight:500; letter-spacing:.08em; text-transform:uppercase;
+    padding:11px 22px; border-radius:24px; cursor:pointer; border:1.5px solid var(--divider); background:#fff; color:var(--muted); transition:all .2s;}
+  .tm-acc-nav-btn:hover,.tm-acc-nav-btn.active{background:var(--moss); color:#fff; border-color:var(--moss);}
+
+  /* app layout pills (Tower tab) — default / primary / danger */
+  .tm-layout-btn{font-family:'Jost',sans-serif; font-size:.6rem; font-weight:600; letter-spacing:.09em; text-transform:uppercase;
+    padding:6px 14px; border-radius:999px; cursor:pointer; border:none; background:rgba(74,107,82,.10); color:var(--muted); transition:all .15s ease;}
+  .tm-layout-btn:hover{background:rgba(74,107,82,.18);}
+  .tm-layout-btn.primary{background:rgba(15,107,34,.10); color:var(--moss);}
+  .tm-layout-btn.primary:hover{background:rgba(15,107,34,.18);}
+  .tm-layout-btn.danger{background:rgba(184,92,56,.10); color:var(--terracotta);}
+  .tm-layout-btn.danger:hover{background:rgba(184,92,56,.18);}
+
+  /* app plant-card action buttons (Jost, 3px radius, full-saturation hover) */
+  .tm-del-btn,.tm-edit-btn,.tm-archive-btn,.tm-undo-btn{cursor:pointer; font-size:.7rem; padding:4px 10px; border-radius:3px;
+    font-family:'Jost',sans-serif; letter-spacing:.08em; text-transform:uppercase; white-space:nowrap;}
+  .tm-del-btn{background:#fde8e8; border:1px solid #f0c0b0; color:var(--terracotta);}
+  .tm-del-btn:hover{background:var(--terracotta); color:#fff;}
+  .tm-edit-btn{background:#eaf2fb; border:1px solid #b8d4ee; color:#2a6496;}
+  .tm-edit-btn:hover{background:#2a6496; color:#fff;}
+  .tm-archive-btn{background:#f9f0d3; border:1px solid #e2c878; color:#8f6a12;}
+  .tm-archive-btn:hover{background:var(--gold); color:#fff;}
+  .tm-undo-btn{background:#e2f1ec; border:1px solid #78b39c; color:#2e7d68;}
+  .tm-undo-btn:hover{background:#54ac9b; color:#fff;}
+
+  /* app tag */
+  .tm-lc-tag{font-family:'Jost',sans-serif; font-size:.58rem; font-weight:500; letter-spacing:.08em; text-transform:uppercase;
+    padding:2px 7px; border-radius:2px; background:var(--parchment); color:var(--muted);}
+
+  /* app form controls (inline-styled in the add-pod form + SOW banner) */
+  .tm-input,.tm-select{font-family:'Jost',sans-serif; font-size:.92rem; color:var(--ink); background:#fff;
+    border:1.5px solid var(--divider); border-radius:4px; padding:7px 9px;}
+  .tm-sow-input{font-family:'Jost',sans-serif; font-size:.92rem; color:var(--ink); background:#fff;
+    border:1.5px solid var(--divider); border-radius:6px; padding:7px 10px; cursor:pointer;}
+  .tm-eyebrow{font-family:'Jost',sans-serif; font-size:.6rem; font-weight:600; letter-spacing:.16em; text-transform:uppercase; color:var(--muted);}
+</style>
+</head>
+<body>
+  <div class="ref-top">
+    <h1 class="doc">Thryve — UI Style Reference</h1>
+    <p>Living catalogue of every button, header, and badge. Hover the buttons to see states. Each block in the &lt;style&gt; is copy-paste ready; the class name is listed beside each demo. Edit here, review, then import into sections.</p>
+  </div>
+
+  <div class="wrap">
+
+    <div class="group">
+      <h2 class="doc">Text &amp; Headers</h2>
+
+      <div class="spec">
+        <div class="demo"><h1 class="ds">Page Title</h1></div>
+        <div class="meta"><b>h1.ds</b><span class="desc">Top-level page title — uppercase, moss green, wide tracking.</span></div>
+      </div>
+      <div class="spec">
+        <div class="demo"><h2 class="ds">Section Header</h2></div>
+        <div class="meta"><b>h2.ds</b><span class="desc">Section label inside a page.</span></div>
+      </div>
+      <div class="spec">
+        <div class="demo"><p class="ds-sub">Short italic line under a title.</p></div>
+        <div class="meta"><b>.ds-sub</b><span class="desc">Muted italic subtitle / helper line.</span></div>
+      </div>
+      <div class="spec">
+        <div class="demo"><span class="ds-card-title">Card Title</span></div>
+        <div class="meta"><b>.ds-card-title</b><span class="desc">Bold title inside a card header (e.g. plant card).</span></div>
+      </div>
+      <div class="spec">
+        <div class="demo"><span class="ds-tray-name">Tray Name</span></div>
+        <div class="meta"><b>.ds-tray-name</b><span class="desc">Smaller bold title for a tray / sub-card.</span></div>
+      </div>
+      <div class="spec">
+        <div class="demo"><span class="ds-removed-title">Custom Tray 1 <span>removed</span></span></div>
+        <div class="meta"><b>.ds-removed-title</b><span class="desc">Tombstone headline; the trailing word is muted.</span></div>
+      </div>
+    </div>
+
+    <div class="group">
+      <h2 class="doc">Buttons</h2>
+
+      <div class="spec">
+        <div class="demo"><button class="btn">Primary</button></div>
+        <div class="meta"><b>.btn</b><span class="desc">Primary action — teal fill, soft shadow.</span></div>
+      </div>
+      <div class="spec">
+        <div class="demo"><button class="btn ghost">Ghost</button></div>
+        <div class="meta"><b>.btn.ghost</b><span class="desc">Secondary / cancel — outlined, no fill.</span></div>
+      </div>
+      <div class="spec">
+        <div class="demo"><button class="btn sm">Small</button><button class="btn sm ghost">Small ghost</button></div>
+        <div class="meta"><b>.btn.sm</b> · <b>.btn.sm.ghost</b><span class="desc">Compact variants for tight rows.</span></div>
+      </div>
+      <div class="spec">
+        <div class="demo"><button class="del-btn">Remove</button></div>
+        <div class="meta"><b>.del-btn</b><span class="desc">Destructive — pale terracotta; hover softens (not full saturation).</span></div>
+      </div>
+      <div class="spec">
+        <div class="demo"><button class="undo-btn">Undo</button></div>
+        <div class="meta"><b>.undo-btn</b><span class="desc">Pairs with a soft-delete tombstone to restore.</span></div>
+      </div>
+    </div>
+
+    <div class="group">
+      <h2 class="doc">Status Badges</h2>
+      <div class="spec">
+        <div class="demo">
+          <span class="stage seeded">Seeded</span>
+          <span class="stage sprouted">Sprouted</span>
+          <span class="stage tower">Tower</span>
+        </div>
+        <div class="meta"><b>.stage.seeded</b> · <b>.sprouted</b> · <b>.tower</b><span class="desc">Lifecycle pills used on plant cards.</span></div>
+      </div>
+    </div>
+
+    <div class="group">
+      <h2 class="doc">From the app (TrackerMbile) — for review &amp; consolidation</h2>
+      <p class="ds-sub" style="margin:8px 0 0; max-width:640px">Real components currently shipping in TrackerMbile.html, pulled in as-is. Where one function exists in two looks, both are shown side by side — pick the winner and we standardize it across the app. (The <code>tm-</code> prefix here only prevents name clashes with the prototype set above; each demo lists its true class + origin.)</p>
+
+      <div class="subhead">Navigation / mode buttons</div>
+      <div class="spec">
+        <div class="demo"><button class="tm-tab-btn">Tower</button><button class="tm-tab-btn active">Tasks</button></div>
+        <div class="meta"><b>.tab-btn</b> / <b>.active</b><span class="desc">Origin: main tab bar. Jost, underline-on-active, no-shift bold.</span></div>
+      </div>
+      <div class="spec">
+        <div class="demo"><button class="tm-acc-nav-btn">Overview</button><button class="tm-acc-nav-btn active">Cleaning</button></div>
+        <div class="meta"><b>.acc-nav-btn</b> / <b>.active</b><span class="desc">Origin: Info tab section nav. White pill → moss-filled when active.</span></div>
+      </div>
+      <div class="spec">
+        <div class="demo"><button class="tm-layout-btn">Default</button><button class="tm-layout-btn primary">Save</button><button class="tm-layout-btn danger">Clear</button></div>
+        <div class="meta"><b>.layout-btn</b> / <b>.primary</b> / <b>.danger</b><span class="desc">Origin: Tower tab actions. Tiny tinted pills.</span></div>
+      </div>
+
+      <div class="subhead">Card action buttons</div>
+      <div class="spec">
+        <div class="demo"><button class="tm-edit-btn">Edit</button><button class="tm-archive-btn">Archive</button><button class="tm-del-btn">Remove</button><button class="tm-undo-btn">Undo</button></div>
+        <div class="meta"><b>.edit-btn · .archive-btn · .del-btn · .undo-btn</b><span class="desc">Origin: Ledger plant cards. Jost, 3px radius, fills fully on hover.</span></div>
+      </div>
+      <div class="dupe"><b>Duplicate to resolve — Remove &amp; Undo.</b> The app versions above (Jost, 3px, full-saturation hover) differ from the prototype's <code>.del-btn</code>/<code>.undo-btn</code> in the Buttons group (Avenir, 7-8px radius, paler hover). Same job, two looks — pick one and unify.</div>
+
+      <div class="subhead">Form controls</div>
+      <div class="spec">
+        <div class="demo"><input class="tm-input" type="text" placeholder="12" style="width:70px;text-align:center"><input class="tm-input" type="date" value="2026-06-05"></div>
+        <div class="meta"><b>text / date input</b><span class="desc">Origin: add-pod form (#new-pod, #new-date) — currently inline-styled.</span></div>
+      </div>
+      <div class="spec">
+        <div class="demo"><select class="tm-select"><option>Basil</option><option>Lettuce</option><option>Kale</option></select></div>
+        <div class="meta"><b>select</b><span class="desc">Origin: add-pod form (#new-plant) and tower pod dropdowns.</span></div>
+      </div>
+      <div class="spec">
+        <div class="demo"><input class="tm-sow-input" type="date" value="2026-04-23"></div>
+        <div class="meta"><b>.sow-input</b><span class="desc">Origin: Start-of-Watering banner. 6px radius variant of the date input.</span></div>
+      </div>
+
+      <div class="subhead">Labels &amp; tags</div>
+      <div class="spec">
+        <div class="demo"><span class="tm-eyebrow">Start of Watering</span></div>
+        <div class="meta"><b>.sow-eyebrow</b><span class="desc">Origin: SOW banner. Tiny uppercase eyebrow label.</span></div>
+      </div>
+      <div class="spec">
+        <div class="demo"><span class="tm-lc-tag">Leafy Green</span><span class="tm-lc-tag">Pet Safe</span></div>
+        <div class="meta"><b>.lc-tag</b><span class="desc">Origin: plant card meta tags.</span></div>
+      </div>
+
+      <div class="dupe"><b>Duplicate to resolve — primary button.</b> A "primary action" currently has three looks across the app: prototype <code>.btn</code> (teal fill), the Tasks export <code>.ebtn</code> (teal fill, heavier shadow), and <code>.layout-btn.primary</code> (tinted moss pill). Pick the canonical primary.</div>
+      <div class="dupe"><b>Font split to resolve.</b> The app uses <b>Jost</b>; the prototype + migrated tracker use <b>Avenir Next</b>. Decide the canonical UI font before we standardize, since it changes every component here.</div>
+    </div>
+
+  </div>
+</body>
+</html>
