@@ -286,25 +286,55 @@ const TASKS = [
    steps:['Gently pull each pod to check roots below','White & fuzzy = good · brown & slimy = treat','Trim only roots clogging the pump']},
 ];
 
-const STORE='thryve-trackerday-v2';
+/* ── persistence ──────────────────────────────────────────────────────────
+   Saved shape (localStorage["thryve-trackerday-v2"]):
+     {
+       v: 2,                              schema version, for future migrations
+       savedAt: "2026-06-04T18:22:01Z",   last write, ISO-8601
+       sow: "2026-04-23",                 start-of-watering, YYYY-MM-DD
+       done: { "2026-06-04": ["food","water"] }   completions grouped by day,
+                                                   task-ids sorted for tidy diffs
+     }
+   load() tolerates a missing/corrupt blob and auto-migrates the old flat
+   { "water|2026-06-04": 1 } format, so existing saves are never lost.        */
+const STORE='thryve-trackerday-v2', SCHEMA=2;
 let store = load();
 let view = startOfMonth(new Date());
 let scrub = 0;   // days the visible day-window is panned from its default frame (drag the date strip)
 
+function emptyStore(){ return { v:SCHEMA, sow: iso(new Date(Date.now()-42*DAY)), done:{} }; }
+function markDone(st,id,dstr){                       // add one completion, keeping each day's list unique + sorted
+  const a = st.done[dstr] || (st.done[dstr]=[]);
+  if(a.indexOf(id)<0){ a.push(id); a.sort(); }
+}
+function normalize(s){                               // coerce any saved blob into the current clean shape
+  const out=emptyStore();
+  if(s && typeof s.sow==='string') out.sow=s.sow;
+  const d=(s && s.done) || {};
+  Object.keys(d).forEach(function(k){
+    if(k.indexOf('|')>=0){ if(d[k]){ const p=k.split('|'); markDone(out,p[0],p[1]); } }   // legacy flat key
+    else if(Array.isArray(d[k])){ d[k].forEach(function(id){ markDone(out,id,k); }); }      // already grouped
+  });
+  return out;
+}
 function load(){
-  try{ const s=JSON.parse(localStorage.getItem(STORE)); if(s&&s.done) return s; }catch(e){}
-  return { sow: iso(new Date(Date.now()-42*DAY)), done:{} };   // clean start — green only comes from your clicks
+  try{ const s=JSON.parse(localStorage.getItem(STORE)); if(s&&s.done) return normalize(s); }catch(e){}
+  return emptyStore();   // clean start — green only comes from your clicks
 }
-function save(){ try{ localStorage.setItem(STORE, JSON.stringify(store)); }catch(e){} }
+function save(){
+  try{ store.v=SCHEMA; store.savedAt=new Date().toISOString();
+       localStorage.setItem(STORE, JSON.stringify(store)); }catch(e){}
+}
 
-function rng(seed){ let x=seed; return ()=>{ x=(x*1103515245+12345)&0x7fffffff; return x/0x7fffffff; }; }
-function seedDemo(s){
-  const rand=rng(99); const today=startOfDay(new Date()); const sow=new Date(s.sow+'T12:00:00');
-  for(let t=Date.now()-42*DAY; t<today.getTime(); t+=DAY){
-    const d=startOfDay(new Date(t));
-    TASKS.forEach(tk=>{ if(isDue(tk,d,sow) && rand()<0.7) s.done[key(tk.id,d)]=1; });
-  }
+/* completion accessors — the rest of the app goes through these, never store.done directly */
+function isDone(id,date){ const a=store.done[iso(date)]; return !!a && a.indexOf(id)>=0; }
+function setDone(id,date,on){
+  const ds=iso(date), a=store.done[ds];
+  if(on){ markDone(store,id,ds); }
+  else if(a){ const i=a.indexOf(id); if(i>=0) a.splice(i,1); if(!a.length) delete store.done[ds]; }
+  save();
 }
+function toggleDone(id,date){ setDone(id,date,!isDone(id,date)); }
 
 /* date helpers */
 function startOfDay(d){ const x=new Date(d); x.setHours(12,0,0,0); return x; }
@@ -312,7 +342,6 @@ function startOfMonth(d){ return new Date(d.getFullYear(), d.getMonth(), 1, 12);
 function daysInMonth(y,m){ return new Date(y,m+1,0).getDate(); }
 function iso(d){ const x=startOfDay(d); return x.getFullYear()+'-'+pad(x.getMonth()+1)+'-'+pad(x.getDate()); }
 function pad(n){ return String(n).padStart(2,'0'); }
-function key(id,d){ return id+'|'+iso(d); }
 
 function sowDate(){ return new Date(store.sow+'T12:00:00'); }
 const OFFSET={water:0,food:0,ph:1,tank:4,deadhead:2,harvest:5,prune:3,tower:10,tray:1,mildew:6,pests:4,roots:11};
@@ -325,7 +354,7 @@ function isDue(task,date,sow){
 function cellState(task,date){
   const today=startOfDay(new Date()).getTime();
   const t=startOfDay(date).getTime();
-  const due=isDue(task,date), done=store.done[key(task.id,date)];
+  const due=isDue(task,date), done=isDone(task.id,date);
   if(done) return 'done';                                          // green — completed any day (incl. off-schedule clicks)
   if(t===today) return due ? 'overdue' : 'none';                   // today: due = orange, otherwise stays white
   if(due) return (t<today) ? 'missed' : 'sched';                  // sandy red = missed (before today); grey = upcoming
@@ -362,7 +391,6 @@ function scrubLimits(){
   const base=winBase(y,m,today,fd);
   return { min:1-base, max:(n-fd+1)-base };
 }
-function toggleDone(taskId,date){ const k=key(taskId,date); if(store.done[k]) delete store.done[k]; else store.done[k]=1; save(); }
 
 function tipMarkup(task){
   const nd=nextDue(task), ndTxt=MONTHS[nd.getMonth()]+' '+nd.getDate();   // full month name, e.g. "June 6"
@@ -532,7 +560,7 @@ function freqText(task){
        : 'Every '+task.every+' days';
 }
 function cardHTML(task){
-  const done = !!store.done[key(task.id, startOfDay(new Date()))];
+  const done = isDone(task.id, startOfDay(new Date()));
   const steps = task.steps.map(function(s,i){ return '<div class="rc-step"><span class="rc-num">'+(i+1)+'</span><span class="rc-stext">'+s+'</span></div>'; }).join('');
   return '<div class="rc-card'+(done?' done':'')+'">'+
     '<div class="rc-head">'+
@@ -550,9 +578,7 @@ function renderCards(){
   const due=TASKS.filter(function(t){ return isDue(t,today); });   // all of today's tasks — completed ones stay, just go green
   wrap.innerHTML = due.length ? due.map(cardHTML).join('') : '<p class="nocards">Nothing due today — enjoy the day off.</p>';
   wrap.querySelectorAll('.rc-check').forEach(function(el){
-    el.onclick=function(){ const k=key(el.getAttribute('data-id'), today);
-      if(store.done[k]) delete store.done[k]; else store.done[k]=1;
-      save(); render(); };   // re-render grid (today squares) + cards
+    el.onclick=function(){ toggleDone(el.getAttribute('data-id'), today); render(); };   // re-render grid (today squares) + cards
   });
 }
 
