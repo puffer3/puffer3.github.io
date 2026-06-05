@@ -1,4 +1,18 @@
 <!DOCTYPE html>
+<!--
+  ╔═══════════════════════════════════════════════════════════════════════════╗
+  ║  WEEDS — dev-only scaffolding to PULL before launch                        ║
+  ╠═══════════════════════════════════════════════════════════════════════════╣
+  ║  Temporary things planted for development. Each is tagged inline with       ║
+  ║  `WEED:` — run  grep -n "WEED:" TrackerMbile.html  to list every one.        ║
+  ║  Pull them all before shipping; this block is the index.                    ║
+  ║                                                                             ║
+  ║  1. DEV_SOW (fn bdSow, near the migrated tracker script)                    ║
+  ║     Hardcodes Start-of-Watering = 2026-04-23 so the Tasks day-grid is       ║
+  ║     populated regardless of the app's real sowDate.                         ║
+  ║     Pull: delete DEV_SOW + the active return, uncomment the two lines below.║
+  ╚═══════════════════════════════════════════════════════════════════════════╝
+-->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -5625,9 +5639,11 @@ const TASKS = [
 let view = startOfMonth(new Date());
 let scrub = 0;   // days the visible day-window is panned from its default frame (drag the date strip)
 
+const DEV_SOW = '2026-04-23';   // WEED: #1 forces a fixed Start-of-Watering so the grid is populated
 function bdSow(){
-  if (typeof sowDate === 'string' && sowDate) return new Date(sowDate + 'T12:00:00');
-  return new Date(Date.now() - 42*DAY);   // fall back to ~6 weeks ago if start-of-watering unset
+  return new Date(DEV_SOW + 'T12:00:00');   // WEED: #1 ignore app sowDate. Pull: restore the two lines below.
+  // if (typeof sowDate === 'string' && sowDate) return new Date(sowDate + 'T12:00:00');
+  // return new Date(Date.now() - 42*DAY);   // fall back to ~6 weeks ago if start-of-watering unset
 }
 function doneMap(){ if (!taskData || typeof taskData !== 'object') taskData = {}; return taskData; }
 function isDone(id,date){ const a = doneMap()[iso(date)]; return !!a && a.indexOf(id) >= 0; }
