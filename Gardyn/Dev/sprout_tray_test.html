@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thryve · Sprout Tray test</title>
+<style>
+  :root{
+    --cream:#f0faf0; --parch:#dff0da; --ink:#0f1a0f; --moss:#0f6b22;
+    --muted:#4a6b52; --divider:#9cc49c; --done:#86cc78;
+    --cell:54px;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0 auto; max-width:760px; background:var(--cream); color:var(--ink);
+    font-family:'Avenir Next','Segoe UI',system-ui,sans-serif; padding:18px 20px 80px;}
+  h1{font-size:1rem; letter-spacing:.14em; text-transform:uppercase; color:var(--moss); margin:0 0 2px;}
+  .sub{font-size:.78rem; color:var(--muted); margin:0 0 20px; font-style:italic;}
+  h2{font-size:.8rem; letter-spacing:.12em; text-transform:uppercase; color:var(--moss); margin:0;}
+  section{margin-bottom:26px;}
+  .sec-head{display:flex; align-items:center; justify-content:space-between; margin-bottom:10px;}
+
+  /* shared green button */
+  .btn{font-family:inherit; font-weight:700; font-size:.72rem; letter-spacing:.04em; text-transform:uppercase;
+    background:#78b39c; color:#fff; border:2px solid #54ac9b; border-radius:10px; padding:8px 14px; cursor:pointer;
+    box-shadow:0 4px 10px rgba(0,0,0,.14);}
+  .btn:hover{background:#6aa893;}
+  .btn.ghost{background:transparent; color:var(--muted); border-color:var(--divider); box-shadow:none;}
+  .btn.sm{padding:6px 10px; font-size:.66rem;}
+
+  /* tower */
+  .pod-grid{display:grid; grid-template-columns:repeat(10, 1fr); gap:6px;}
+  .pod{aspect-ratio:1; border-radius:7px; border:1.5px dashed var(--divider); background:#fff;
+    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:1px;
+    font-size:.52rem; color:var(--muted); text-align:center; overflow:hidden; user-select:none;}
+  .pod.filled{border-style:solid; border-color:transparent; color:#16361a; font-weight:700;}
+  .pod .pn{font-size:.5rem; opacity:.5; font-weight:600;}
+  .pod.tgt{outline:3px solid var(--moss); outline-offset:1px; cursor:pointer; animation:pulse 1s infinite;}
+  @keyframes pulse{50%{outline-color:#9cd49c;}}
+
+  /* trays */
+  .tray{background:#fff; border:1.5px solid var(--divider); border-radius:12px; padding:14px; margin-bottom:14px;}
+  /* custom DIY trays: light grey, to set them apart from the Gardyn nursery */
+  .tray.custom{background:#eceeec; border-color:#cbd2cb;}
+  /* Gardyn nursery: basic oval placeholder — round seed cups, centered — until real art lands */
+  .tray.gardyn{border-radius:160px; padding:24px 54px; background:#eef7ec; border-color:#bcdcb6;
+    box-shadow:inset 0 0 0 5px rgba(255,255,255,.55);}
+  .tray.gardyn .tray-head{flex-direction:column; align-items:center; gap:6px; text-align:center;}
+  .tray.gardyn .cell-grid{max-width:440px; margin:0 auto; gap:12px;}
+  .tray.gardyn .cell{border-radius:50%;}            /* round germination cups */
+  .tray-head{display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:10px;}
+  .tray-name{font-weight:700; font-size:.92rem; color:#2f4a38;}
+  .tray-right{display:flex; align-items:center; gap:10px;}
+  .tray-meta{font-size:.66rem; color:var(--muted); font-style:italic;}
+  .del-btn{background:#fde8e8; border:1px solid #f0c0b0; color:#b85c38; cursor:pointer; font-size:.6rem;
+    letter-spacing:.06em; text-transform:uppercase; font-weight:700; padding:5px 9px; border-radius:7px; white-space:nowrap;}
+  .del-btn:hover{background:#f4ccbf; color:#9c4e30;}
+  /* removed-tray tombstone (transient, never saved) with undo */
+  .tray-tomb{display:flex; align-items:center; gap:12px; background:var(--cream); border:1.5px solid var(--divider);
+    border-radius:12px; padding:14px 16px; margin-bottom:14px; animation:rise .2s ease;}
+  .tomb-body{flex:1; min-width:0;}
+  .tomb-title{font-weight:700; font-size:.95rem; color:var(--ink);}
+  .tomb-title span{color:var(--muted); font-weight:500;}
+  .tomb-sub{font-size:.74rem; font-style:italic; color:#b85c38; margin-top:3px;}
+  .undo-btn{background:#e2f1ec; border:1px solid #78b39c; color:#2e7d68; cursor:pointer; font-size:.66rem;
+    letter-spacing:.06em; text-transform:uppercase; font-weight:700; padding:7px 12px; border-radius:8px; white-space:nowrap;}
+  .undo-btn:hover{background:#54ac9b; color:#fff;}
+  .cell-grid{display:grid; gap:5px;}
+  .cell{aspect-ratio:1; border-radius:7px; border:1.5px dashed var(--divider); background:var(--cream);
+    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:1px; position:relative;
+    cursor:pointer; font-size:.54rem; color:var(--muted); text-align:center; overflow:hidden;
+    -webkit-tap-highlight-color:transparent; user-select:none; transition:transform .1s;}
+  .cell:active{transform:scale(.9);}
+  .cell.full{border-style:solid; border-color:transparent; color:#16361a; font-weight:700;}
+  .cell .d{font-size:.5rem; font-weight:600; opacity:.65;}
+  .cell .sprout{position:absolute; top:3px; right:3px; width:7px; height:7px; border-radius:50%;
+    border:1.5px solid #fff; box-shadow:0 0 0 1px rgba(0,0,0,.15);}
+  .cell .plus{font-size:1rem; color:var(--divider); font-weight:400;}
+  .empty-note{font-size:.76rem; color:var(--muted); font-style:italic;}
+
+  /* ledger — recipe-card style, trimmed to the essentials */
+  #ledger{display:flex; flex-direction:column; gap:12px;}
+  .pc-card{background:#fff; border:1.5px solid var(--divider); border-radius:14px; overflow:hidden;}
+  .pc-head{display:flex; align-items:center; gap:12px; padding:12px 16px; border-bottom:1px solid var(--divider);}
+  .pc-dot{width:18px; height:18px; border-radius:6px; flex-shrink:0; box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.7);}
+  .pc-title{font-weight:700; font-size:1.05rem; color:#2f4a38; flex:1;}
+  .pc-body{padding:11px 16px 14px; display:flex; flex-direction:column; gap:7px;}
+  .pc-field{display:flex; gap:10px; font-size:.82rem;}
+  .pc-k{flex:0 0 82px; font-size:.62rem; text-transform:uppercase; letter-spacing:.08em; color:var(--muted); font-weight:600; padding-top:2px;}
+  .pc-v{flex:1; color:#2a402a;}
+  .stage{font-size:.6rem; text-transform:uppercase; letter-spacing:.06em; padding:3px 9px; border-radius:11px; font-weight:700;}
+  .stage.seeded{background:#fff3d6; color:#9a7b1f;}
+  .stage.sprouted{background:#e3f3df; color:#2f7d3a;}
+  .stage.tower{background:#d7f0d2; color:#0f6b22;}
+
+  /* modal */
+  .modal{position:fixed; inset:0; background:rgba(15,26,15,.42); display:none; align-items:flex-end; justify-content:center; z-index:50;}
+  .modal.open{display:flex;}
+  .sheet{background:var(--cream); width:100%; max-width:760px; border-radius:18px 18px 0 0; padding:20px 20px 26px;
+    box-shadow:0 -8px 30px rgba(0,0,0,.2); animation:rise .22s cubic-bezier(.22,1,.36,1);}
+  @keyframes rise{from{transform:translateY(30px); opacity:.6;} to{transform:none; opacity:1;}}
+  @media(min-width:560px){ .modal{align-items:center;} .sheet{border-radius:18px; margin:0 16px;} }
+  .sheet h3{margin:0 0 4px; font-size:1rem; color:var(--moss);}
+  .sheet .x{float:right; background:none; border:none; font-size:1.3rem; color:var(--muted); cursor:pointer; line-height:1; padding:0;}
+  .field{margin:14px 0;}
+  .field label{display:block; font-size:.66rem; text-transform:uppercase; letter-spacing:.08em; color:var(--muted); margin-bottom:5px;}
+  .field select, .field input{width:100%; font-family:inherit; font-size:.95rem; padding:9px 10px;
+    border:1.5px solid var(--divider); border-radius:8px; background:#fff; color:var(--ink);}
+  .row2{display:flex; gap:10px;}
+  .row2 .field{flex:1;}
+  .actions{display:flex; gap:8px; flex-wrap:wrap; margin-top:18px;}
+  .preset-row{display:flex; gap:10px; margin-top:8px;}
+  .preset-row .btn{flex:1; padding:16px 10px;}
+  .meta-line{font-size:.74rem; color:var(--muted); margin:2px 0 0;}
+</style>
+</head>
+<body>
+  <h1>Sprout Tray — test bench</h1>
+  <p class="sub">Prototype for tracking which DIY cube is which, from the nursery tray through transplant into the tower. Standalone; state saved locally.</p>
+
+  <section>
+    <div class="sec-head"><h2>Tower</h2><span class="tray-meta" id="tower-meta"></span></div>
+    <div class="pod-grid" id="tower"></div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <h2>Sprout Trays</h2>
+      <button class="btn" id="addTray">+ Add Tray</button>
+    </div>
+    <div id="trays"></div>
+    <p class="empty-note" id="no-trays">No trays yet. Add one to start tracking seedlings.</p>
+  </section>
+
+  <section>
+    <div class="sec-head"><h2>All plants</h2></div>
+    <div id="ledger"></div>
+    <p class="empty-note" id="no-plants">Nothing seeded yet.</p>
+  </section>
+
+  <div class="modal" id="modal"><div class="sheet" id="sheet"></div></div>
+
+<script>
+/* ───────── data ───────── */
+// Gardyn nursery holds 10 plants (confirmed). Exact row/col arrangement pending Henry's Illustrator art.
+const GARDYN_TRAY = { rows:2, cols:5 };   // 10 cells; 2x5 placeholder layout until the real nursery art lands
+
+const BUILTIN = [
+  {id:"lettuce",name:"Lettuce",light:"low",ph:"6.0-7.0",pets:"Safe",s2sp:5,sp2h:21,gf:60,thin:1},
+  {id:"buttercrunch",name:"Buttercrunch",light:"low",ph:"6.0-7.0",pets:"Safe",s2sp:5,sp2h:21,gf:60,thin:1},
+  {id:"butterhead",name:"Butterhead",light:"low",ph:"6.0-7.0",pets:"Safe",s2sp:5,sp2h:21,gf:60,thin:1},
+  {id:"romaine",name:"Romaine",light:"medium",ph:"6.0-7.0",pets:"Safe",s2sp:5,sp2h:25,gf:60,thin:1},
+  {id:"red-sails",name:"Red Sails",light:"low",ph:"6.0-7.0",pets:"Safe",s2sp:5,sp2h:21,gf:55,thin:1},
+  {id:"red-salad-bowl",name:"Red Salad Bowl",light:"low",ph:"6.0-7.0",pets:"Safe",s2sp:5,sp2h:21,gf:55,thin:1},
+  {id:"endive-lettuce",name:"Endive Lettuce",light:"medium",ph:"5.5-6.5",pets:"Safe",s2sp:7,sp2h:28,gf:60,thin:1},
+  {id:"kale",name:"Kale",light:"high",ph:"5.5-6.5",pets:"Safe",s2sp:7,sp2h:35,gf:90,thin:1},
+  {id:"classic-kale",name:"Classic Kale",light:"high",ph:"5.5-6.5",pets:"Safe",s2sp:7,sp2h:35,gf:90,thin:1},
+  {id:"kale-lacinato",name:"Kale Lacinato",light:"high",ph:"5.5-6.5",pets:"Safe",s2sp:7,sp2h:35,gf:90,thin:1},
+  {id:"spinach",name:"Spinach",light:"high",ph:"6.0-7.0",pets:"Safe",s2sp:7,sp2h:28,gf:60,thin:1},
+  {id:"arugula",name:"Arugula",light:"medium",ph:"6.0-7.0",pets:"Safe",s2sp:5,sp2h:21,gf:45,thin:1},
+  {id:"green-bok-choy",name:"Green Bok Choy",light:"medium",ph:"6.0-7.0",pets:"Safe",s2sp:5,sp2h:28,gf:60,thin:1},
+  {id:"bok-choy",name:"Bok Choy",light:"medium",ph:"6.0-7.0",pets:"Safe",s2sp:5,sp2h:28,gf:60,thin:1},
+  {id:"red-amaranth",name:"Red Amaranth",light:"high",ph:"6.0-7.0",pets:"Safe",s2sp:5,sp2h:21,gf:45,thin:1},
+  {id:"green-mustard",name:"Green Mustard",light:"medium",ph:"6.0-6.5",pets:"Safe",s2sp:5,sp2h:21,gf:45,thin:1},
+  {id:"green-tatsoi",name:"Green Tatsoi",light:"medium",ph:"6.0-7.0",pets:"Safe",s2sp:5,sp2h:25,gf:55,thin:1},
+  {id:"red-tatsoi",name:"Red Tatsoi",light:"medium",ph:"6.0-7.0",pets:"Safe",s2sp:5,sp2h:25,gf:55,thin:1},
+  {id:"red-swiss-chard",name:"Red Swiss Chard",light:"high",ph:"6.0-7.0",pets:"Safe",s2sp:7,sp2h:30,gf:75,thin:1},
+  {id:"red-sorrel",name:"Red Sorrel",light:"medium",ph:"5.5-6.5",pets:"Safe",s2sp:7,sp2h:28,gf:60,thin:1},
+  {id:"watercress",name:"Watercress",light:"medium",ph:"6.5-7.5",pets:"Safe",s2sp:7,sp2h:21,gf:45,thin:1},
+  {id:"wheatgrass",name:"Wheatgrass",light:"low",ph:"6.0-7.0",pets:"Safe",s2sp:3,sp2h:7,gf:14,thin:1},
+  {id:"celery",name:"Celery",light:"high",ph:"6.0-7.0",pets:"Safe",s2sp:14,sp2h:60,gf:90,thin:1},
+  {id:"mini-cauliflower",name:"Mini Cauliflower",light:"high",ph:"6.0-7.0",pets:"Safe",s2sp:7,sp2h:45,gf:60,thin:1},
+  {id:"basil",name:"Basil",light:"high",ph:"5.5-6.5",pets:"Mildly toxic",s2sp:7,sp2h:28,gf:120,thin:1},
+  {id:"holy-basil",name:"Holy Basil",light:"high",ph:"5.5-6.5",pets:"Mildly toxic",s2sp:7,sp2h:28,gf:120,thin:1},
+  {id:"purple-basil",name:"Purple Basil",light:"high",ph:"5.5-6.5",pets:"Mildly toxic",s2sp:7,sp2h:28,gf:120,thin:1},
+  {id:"sweet-thai-basil",name:"Sweet Thai Basil",light:"high",ph:"5.5-6.5",pets:"Mildly toxic",s2sp:7,sp2h:28,gf:120,thin:1},
+  {id:"mint",name:"Mint",light:"medium",ph:"6.0-7.0",pets:"Toxic to cats/dogs",s2sp:10,sp2h:30,gf:120,thin:1},
+  {id:"rosemary",name:"Rosemary",light:"medium",ph:"5.5-6.0",pets:"Mildly toxic",s2sp:14,sp2h:60,gf:180,thin:1},
+  {id:"cilantro",name:"Cilantro",light:"medium",ph:"6.0-7.0",pets:"Safe",s2sp:7,sp2h:21,gf:60,thin:1},
+  {id:"chives",name:"Chives",light:"high",ph:"6.0-7.0",pets:"Toxic to cats/dogs",s2sp:10,sp2h:30,gf:120,thin:2},
+  {id:"bunching-onions",name:"Bunching Onions",light:"high",ph:"6.0-7.0",pets:"Toxic to cats/dogs",s2sp:10,sp2h:35,gf:90,thin:2},
+  {id:"lemongrass",name:"Lemongrass",light:"high",ph:"5.5-7.0",pets:"Safe",s2sp:14,sp2h:60,gf:180,thin:1},
+  {id:"thyme",name:"Thyme",light:"high",ph:"5.5-7.0",pets:"Safe",s2sp:14,sp2h:60,gf:150,thin:1},
+  {id:"italian-parsley",name:"Italian Parsley",light:"medium",ph:"5.5-6.5",pets:"Toxic to cats/dogs",s2sp:14,sp2h:35,gf:90,thin:1},
+  {id:"parsley",name:"Parsley",light:"medium",ph:"5.5-6.5",pets:"Toxic to cats/dogs",s2sp:14,sp2h:35,gf:90,thin:1},
+  {id:"oregano",name:"Oregano",light:"high",ph:"6.0-7.0",pets:"Safe",s2sp:10,sp2h:45,gf:150,thin:1},
+  {id:"sage",name:"Sage",light:"high",ph:"5.5-6.5",pets:"Mildly toxic",s2sp:14,sp2h:56,gf:150,thin:1},
+  {id:"savory",name:"Savory",light:"high",ph:"6.0-6.7",pets:"Safe",s2sp:10,sp2h:45,gf:120,thin:1},
+  {id:"lavender",name:"Lavender",light:"high",ph:"6.4-6.8",pets:"Mildly toxic",s2sp:14,sp2h:60,gf:180,thin:1},
+  {id:"dill",name:"Dill",light:"high",ph:"5.5-6.5",pets:"Safe",s2sp:7,sp2h:28,gf:60,thin:1},
+  {id:"chervil",name:"Chervil",light:"low",ph:"6.0-6.8",pets:"Safe",s2sp:7,sp2h:28,gf:60,thin:1},
+  {id:"stevia",name:"Stevia",light:"high",ph:"6.0-7.0",pets:"Safe",s2sp:10,sp2h:45,gf:150,thin:1},
+  {id:"sweet-marjoram",name:"Sweet Marjoram",light:"high",ph:"6.0-7.0",pets:"Safe",s2sp:10,sp2h:45,gf:120,thin:1},
+  {id:"cherry-tomatoes",name:"Cherry Tomatoes",light:"high",ph:"5.5-6.5",pets:"Toxic to cats/dogs",s2sp:7,sp2h:60,gf:90,thin:1},
+  {id:"banana-peppers",name:"Banana Peppers",light:"high",ph:"5.5-6.5",pets:"Safe",s2sp:10,sp2h:70,gf:60,thin:1},
+  {id:"jalape-os",name:"Jalapeños",light:"high",ph:"5.5-6.5",pets:"Safe",s2sp:10,sp2h:70,gf:60,thin:1},
+  {id:"sweet-peppers",name:"Sweet Peppers",light:"high",ph:"5.5-6.5",pets:"Safe",s2sp:10,sp2h:70,gf:60,thin:1},
+  {id:"lemon-hot-pepper",name:"Lemon Hot Pepper",light:"high",ph:"5.5-6.5",pets:"Safe",s2sp:10,sp2h:70,gf:60,thin:1},
+  {id:"cucumbers",name:"Cucumbers",light:"high",ph:"5.5-6.5",pets:"Safe",s2sp:5,sp2h:55,gf:60,thin:1},
+  {id:"dragon-beans",name:"Dragon Beans",light:"high",ph:"6.0-7.0",pets:"Safe",s2sp:5,sp2h:55,gf:60,thin:1},
+  {id:"green-beans",name:"Green Beans",light:"high",ph:"6.0-7.0",pets:"Safe",s2sp:5,sp2h:55,gf:60,thin:1},
+  {id:"peas",name:"Peas",light:"high",ph:"6.0-7.5",pets:"Safe",s2sp:5,sp2h:55,gf:60,thin:1},
+  {id:"fairytale-eggplant",name:"Fairytale Eggplant",light:"high",ph:"5.5-6.5",pets:"Toxic to cats/dogs",s2sp:10,sp2h:70,gf:60,thin:1},
+  {id:"strawberries",name:"Strawberries",light:"high",ph:"5.5-6.5",pets:"Safe",s2sp:14,sp2h:60,gf:90,thin:1},
+  {id:"mini-strawberries",name:"Mini Strawberries",light:"high",ph:"5.5-6.5",pets:"Safe",s2sp:14,sp2h:60,gf:90,thin:1},
+  {id:"marietta-marigold",name:"Marietta Marigold",light:"high",ph:"6.0-7.5",pets:"Safe",s2sp:5,sp2h:28,gf:90,thin:1},
+  {id:"marigold",name:"Marigold",light:"high",ph:"6.0-7.5",pets:"Safe",s2sp:5,sp2h:28,gf:90,thin:1},
+  {id:"pink-petunia",name:"Pink Petunia",light:"low",ph:"6.0-7.0",pets:"Safe",s2sp:10,sp2h:42,gf:90,thin:1},
+  {id:"white-petunia",name:"White Petunia",light:"low",ph:"6.0-7.0",pets:"Safe",s2sp:10,sp2h:42,gf:90,thin:1},
+  {id:"petunia",name:"Petunia",light:"low",ph:"6.0-7.0",pets:"Safe",s2sp:10,sp2h:42,gf:90,thin:1},
+  {id:"purple-campanula",name:"Purple Campanula",light:"medium",ph:"5.5-6.5",pets:"Safe",s2sp:14,sp2h:42,gf:60,thin:1},
+  {id:"purple-snapdragon",name:"Purple Snapdragon",light:"high",ph:"6.0-7.5",pets:"Safe",s2sp:10,sp2h:42,gf:90,thin:1},
+  {id:"scarlet-snapdragon",name:"Scarlet Snapdragon",light:"high",ph:"6.0-7.5",pets:"Safe",s2sp:10,sp2h:42,gf:90,thin:1},
+  {id:"yellow-snapdragon",name:"Yellow Snapdragon",light:"high",ph:"6.0-7.5",pets:"Safe",s2sp:10,sp2h:42,gf:90,thin:1},
+  {id:"radio-calendula",name:"Radio Calendula",light:"medium",ph:"5.5-7.0",pets:"Safe",s2sp:7,sp2h:35,gf:90,thin:1},
+  {id:"torenia",name:"Torenia",light:"low",ph:"6.0-7.0",pets:"Safe",s2sp:10,sp2h:42,gf:90,thin:1},
+  {id:"nasturtium",name:"Nasturtium",light:"low",ph:"6.0-7.5",pets:"Safe",s2sp:7,sp2h:35,gf:90,thin:1},
+  {id:"viola",name:"Viola",light:"low",ph:"5.5-6.5",pets:"Safe",s2sp:10,sp2h:28,gf:90,thin:1},
+  {id:"chamomile",name:"Chamomile",light:"medium",ph:"5.6-7.5",pets:"Safe",s2sp:7,sp2h:42,gf:60,thin:1},
+  {id:"dianthus",name:"Dianthus",light:"medium",ph:"6.0-7.0",pets:"Safe",s2sp:7,sp2h:42,gf:60,thin:1},
+  {id:"borage",name:"Borage",light:"medium",ph:"6.0-7.0",pets:"Safe",s2sp:7,sp2h:35,gf:90,thin:1},
+  {id:"hibiscus",name:"Hibiscus",light:"high",ph:"6.0-7.0",pets:"Safe",s2sp:14,sp2h:60,gf:90,thin:1},
+];
+function hashColor(s){ let h=0; for(let i=0;i<s.length;i++) h=(h*31+s.charCodeAt(i))>>>0; return 'hsl('+(h%360)+',52%,62%)'; }
+BUILTIN.forEach(p=>{ if(!p.color) p.color=hashColor(p.id); });
+function allPlants(){ return BUILTIN.concat(state.customPlants||[]); }
+const byId = id => allPlants().find(p=>p.id===id);
+function tint(c,a){ return c.replace('hsl(','hsla(').replace(')',','+a+')'); }
+const abbr = name => name.length<=4 ? name : name.slice(0,4);
+
+const TOWER_PODS = 30;
+const KEY = 'thryve-sprout-test-v1';
+let state = load();
+function load(){ try{ const s=JSON.parse(localStorage.getItem(KEY)); if(s&&s.plants) return s; }catch(e){}
+  return { trays:[], plants:[], customPlants:[] }; }
+// removed trays are transient (soft-delete) — kept in memory so Undo works, but
+// filtered (with their seedlings) out of what we persist. A reload commits the removal.
+function cleanState(){
+  const trays = state.trays.filter(t=>!t.removed);
+  const live = {}; trays.forEach(t=>live[t.id]=1);
+  const plants = state.plants.filter(p=> p.loc.type!=='tray' || live[p.loc.trayId]);
+  return { trays, plants, customPlants: state.customPlants||[] };
+}
+function save(){ try{ localStorage.setItem(KEY, JSON.stringify(cleanState())); }catch(e){} }
+function uid(){ return Date.now().toString(36)+Math.random().toString(36).slice(2,6); }
+
+/* ───────── date helpers ───────── */
+function today(){ const t=new Date(); t.setHours(12,0,0,0); return t; }
+function isoToday(){ const t=today(); return t.getFullYear()+'-'+String(t.getMonth()+1).padStart(2,'0')+'-'+String(t.getDate()).padStart(2,'0'); }
+function daysSince(s){ return Math.round((today()-new Date(s+'T12:00:00'))/86400000); }
+
+/* ───────── plant lookups ───────── */
+function plantInCell(trayId,r,c){ return state.plants.find(p=>p.loc&&p.loc.type==='tray'&&p.loc.trayId===trayId&&p.loc.r===r&&p.loc.c===c); }
+function plantInPod(n){ return state.plants.find(p=>p.loc&&p.loc.type==='pod'&&p.loc.pod===n); }
+function emptyPods(){ const out=[]; for(let n=1;n<=TOWER_PODS;n++){ if(!plantInPod(n)) out.push(n); } return out; }
+function stageOf(p){ return p.loc&&p.loc.type==='pod' ? 'tower' : (p.sprouted?'sprouted':'seeded'); }
+
+/* ───────── actions ───────── */
+function addTray(type,rows,cols){
+  const n = state.trays.filter(t=>t.type===type).length+1;
+  state.trays.push({ id:uid(), type, rows, cols,
+    name: type==='gardyn' ? 'Gardyn Nursery'+(n>1?' '+n:'') : 'Custom Tray '+n });
+  save(); render();
+}
+function seedCell(trayId,r,c,variety,date,seeds){
+  state.plants.push({ id:uid(), variety, seededOn:date, seeds:seeds, sprouted:false, transplantedOn:null,
+    loc:{type:'tray',trayId,r,c} });
+  save(); render();
+}
+function setSprouted(id,val){ const p=state.plants.find(x=>x.id===id); if(p){ p.sprouted=val; save(); render(); } }
+function clearPlant(id){ state.plants=state.plants.filter(x=>x.id!==id); save(); render(); }
+function transplant(id,pod){ const p=state.plants.find(x=>x.id===id); if(p){ p.loc={type:'pod',pod}; p.sprouted=true; p.transplantedOn=isoToday(); save(); render(); } }
+
+/* ───────── render ───────── */
+function render(){ renderTower(); renderTrays(); renderLedger(); }
+
+function renderTower(){
+  const wrap=document.getElementById('tower'); wrap.innerHTML='';
+  for(let n=1;n<=TOWER_PODS;n++){
+    const p=plantInPod(n); const d=document.createElement('div');
+    d.className='pod'+(p?' filled':'');
+    if(p){ const pl=byId(p.variety); d.style.background=tint(pl.color,.28); d.style.borderColor=pl.color;
+      d.innerHTML='<span class="pn">'+n+'</span>'+abbr(pl.name); }
+    else d.innerHTML='<span class="pn">'+n+'</span>';
+    wrap.appendChild(d);
+  }
+  document.getElementById('tower-meta').textContent=(TOWER_PODS-emptyPods().length)+' / '+TOWER_PODS+' pods';
+}
+
+function renderTrays(){
+  const wrap=document.getElementById('trays'); wrap.innerHTML='';
+  document.getElementById('no-trays').style.display = state.trays.length?'none':'block';
+  state.trays.forEach(tray=>{
+    if(tray.removed){
+      const tomb=document.createElement('div'); tomb.className='tray-tomb';
+      tomb.innerHTML='<div class="tomb-body"><div class="tomb-title">'+tray.name+' <span>removed</span></div>'+
+        '<div class="tomb-sub">Won\'t be saved — undo to keep it.</div></div>'+
+        '<button class="undo-btn" onclick="undoRemoveTray(\''+tray.id+'\')">Undo</button>';
+      wrap.appendChild(tomb); return;
+    }
+    const card=document.createElement('div'); card.className='tray '+tray.type;
+    const head=document.createElement('div'); head.className='tray-head';
+    head.innerHTML='<span class="tray-name">'+tray.name+'</span>'+
+      '<span class="tray-right"><span class="tray-meta">'+tray.rows+' × '+tray.cols+' · '+countSeeded(tray.id)+' seeded</span>'+
+      '<button class="del-btn" onclick="removeTray(\''+tray.id+'\')">Remove</button></span>';
+    card.appendChild(head);
+    const grid=document.createElement('div'); grid.className='cell-grid';
+    grid.style.gridTemplateColumns='repeat('+tray.cols+', 1fr)';
+    for(let r=0;r<tray.rows;r++) for(let c=0;c<tray.cols;c++){
+      const p=plantInCell(tray.id,r,c); const cell=document.createElement('div');
+      cell.className='cell'+(p?' full':'');
+      if(p){ const pl=byId(p.variety); cell.style.background=tint(pl.color,.28); cell.style.borderColor=pl.color;
+        const dot=p.sprouted?'#2f9e44':'#fff';
+        cell.innerHTML='<span class="sprout" style="background:'+dot+'"></span>'+abbr(pl.name)+'<span class="d">d'+daysSince(p.seededOn)+'</span>';
+        cell.onclick=()=>openCell(p); }
+      else { cell.innerHTML='<span class="plus">+</span>'; cell.onclick=()=>openSeed(tray.id,r,c); }
+      grid.appendChild(cell);
+    }
+    card.appendChild(grid);
+    wrap.appendChild(card);
+  });
+}
+function countSeeded(trayId){ return state.plants.filter(p=>p.loc&&p.loc.type==='tray'&&p.loc.trayId===trayId).length; }
+function removeTray(id){ const t=state.trays.find(x=>x.id===id); if(t){ t.removed=true; save(); render(); } }
+function undoRemoveTray(id){ const t=state.trays.find(x=>x.id===id); if(t){ delete t.removed; save(); render(); } }
+
+function renderLedger(){
+  const wrap=document.getElementById('ledger'); wrap.innerHTML='';
+  document.getElementById('no-plants').style.display = state.plants.length?'none':'block';
+  state.plants.slice().sort((a,b)=>a.seededOn<b.seededOn?1:-1).forEach(p=>{
+    const pl=byId(p.variety); const st=stageOf(p);
+    const loc = p.loc.type==='pod' ? ('Pod '+p.loc.pod) : ('Tray cell '+(p.loc.r+1)+'·'+(p.loc.c+1));
+    let fields =
+      '<div class="pc-field"><span class="pc-k">Seeds</span><span class="pc-v">'+(p.seeds||1)+'</span></div>'+
+      '<div class="pc-field"><span class="pc-k">Seeded</span><span class="pc-v">'+p.seededOn+' &middot; day '+daysSince(p.seededOn)+'</span></div>'+
+      '<div class="pc-field"><span class="pc-k">Location</span><span class="pc-v">'+loc+'</span></div>';
+    if(p.transplantedOn) fields+='<div class="pc-field"><span class="pc-k">Transplanted</span><span class="pc-v">'+p.transplantedOn+'</span></div>';
+    const card=document.createElement('div'); card.className='pc-card';
+    card.innerHTML=
+      '<div class="pc-head" style="background:linear-gradient(100deg,'+pl.color+'22 8%,'+pl.color+'55 100%)">'+
+        '<span class="pc-dot" style="background:'+pl.color+'"></span>'+
+        '<span class="pc-title">'+pl.name+'</span>'+
+        '<span class="stage '+st+'">'+st+'</span>'+
+      '</div>'+
+      '<div class="pc-body">'+fields+'</div>';
+    wrap.appendChild(card);
+  });
+}
+
+/* ───────── modal ───────── */
+const modal=document.getElementById('modal'), sheet=document.getElementById('sheet');
+function openModal(html){ sheet.innerHTML=html; modal.classList.add('open'); }
+function closeModal(){ modal.classList.remove('open'); }
+modal.onclick=e=>{ if(e.target===modal) closeModal(); };
+
+function plantOptions(sel){ return allPlants().map(p=>'<option value="'+p.id+'"'+(p.id===sel?' selected':'')+'>'+p.name+(p.custom?' (custom)':'')+'</option>').join(''); }
+
+function openAddTray(){
+  openModal(
+    '<button class="x" onclick="closeModal()">×</button>'+
+    '<h3>Add a sprout tray</h3>'+
+    '<p class="meta-line">Pick the Gardyn nursery, or set your own grid for a DIY / non-standard tray.</p>'+
+    '<div class="preset-row">'+
+      '<button class="btn" onclick="addTray(\'gardyn\','+GARDYN_TRAY.rows+','+GARDYN_TRAY.cols+');closeModal()">Gardyn Nursery<br><span style="font-weight:400;font-size:.6rem">10 cells ('+GARDYN_TRAY.rows+' × '+GARDYN_TRAY.cols+')</span></button>'+
+      '<button class="btn ghost" onclick="showCustom()">Custom tray</button>'+
+    '</div>'+
+    '<div id="custom-fields" style="display:none">'+
+      '<div class="row2">'+
+        '<div class="field"><label>Rows</label><input id="t-rows" type="number" min="1" max="20" value="2"></div>'+
+        '<div class="field"><label>Columns</label><input id="t-cols" type="number" min="1" max="20" value="6"></div>'+
+      '</div>'+
+      '<div class="actions"><button class="btn" onclick="createCustom()">Create tray</button></div>'+
+    '</div>'
+  );
+}
+function showCustom(){ document.getElementById('custom-fields').style.display='block'; }
+function createCustom(){
+  const r=Math.max(1,Math.min(20,+document.getElementById('t-rows').value||1));
+  const c=Math.max(1,Math.min(20,+document.getElementById('t-cols').value||1));
+  addTray('custom',r,c); closeModal();
+}
+
+function openSeed(trayId,r,c){
+  openModal(
+    '<button class="x" onclick="closeModal()">×</button>'+
+    '<h3>Seed this cell</h3>'+
+    '<p class="meta-line">Cell '+(r+1)+'·'+(c+1)+' — pick what went in.</p>'+
+    '<div class="field"><label style="display:flex;justify-content:space-between;align-items:center">Plant'+
+      '<button class="btn sm ghost" type="button" onclick="toggleCustomPlant()">+ Custom plant</button></label>'+
+      '<select id="s-var">'+plantOptions('lettuce')+'</select></div>'+
+    '<div id="custom-plant" style="display:none;border:1.5px dashed var(--divider);border-radius:10px;padding:6px 12px 12px;margin:-4px 0 4px;background:#fbfffb">'+
+      '<div class="field"><label>New plant name</label><input id="cp-name" type="text" placeholder="e.g. Genovese Basil"></div>'+
+      '<div class="row2">'+
+        '<div class="field"><label>Light / heat</label><select id="cp-light"><option value="low">Low</option><option value="medium" selected>Medium</option><option value="high">High</option></select></div>'+
+        '<div class="field"><label>pH range</label><input id="cp-ph" type="text" placeholder="6.0-7.0"></div>'+
+      '</div>'+
+      '<div class="row2">'+
+        '<div class="field"><label>Pet safe?</label><select id="cp-pets"><option>Safe</option><option>Toxic</option></select></div>'+
+        '<div class="field"><label>Seed→sprout (days)</label><input id="cp-s2sp" type="number" min="1" value="7"></div>'+
+      '</div>'+
+      '<div class="row2">'+
+        '<div class="field"><label>Sprout→harvest (days)</label><input id="cp-sp2h" type="number" min="1" value="28"></div>'+
+        '<div class="field"><label>Notes</label><input id="cp-notes" type="text" placeholder="optional"></div>'+
+      '</div>'+
+      '<div class="actions"><button class="btn sm" type="button" onclick="addCustomPlant()">Add to list</button>'+
+        '<button class="btn sm ghost" type="button" onclick="toggleCustomPlant()">Cancel</button></div>'+
+    '</div>'+
+    '<div class="row2">'+
+      '<div class="field"><label>Number of seeds</label><input id="s-seeds" type="number" min="1" max="99" value="3"></div>'+
+      '<div class="field"><label>Seeded on</label><input id="s-date" type="date" value="'+isoToday()+'"></div>'+
+    '</div>'+
+    '<div class="actions">'+
+      '<button class="btn" onclick="doSeed(\''+trayId+'\','+r+','+c+')">Seed cell</button>'+
+      '<button class="btn ghost" onclick="closeModal()">Cancel</button>'+
+    '</div>'
+  );
+}
+function doSeed(trayId,r,c){
+  seedCell(trayId,r,c,document.getElementById('s-var').value,document.getElementById('s-date').value,
+    Math.max(1,+document.getElementById('s-seeds').value||1));
+  closeModal();
+}
+function toggleCustomPlant(){
+  const el=document.getElementById('custom-plant');
+  el.style.display = el.style.display==='none' ? 'block' : 'none';
+}
+function addCustomPlant(){
+  const name=(document.getElementById('cp-name').value||'').trim();
+  if(!name){ document.getElementById('cp-name').focus(); return; }
+  const p={ id:'cust-'+uid(), name, custom:true, color:hashColor(name),
+    light:document.getElementById('cp-light').value,
+    ph:(document.getElementById('cp-ph').value||'6.0-7.0').trim(),
+    pets:document.getElementById('cp-pets').value,
+    s2sp:Math.max(1,+document.getElementById('cp-s2sp').value||7),
+    sp2h:Math.max(1,+document.getElementById('cp-sp2h').value||28),
+    gf:90, thin:1,
+    notes:(document.getElementById('cp-notes').value||'').trim() };
+  state.customPlants=state.customPlants||[]; state.customPlants.push(p); save();
+  document.getElementById('s-var').innerHTML=plantOptions(p.id);   // re-list with the new plant selected
+  document.getElementById('custom-plant').style.display='none';
+}
+
+function openCell(p){
+  const pl=byId(p.variety); const pods=emptyPods();
+  const podSel = pods.length
+    ? '<div class="field"><label>Transplant to pod</label><select id="c-pod">'+pods.map(n=>'<option value="'+n+'">Pod '+n+'</option>').join('')+'</select></div>'+
+      '<div class="actions"><button class="btn" onclick="doTransplant(\''+p.id+'\')">Move to tower</button></div>'
+    : '<p class="meta-line">No empty pods — free one in the tower first.</p>';
+  openModal(
+    '<button class="x" onclick="closeModal()">×</button>'+
+    '<h3 style="color:'+pl.color+'">'+pl.name+'</h3>'+
+    '<p class="meta-line">Seeded '+p.seededOn+' · day '+daysSince(p.seededOn)+'</p>'+
+    '<div class="actions">'+
+      '<button class="btn '+(p.sprouted?'ghost':'')+'" onclick="setSprouted(\''+p.id+'\','+(!p.sprouted)+');closeModal()">'+(p.sprouted?'Sprouted ✓ (undo)':'Mark sprouted')+'</button>'+
+      '<button class="btn ghost" onclick="if(confirm(\'Clear this cell?\')){clearPlant(\''+p.id+'\');closeModal();}">Clear</button>'+
+    '</div>'+
+    '<hr style="border:none;border-top:1px dotted var(--divider);margin:18px 0 4px">'+
+    podSel
+  );
+}
+function doTransplant(id){ transplant(id, +document.getElementById('c-pod').value); closeModal(); }
+
+document.getElementById('addTray').onclick=openAddTray;
+render();
+</script>
+</body>
+</html>
