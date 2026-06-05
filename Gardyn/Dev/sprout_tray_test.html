@@ -26,6 +26,8 @@
   .btn:hover{background:#6aa893;}
   .btn.ghost{background:transparent; color:var(--muted); border-color:var(--divider); box-shadow:none;}
   .btn.sm{padding:6px 10px; font-size:.66rem;}
+  .btn.wide{width:100%; padding:12px;}
+  .sprout-list{display:flex; flex-direction:column; gap:12px; margin-top:12px;}
 
   /* tower */
   .pod-grid{display:grid; grid-template-columns:repeat(10, 1fr); gap:6px;}
@@ -38,16 +40,17 @@
   @keyframes pulse{50%{outline-color:#9cd49c;}}
 
   /* trays */
-  .tray{background:#fff; border:1.5px solid var(--divider); border-radius:12px; padding:14px; margin-bottom:14px;}
+  .tray-wrap{margin-bottom:22px;}
+  /* title row lives ABOVE and OUTSIDE the tray bounds */
+  .tray-outer-head{display:flex; align-items:center; justify-content:space-between; gap:10px; margin:0 6px 9px;}
+  .tray{background:#fff; border:1.5px solid var(--divider); border-radius:12px; padding:14px; margin:0;}
   /* custom DIY trays: light grey, to set them apart from the Gardyn nursery */
   .tray.custom{background:#eceeec; border-color:#cbd2cb;}
-  /* Gardyn nursery: basic oval placeholder — round seed cups, centered — until real art lands */
-  .tray.gardyn{border-radius:160px; padding:24px 54px; background:#eef7ec; border-color:#bcdcb6;
+  /* Gardyn nursery: basic oval placeholder — large round seed cups, centered — until real art lands */
+  .tray.gardyn{border-radius:160px; padding:26px 48px; background:#eef7ec; border-color:#bcdcb6;
     box-shadow:inset 0 0 0 5px rgba(255,255,255,.55);}
-  .tray.gardyn .tray-head{flex-direction:column; align-items:center; gap:6px; text-align:center;}
-  .tray.gardyn .cell-grid{max-width:440px; margin:0 auto; gap:12px;}
+  .tray.gardyn .cell-grid{max-width:600px; margin:0 auto; gap:16px;}
   .tray.gardyn .cell{border-radius:50%;}            /* round germination cups */
-  .tray-head{display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:10px;}
   .tray-name{font-weight:700; font-size:.92rem; color:#2f4a38;}
   .tray-right{display:flex; align-items:center; gap:10px;}
   .tray-meta{font-size:.66rem; color:var(--muted); font-style:italic;}
@@ -101,6 +104,12 @@
   @media(min-width:560px){ .modal{align-items:center;} .sheet{border-radius:18px; margin:0 16px;} }
   .sheet h3{margin:0 0 4px; font-size:1rem; color:var(--moss);}
   .sheet .x{float:right; background:none; border:none; font-size:1.3rem; color:var(--muted); cursor:pointer; line-height:1; padding:0;}
+  /* recipe-card-style header bar for modals (matches the ledger plant cards) */
+  .card-head{position:relative; margin:-20px -20px 18px; padding:15px 20px;
+    background:linear-gradient(100deg,#dff0da 8%,#a1ff7f 100%); border-bottom:1px solid #9cc49c;
+    border-radius:18px 18px 0 0; font-weight:700; font-size:1.05rem; color:#2f4a38;}
+  .card-head .loc{font-weight:500; color:#4a6b52; font-size:.82rem; margin-left:5px;}
+  .card-head .x{position:absolute; top:11px; right:14px; float:none; color:#2f4a38; font-size:1.4rem;}
   .field{margin:14px 0;}
   .field label{display:block; font-size:.66rem; text-transform:uppercase; letter-spacing:.08em; color:var(--muted); margin-bottom:5px;}
   .field select, .field input{width:100%; font-family:inherit; font-size:.95rem; padding:9px 10px;
@@ -111,6 +120,11 @@
   .preset-row{display:flex; gap:10px; margin-top:8px;}
   .preset-row .btn{flex:1; padding:16px 10px;}
   .meta-line{font-size:.74rem; color:var(--muted); margin:2px 0 0;}
+  /* little pod-number bubble that lives inside the "Move to tower" button */
+  .pod-in{width:42px; text-align:center; font-family:inherit; font-weight:700; font-size:.92em;
+    border:none; border-radius:6px; background:rgba(255,255,255,.92); color:#2f4a38;
+    padding:3px 2px; margin:0 6px; vertical-align:middle; -moz-appearance:textfield;}
+  .pod-in::-webkit-outer-spin-button,.pod-in::-webkit-inner-spin-button{-webkit-appearance:none; margin:0;}
 </style>
 </head>
 <body>
@@ -137,12 +151,17 @@
     <p class="empty-note" id="no-plants">Nothing seeded yet.</p>
   </section>
 
+  <section>
+    <button class="btn ghost wide" id="toggleSprouts">Show sprouts</button>
+    <div id="sprouts" class="sprout-list" hidden></div>
+  </section>
+
   <div class="modal" id="modal"><div class="sheet" id="sheet"></div></div>
 
 <script>
 /* ───────── data ───────── */
 // Gardyn nursery holds 10 plants (confirmed). Exact row/col arrangement pending Henry's Illustrator art.
-const GARDYN_TRAY = { rows:2, cols:5 };   // 10 cells; 2x5 placeholder layout until the real nursery art lands
+const GARDYN_TRAY = { rows:2, cols:5 };   // Gardyn nursery: 5 x 2 (5 wide, 2 tall) = 10 cells
 
 const BUILTIN = [
   {id:"lettuce",name:"Lettuce",light:"low",ph:"6.0-7.0",pets:"Safe",s2sp:5,sp2h:21,gf:60,thin:1},
@@ -255,10 +274,10 @@ function emptyPods(){ const out=[]; for(let n=1;n<=TOWER_PODS;n++){ if(!plantInP
 function stageOf(p){ return p.loc&&p.loc.type==='pod' ? 'tower' : (p.sprouted?'sprouted':'seeded'); }
 
 /* ───────── actions ───────── */
-function addTray(type,rows,cols){
+function addTray(type,rows,cols,name){
   const n = state.trays.filter(t=>t.type===type).length+1;
   state.trays.push({ id:uid(), type, rows, cols,
-    name: type==='gardyn' ? 'Gardyn Nursery'+(n>1?' '+n:'') : 'Custom Tray '+n });
+    name: (name&&name.trim()) || (type==='gardyn' ? 'Gardyn Nursery'+(n>1?' '+n:'') : 'Custom Tray '+n) });
   save(); render();
 }
 function seedCell(trayId,r,c,variety,date,seeds){
@@ -271,7 +290,8 @@ function clearPlant(id){ state.plants=state.plants.filter(x=>x.id!==id); save();
 function transplant(id,pod){ const p=state.plants.find(x=>x.id===id); if(p){ p.loc={type:'pod',pod}; p.sprouted=true; p.transplantedOn=isoToday(); save(); render(); } }
 
 /* ───────── render ───────── */
-function render(){ renderTower(); renderTrays(); renderLedger(); }
+function render(){ renderTower(); renderTrays(); renderLedger(); renderSprouts(); }
+function trayName(id){ const t=state.trays.find(x=>x.id===id); return t?t.name:'—'; }
 
 function renderTower(){
   const wrap=document.getElementById('tower'); wrap.innerHTML='';
@@ -297,12 +317,13 @@ function renderTrays(){
         '<button class="undo-btn" onclick="undoRemoveTray(\''+tray.id+'\')">Undo</button>';
       wrap.appendChild(tomb); return;
     }
-    const card=document.createElement('div'); card.className='tray '+tray.type;
-    const head=document.createElement('div'); head.className='tray-head';
+    const block=document.createElement('div'); block.className='tray-wrap';
+    const head=document.createElement('div'); head.className='tray-outer-head';
     head.innerHTML='<span class="tray-name">'+tray.name+'</span>'+
-      '<span class="tray-right"><span class="tray-meta">'+tray.rows+' × '+tray.cols+' · '+countSeeded(tray.id)+' seeded</span>'+
+      '<span class="tray-right"><span class="tray-meta">'+tray.cols+' × '+tray.rows+' · '+countSeeded(tray.id)+' seeded</span>'+
       '<button class="del-btn" onclick="removeTray(\''+tray.id+'\')">Remove</button></span>';
-    card.appendChild(head);
+    block.appendChild(head);
+    const card=document.createElement('div'); card.className='tray '+tray.type;
     const grid=document.createElement('div'); grid.className='cell-grid';
     grid.style.gridTemplateColumns='repeat('+tray.cols+', 1fr)';
     for(let r=0;r<tray.rows;r++) for(let c=0;c<tray.cols;c++){
@@ -316,7 +337,8 @@ function renderTrays(){
       grid.appendChild(cell);
     }
     card.appendChild(grid);
-    wrap.appendChild(card);
+    block.appendChild(card);
+    wrap.appendChild(block);
   });
 }
 function countSeeded(trayId){ return state.plants.filter(p=>p.loc&&p.loc.type==='tray'&&p.loc.trayId===trayId).length; }
@@ -336,12 +358,40 @@ function renderLedger(){
     if(p.transplantedOn) fields+='<div class="pc-field"><span class="pc-k">Transplanted</span><span class="pc-v">'+p.transplantedOn+'</span></div>';
     const card=document.createElement('div'); card.className='pc-card';
     card.innerHTML=
-      '<div class="pc-head" style="background:linear-gradient(100deg,'+pl.color+'22 8%,'+pl.color+'55 100%)">'+
+      '<div class="pc-head" style="background:linear-gradient(100deg,'+tint(pl.color,.13)+' 8%,'+tint(pl.color,.34)+' 100%)">'+
         '<span class="pc-dot" style="background:'+pl.color+'"></span>'+
         '<span class="pc-title">'+pl.name+'</span>'+
         '<span class="stage '+st+'">'+st+'</span>'+
       '</div>'+
       '<div class="pc-body">'+fields+'</div>';
+    wrap.appendChild(card);
+  });
+}
+
+/* sprout cards — same look as the ledger plant cards, trimmed to tray-relevant info.
+   (When ported, sprouts merge into the main ledger; here they get their own toggle.) */
+function renderSprouts(){
+  const wrap=document.getElementById('sprouts'), btn=document.getElementById('toggleSprouts');
+  const seedlings=state.plants.filter(p=>p.loc&&p.loc.type==='tray')
+    .sort((a,b)=>a.seededOn<b.seededOn?1:-1);
+  btn.textContent=(wrap.hidden?'Show':'Hide')+' sprouts ('+seedlings.length+')';
+  if(wrap.hidden) return;
+  wrap.innerHTML = seedlings.length ? '' : '<p class="empty-note">No seedlings in trays right now.</p>';
+  seedlings.forEach(p=>{
+    const pl=byId(p.variety); const st=p.sprouted?'sprouted':'seeded';
+    const card=document.createElement('div'); card.className='pc-card';
+    card.innerHTML=
+      '<div class="pc-head" style="background:linear-gradient(100deg,'+tint(pl.color,.13)+' 8%,'+tint(pl.color,.34)+' 100%)">'+
+        '<span class="pc-dot" style="background:'+pl.color+'"></span>'+
+        '<span class="pc-title">'+pl.name+'</span>'+
+        '<span class="stage '+st+'">'+st+'</span>'+
+      '</div>'+
+      '<div class="pc-body">'+
+        '<div class="pc-field"><span class="pc-k">Tray</span><span class="pc-v">'+trayName(p.loc.trayId)+'</span></div>'+
+        '<div class="pc-field"><span class="pc-k">Location</span><span class="pc-v">Cell '+(p.loc.r+1)+'·'+(p.loc.c+1)+'</span></div>'+
+        '<div class="pc-field"><span class="pc-k">Seeds</span><span class="pc-v">'+(p.seeds||1)+'</span></div>'+
+        '<div class="pc-field"><span class="pc-k">Seeded</span><span class="pc-v">'+p.seededOn+' &middot; day '+daysSince(p.seededOn)+'</span></div>'+
+      '</div>';
     wrap.appendChild(card);
   });
 }
@@ -356,14 +406,14 @@ function plantOptions(sel){ return allPlants().map(p=>'<option value="'+p.id+'"'
 
 function openAddTray(){
   openModal(
-    '<button class="x" onclick="closeModal()">×</button>'+
-    '<h3>Add a sprout tray</h3>'+
+    '<div class="card-head"><button class="x" onclick="closeModal()">×</button>Add a sprout tray</div>'+
     '<p class="meta-line">Pick the Gardyn nursery, or set your own grid for a DIY / non-standard tray.</p>'+
     '<div class="preset-row">'+
       '<button class="btn" onclick="addTray(\'gardyn\','+GARDYN_TRAY.rows+','+GARDYN_TRAY.cols+');closeModal()">Gardyn Nursery<br><span style="font-weight:400;font-size:.6rem">10 cells ('+GARDYN_TRAY.rows+' × '+GARDYN_TRAY.cols+')</span></button>'+
       '<button class="btn ghost" onclick="showCustom()">Custom tray</button>'+
     '</div>'+
     '<div id="custom-fields" style="display:none">'+
+      '<div class="field"><label>Tray name</label><input id="t-name" type="text" placeholder="e.g. Kitchen windowsill tray"></div>'+
       '<div class="row2">'+
         '<div class="field"><label>Rows</label><input id="t-rows" type="number" min="1" max="20" value="2"></div>'+
         '<div class="field"><label>Columns</label><input id="t-cols" type="number" min="1" max="20" value="6"></div>'+
@@ -376,14 +426,12 @@ function showCustom(){ document.getElementById('custom-fields').style.display='b
 function createCustom(){
   const r=Math.max(1,Math.min(20,+document.getElementById('t-rows').value||1));
   const c=Math.max(1,Math.min(20,+document.getElementById('t-cols').value||1));
-  addTray('custom',r,c); closeModal();
+  addTray('custom',r,c,document.getElementById('t-name').value); closeModal();
 }
 
 function openSeed(trayId,r,c){
   openModal(
-    '<button class="x" onclick="closeModal()">×</button>'+
-    '<h3>Seed this cell</h3>'+
-    '<p class="meta-line">Cell '+(r+1)+'·'+(c+1)+' — pick what went in.</p>'+
+    '<div class="card-head"><button class="x" onclick="closeModal()">×</button>Seed cell <span class="loc">'+(r+1)+'·'+(c+1)+'</span></div>'+
     '<div class="field"><label style="display:flex;justify-content:space-between;align-items:center">Plant'+
       '<button class="btn sm ghost" type="button" onclick="toggleCustomPlant()">+ Custom plant</button></label>'+
       '<select id="s-var">'+plantOptions('lettuce')+'</select></div>'+
@@ -442,13 +490,13 @@ function addCustomPlant(){
 function openCell(p){
   const pl=byId(p.variety); const pods=emptyPods();
   const podSel = pods.length
-    ? '<div class="field"><label>Transplant to pod</label><select id="c-pod">'+pods.map(n=>'<option value="'+n+'">Pod '+n+'</option>').join('')+'</select></div>'+
-      '<div class="actions"><button class="btn" onclick="doTransplant(\''+p.id+'\')">Move to tower</button></div>'
+    ? '<div class="actions"><button class="btn" onclick="doTransplant(\''+p.id+'\')">Move to tower'+
+        '<input class="pod-in" id="c-pod" type="number" min="1" max="'+TOWER_PODS+'" value="'+pods[0]+'" '+
+        'onclick="event.stopPropagation()" onkeydown="if(event.key===\'Enter\'){event.preventDefault();doTransplant(\''+p.id+'\');}">pod</button></div>'+
+      '<p class="meta-line">Empty pods: '+pods.join(', ')+'</p>'
     : '<p class="meta-line">No empty pods — free one in the tower first.</p>';
   openModal(
-    '<button class="x" onclick="closeModal()">×</button>'+
-    '<h3 style="color:'+pl.color+'">'+pl.name+'</h3>'+
-    '<p class="meta-line">Seeded '+p.seededOn+' · day '+daysSince(p.seededOn)+'</p>'+
+    '<div class="card-head" style="background:linear-gradient(100deg,'+tint(pl.color,.2)+' 8%,'+tint(pl.color,.5)+' 100%)"><button class="x" onclick="closeModal()">×</button>'+pl.name+' <span class="loc">seeded day '+daysSince(p.seededOn)+'</span></div>'+
     '<div class="actions">'+
       '<button class="btn '+(p.sprouted?'ghost':'')+'" onclick="setSprouted(\''+p.id+'\','+(!p.sprouted)+');closeModal()">'+(p.sprouted?'Sprouted ✓ (undo)':'Mark sprouted')+'</button>'+
       '<button class="btn ghost" onclick="if(confirm(\'Clear this cell?\')){clearPlant(\''+p.id+'\');closeModal();}">Clear</button>'+
@@ -457,9 +505,17 @@ function openCell(p){
     podSel
   );
 }
-function doTransplant(id){ transplant(id, +document.getElementById('c-pod').value); closeModal(); }
+function doTransplant(id){
+  const v=parseInt(document.getElementById('c-pod').value,10);
+  if(!v||v<1||v>TOWER_PODS){ alert('Enter a pod number 1–'+TOWER_PODS); return; }
+  if(plantInPod(v)){ alert('Pod '+v+' is taken — pick an empty one.'); return; }
+  transplant(id, v); closeModal();
+}
 
 document.getElementById('addTray').onclick=openAddTray;
+document.getElementById('toggleSprouts').onclick=function(){
+  const wrap=document.getElementById('sprouts'); wrap.hidden=!wrap.hidden; renderSprouts();
+};
 render();
 </script>
 </body>
