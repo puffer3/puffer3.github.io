@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Thryve · Sprout Tray test</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
     --cream:#f0faf0; --parch:#dff0da; --ink:#0f1a0f; --moss:#0f6b22;
@@ -27,7 +28,52 @@
   .btn.ghost{background:transparent; color:var(--muted); border-color:var(--divider); box-shadow:none;}
   .btn.sm{padding:6px 10px; font-size:.66rem;}
   .btn.wide{width:100%; padding:12px;}
-  .sprout-list{display:flex; flex-direction:column; gap:12px; margin-top:12px;}
+  .sprout-list{display:flex; flex-direction:column; gap:14px; margin-top:12px;}
+  /* sprout card — matches the app's plant-tracker card (green header + bordered data grid) */
+  .sk-card{background:var(--cream); border:1.5px solid var(--divider); border-radius:8px; overflow:hidden;}
+  .sk-top{display:flex; align-items:center; gap:9px; padding:9px 14px; background:#dcecd4; flex-wrap:wrap;}
+  .sk-dot{width:12px; height:12px; border-radius:4px; flex-shrink:0;}
+  .sk-top .nm{font-weight:700; font-size:.95rem; color:var(--ink);}
+  .sk-top .dt{font-size:.8rem; color:var(--muted);}
+  .sk-top .sep{color:#9cc49c;}
+  .sk-status{font-family:inherit; font-size:.7rem; padding:4px 11px; border:none; border-radius:4px; font-weight:600; white-space:nowrap; cursor:pointer;}
+  .sk-status.seeded{background:#f5edda; color:#c4962a;}
+  .sk-status.sprouted{background:#d0f0d0; color:#2d6a2d;}
+  .sk-status:hover{filter:brightness(.96);}
+  .sk-act{margin-left:auto; display:flex; gap:6px; flex-wrap:wrap;}
+  .sk-btn{font-family:inherit; font-size:.62rem; letter-spacing:.04em; text-transform:uppercase; font-weight:700;
+    padding:5px 10px; border-radius:6px; cursor:pointer; white-space:nowrap;}
+  .sk-btn.tp{background:#78b39c; color:#fff; border:1px solid #54ac9b;}
+  .sk-btn.tp:hover{background:#6aa893;}
+  .sk-btn.ed{background:#eaf2fb; color:#2a6496; border:1px solid #b8d4ee;}
+  .sk-btn.ed:hover{background:#2a6496; color:#fff;}
+  .sk-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--divider); border-top:1px solid var(--divider);}
+  .sk-cell{background:var(--cream); padding:8px 12px;}
+  .sk-lbl{font-size:.5rem; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); display:block; margin-bottom:3px;}
+  .sk-val{font-size:.82rem; color:var(--ink);}
+  .sk-valm{font-size:.78rem; color:var(--muted);}
+  .sk-cell .ldot{display:inline-block; width:7px; height:7px; border-radius:50%; margin-right:3px; vertical-align:middle;}
+  /* header inline controls — borderless, like the app card's name/date */
+  .sk-eyebrow{font-size:.6rem; color:var(--muted); text-transform:uppercase; letter-spacing:.1em; font-weight:600;}
+  .sk-coord{font-weight:700; font-size:.92rem; color:var(--ink);}
+  .sk-name{border:none; background:transparent; font-family:inherit; font-size:.92rem; font-weight:700; color:#2f4a38; cursor:pointer; max-width:160px;}
+  .sk-date{border:none; background:transparent; font-family:inherit; font-size:.8rem; color:var(--muted); cursor:pointer;}
+  .sk-seeds{border:1px solid var(--divider); border-radius:4px; padding:1px 5px; font-family:inherit; font-size:.82rem; width:56px; background:#fff; color:var(--ink);}
+  .sk-span2{grid-column:span 2;}
+  /* removed-sprout tombstone — mirrors the ledger page's removed card */
+  .sk-tomb{position:relative; background:var(--cream); border:1.5px solid var(--divider); border-radius:8px;
+    padding:14px 18px 14px 22px; display:flex; align-items:center; gap:12px; overflow:hidden; animation:rise .2s ease;}
+  .sk-tomb .accent{position:absolute; left:0; top:0; bottom:0; width:5px; background:#b85c38;}
+  .sk-tomb .arc-body{flex:1; min-width:0;}
+  .sk-tomb .eyebrow{font-size:.6rem; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); font-weight:600; margin-bottom:5px;}
+  .sk-tomb .headline{font-size:1.2rem; color:var(--ink); font-weight:700; line-height:1.15;}
+  .sk-tomb .headline .arc{color:var(--muted); font-weight:500;}
+  .sk-tomb .phrase{font-size:.85rem; font-style:italic; margin-top:5px; color:#b85c38;}
+  @media(max-width:560px){
+    .sk-grid{grid-template-columns:1fr;}
+    .sk-cell{display:flex; justify-content:space-between; align-items:baseline; gap:12px;}
+    .sk-lbl{margin-bottom:0;}
+  }
 
   /* tower */
   .pod-grid{display:grid; grid-template-columns:repeat(10, 1fr); gap:6px;}
@@ -47,11 +93,14 @@
   /* custom DIY trays: light grey, to set them apart from the Gardyn nursery */
   .tray.custom{background:#eceeec; border-color:#cbd2cb;}
   /* Gardyn nursery: basic oval placeholder — large round seed cups, centered — until real art lands */
-  .tray.gardyn{border-radius:160px; padding:26px 48px; background:#eef7ec; border-color:#bcdcb6;
-    box-shadow:inset 0 0 0 5px rgba(255,255,255,.55);}
-  .tray.gardyn .cell-grid{max-width:600px; margin:0 auto; gap:16px;}
+  /* Gardyn nursery: white rounded-corner rectangle (like the custom tray but white), round cups */
+  .tray.gardyn{background:#fff; border-color:var(--divider); border-radius:16px; padding:20px 24px;}
+  .tray.gardyn .cell-grid{max-width:560px; margin:0 auto; gap:16px;}
   .tray.gardyn .cell{border-radius:50%;}            /* round germination cups */
-  .tray-name{font-weight:700; font-size:.92rem; color:#2f4a38;}
+  .tray-name{font-weight:700; font-size:.92rem; color:#2f4a38; cursor:text;}
+  .tray-name:hover{text-decoration:underline dotted; text-underline-offset:3px;}   /* minimal "editable" hint */
+  .tray-name-edit{font-family:inherit; font-weight:700; font-size:.92rem; color:#2f4a38;
+    border:1.5px solid var(--divider); border-radius:6px; padding:1px 6px; max-width:240px; background:#fff;}
   .tray-right{display:flex; align-items:center; gap:10px;}
   .tray-meta{font-size:.66rem; color:var(--muted); font-style:italic;}
   .del-btn{background:#fde8e8; border:1px solid #f0c0b0; color:#b85c38; cursor:pointer; font-size:.6rem;
@@ -70,11 +119,25 @@
   .cell-grid{display:grid; gap:5px;}
   .cell{aspect-ratio:1; border-radius:7px; border:1.5px dashed var(--divider); background:var(--cream);
     display:flex; flex-direction:column; align-items:center; justify-content:center; gap:1px; position:relative;
-    cursor:pointer; font-size:.54rem; color:var(--muted); text-align:center; overflow:hidden;
+    cursor:pointer; font-size:.62rem; line-height:1.06; padding:3px; color:var(--muted); text-align:center; overflow:hidden;
     -webkit-tap-highlight-color:transparent; user-select:none; transition:transform .1s;}
   .cell:active{transform:scale(.9);}
   .cell.full{border-style:solid; border-color:transparent; color:#16361a; font-weight:700;}
-  .cell .d{font-size:.5rem; font-weight:600; opacity:.65;}
+  .cell .nm{display:block; width:100%; white-space:normal; word-break:break-word; line-height:1.05;}
+  .cell .d{font-size:.52rem; font-weight:600; opacity:.65; white-space:nowrap;}
+  /* plant dropdown sits on top of the cup; styled to read like the plant name (no arrow) */
+  .cell-sel{appearance:none; -webkit-appearance:none; width:100%; border:none; background:transparent;
+    font-family:inherit; font-size:.6rem; font-weight:700; color:#16361a; text-align:center; text-align-last:center;
+    cursor:pointer; padding:0; line-height:1.05; white-space:normal;}
+  .cell-sel option{color:#16361a; font-weight:500;}
+  .cell:not(.full) .cell-sel{color:var(--divider); font-size:1.1rem; font-weight:400;}   /* empty cup shows a muted ＋ */
+  /* sprouted toggle + editable seed count inside the cup (same colors as the recipe cards) */
+  .cell-sprout{font-family:inherit; font-size:.5rem; font-weight:600; padding:1px 6px; border:none; border-radius:3px;
+    cursor:pointer; background:#f5edda; color:#c4962a; margin-top:2px; white-space:nowrap;}
+  .cell-sprout.on{background:#d0f0d0; color:#2d6a2d;}
+  .cell-seeds{font-size:.5rem; font-weight:600; opacity:.72; cursor:text; margin-top:1px; white-space:nowrap;}
+  .cell-seeds-edit{width:46px; font-family:inherit; font-size:.5rem; text-align:center; border:1px solid var(--divider);
+    border-radius:4px; padding:0 2px; margin-top:1px;}
   .cell .sprout{position:absolute; top:3px; right:3px; width:7px; height:7px; border-radius:50%;
     border:1.5px solid #fff; box-shadow:0 0 0 1px rgba(0,0,0,.15);}
   .cell .plus{font-size:1rem; color:var(--divider); font-weight:400;}
@@ -125,6 +188,7 @@
     border:none; border-radius:6px; background:rgba(255,255,255,.92); color:#2f4a38;
     padding:3px 2px; margin:0 6px; vertical-align:middle; -moz-appearance:textfield;}
   .pod-in::-webkit-outer-spin-button,.pod-in::-webkit-inner-spin-button{-webkit-appearance:none; margin:0;}
+  .tp-info{display:flex; flex-direction:column; gap:7px; margin:0 0 16px;}
 </style>
 </head>
 <body>
@@ -139,7 +203,7 @@
   <section>
     <div class="sec-head">
       <h2>Sprout Trays</h2>
-      <button class="btn" id="addTray">+ Add Tray</button>
+      <button class="btn" id="addTray">+ Add Sprouting Tray</button>
     </div>
     <div id="trays"></div>
     <p class="empty-note" id="no-trays">No trays yet. Add one to start tracking seedlings.</p>
@@ -161,7 +225,7 @@
 <script>
 /* ───────── data ───────── */
 // Gardyn nursery holds 10 plants (confirmed). Exact row/col arrangement pending Henry's Illustrator art.
-const GARDYN_TRAY = { rows:2, cols:5 };   // Gardyn nursery: 5 x 2 (5 wide, 2 tall) = 10 cells
+const GARDYN_TRAY = { rows:2, cols:5 };   // Gardyn nursery: 2 x 5 = 10 plants
 
 const BUILTIN = [
   {id:"lettuce",name:"Lettuce",light:"low",ph:"6.0-7.0",pets:"Safe",s2sp:5,sp2h:21,gf:60,thin:1},
@@ -249,6 +313,8 @@ const abbr = name => name.length<=4 ? name : name.slice(0,4);
 const TOWER_PODS = 30;
 const KEY = 'thryve-sprout-test-v1';
 let state = load();
+// the Gardyn nursery is fixed at 2 x 5 (10 plants) — normalize any stale/older gardyn trays
+state.trays.forEach(function(t){ if(t.type==='gardyn'){ t.rows=GARDYN_TRAY.rows; t.cols=GARDYN_TRAY.cols; } });
 function load(){ try{ const s=JSON.parse(localStorage.getItem(KEY)); if(s&&s.plants) return s; }catch(e){}
   return { trays:[], plants:[], customPlants:[] }; }
 // removed trays are transient (soft-delete) — kept in memory so Undo works, but
@@ -256,7 +322,7 @@ function load(){ try{ const s=JSON.parse(localStorage.getItem(KEY)); if(s&&s.pla
 function cleanState(){
   const trays = state.trays.filter(t=>!t.removed);
   const live = {}; trays.forEach(t=>live[t.id]=1);
-  const plants = state.plants.filter(p=> p.loc.type!=='tray' || live[p.loc.trayId]);
+  const plants = state.plants.filter(p=> !p.removed && (p.loc.type!=='tray' || live[p.loc.trayId]));
   return { trays, plants, customPlants: state.customPlants||[] };
 }
 function save(){ try{ localStorage.setItem(KEY, JSON.stringify(cleanState())); }catch(e){} }
@@ -266,6 +332,9 @@ function uid(){ return Date.now().toString(36)+Math.random().toString(36).slice(
 function today(){ const t=new Date(); t.setHours(12,0,0,0); return t; }
 function isoToday(){ const t=today(); return t.getFullYear()+'-'+String(t.getMonth()+1).padStart(2,'0')+'-'+String(t.getDate()).padStart(2,'0'); }
 function daysSince(s){ return Math.round((today()-new Date(s+'T12:00:00'))/86400000); }
+function addDaysISO(s,n){ const d=new Date(s+'T12:00:00'); d.setDate(d.getDate()+n);
+  return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
+function fmtDate(s){ return new Date(s+'T12:00:00').toLocaleDateString(undefined,{month:'short',day:'numeric',year:'numeric'}); }
 
 /* ───────── plant lookups ───────── */
 function plantInCell(trayId,r,c){ return state.plants.find(p=>p.loc&&p.loc.type==='tray'&&p.loc.trayId===trayId&&p.loc.r===r&&p.loc.c===c); }
@@ -285,7 +354,8 @@ function seedCell(trayId,r,c,variety,date,seeds){
     loc:{type:'tray',trayId,r,c} });
   save(); render();
 }
-function setSprouted(id,val){ const p=state.plants.find(x=>x.id===id); if(p){ p.sprouted=val; save(); render(); } }
+function setSprouted(id,val){ const p=state.plants.find(x=>x.id===id);
+  if(p){ p.sprouted=val; if(val) p.sproutedOn=isoToday(); else delete p.sproutedOn; save(); render(); } }
 function clearPlant(id){ state.plants=state.plants.filter(x=>x.id!==id); save(); render(); }
 function transplant(id,pod){ const p=state.plants.find(x=>x.id===id); if(p){ p.loc={type:'pod',pod}; p.sprouted=true; p.transplantedOn=isoToday(); save(); render(); } }
 
@@ -319,8 +389,8 @@ function renderTrays(){
     }
     const block=document.createElement('div'); block.className='tray-wrap';
     const head=document.createElement('div'); head.className='tray-outer-head';
-    head.innerHTML='<span class="tray-name">'+tray.name+'</span>'+
-      '<span class="tray-right"><span class="tray-meta">'+tray.cols+' × '+tray.rows+' · '+countSeeded(tray.id)+' seeded</span>'+
+    head.innerHTML='<span class="tray-name" onclick="editTrayName(this,\''+tray.id+'\')" title="Tap to rename">'+tray.name+'</span>'+
+      '<span class="tray-right"><span class="tray-meta">'+tray.rows+' × '+tray.cols+' · '+countSeeded(tray.id)+' seeded</span>'+
       '<button class="del-btn" onclick="removeTray(\''+tray.id+'\')">Remove</button></span>';
     block.appendChild(head);
     const card=document.createElement('div'); card.className='tray '+tray.type;
@@ -329,11 +399,16 @@ function renderTrays(){
     for(let r=0;r<tray.rows;r++) for(let c=0;c<tray.cols;c++){
       const p=plantInCell(tray.id,r,c); const cell=document.createElement('div');
       cell.className='cell'+(p?' full':'');
-      if(p){ const pl=byId(p.variety); cell.style.background=tint(pl.color,.28); cell.style.borderColor=pl.color;
-        const dot=p.sprouted?'#2f9e44':'#fff';
-        cell.innerHTML='<span class="sprout" style="background:'+dot+'"></span>'+abbr(pl.name)+'<span class="d">d'+daysSince(p.seededOn)+'</span>';
-        cell.onclick=()=>openCell(p); }
-      else { cell.innerHTML='<span class="plus">+</span>'; cell.onclick=()=>openSeed(tray.id,r,c); }
+      if(p){ const pl=byId(p.variety); cell.style.background=tint(pl.color,.28); cell.style.borderColor=pl.color; }
+      cell.innerHTML=
+        '<select class="cell-sel" onchange="cellPick(\''+tray.id+'\','+r+','+c+',this.value)">'+
+          '<option value="">'+(p?'':'＋')+'</option>'+plantOptions(p?p.variety:'')+
+          '<option value="__custom__">＋ Custom…</option>'+
+        '</select>'+
+        (p?'<span class="d">day '+daysSince(p.seededOn)+'</span>'+
+           '<button class="cell-sprout'+(p.sprouted?' on':'')+'" onclick="event.stopPropagation();setSprouted(\''+p.id+'\','+(!p.sprouted)+')">'+(p.sprouted?'Sprouted':'Not sprouted')+'</button>'+
+           '<span class="cell-seeds" onclick="event.stopPropagation();editCellSeeds(this,\''+p.id+'\')">'+(p.seeds||1)+' seeds</span>'
+         :'');
       grid.appendChild(cell);
     }
     card.appendChild(grid);
@@ -344,13 +419,21 @@ function renderTrays(){
 function countSeeded(trayId){ return state.plants.filter(p=>p.loc&&p.loc.type==='tray'&&p.loc.trayId===trayId).length; }
 function removeTray(id){ const t=state.trays.find(x=>x.id===id); if(t){ t.removed=true; save(); render(); } }
 function undoRemoveTray(id){ const t=state.trays.find(x=>x.id===id); if(t){ delete t.removed; save(); render(); } }
+function renameTray(id,name){ const t=state.trays.find(x=>x.id===id); const v=(name||'').trim(); if(t&&v){ t.name=v; save(); } render(); }
+function editTrayName(span,id){            // double-click a tray name to edit it inline
+  const cur=span.textContent;
+  const inp=document.createElement('input'); inp.className='tray-name-edit'; inp.value=cur;
+  inp.onkeydown=function(e){ if(e.key==='Enter') inp.blur(); else if(e.key==='Escape'){ inp.value=cur; inp.blur(); } };
+  inp.onblur=function(){ renameTray(id, inp.value||cur); };
+  span.replaceWith(inp); inp.focus(); inp.select();
+}
 
 function renderLedger(){
   const wrap=document.getElementById('ledger'); wrap.innerHTML='';
   document.getElementById('no-plants').style.display = state.plants.length?'none':'block';
   state.plants.slice().sort((a,b)=>a.seededOn<b.seededOn?1:-1).forEach(p=>{
     const pl=byId(p.variety); const st=stageOf(p);
-    const loc = p.loc.type==='pod' ? ('Pod '+p.loc.pod) : ('Tray cell '+(p.loc.r+1)+'·'+(p.loc.c+1));
+    const loc = p.loc.type==='pod' ? ('Pod '+p.loc.pod) : ('Row '+(p.loc.r+1)+', Cell '+(p.loc.c+1));
     let fields =
       '<div class="pc-field"><span class="pc-k">Seeds</span><span class="pc-v">'+(p.seeds||1)+'</span></div>'+
       '<div class="pc-field"><span class="pc-k">Seeded</span><span class="pc-v">'+p.seededOn+' &middot; day '+daysSince(p.seededOn)+'</span></div>'+
@@ -368,32 +451,73 @@ function renderLedger(){
   });
 }
 
-/* sprout cards — same look as the ledger plant cards, trimmed to tray-relevant info.
-   (When ported, sprouts merge into the main ledger; here they get their own toggle.) */
+/* sprout cards — built to match the app's plant-tracker card: green header bar +
+   bordered data grid. Trimmed to tray-relevant fields (no harvest/die-off yet). */
 function renderSprouts(){
   const wrap=document.getElementById('sprouts'), btn=document.getElementById('toggleSprouts');
   const seedlings=state.plants.filter(p=>p.loc&&p.loc.type==='tray')
     .sort((a,b)=>a.seededOn<b.seededOn?1:-1);
-  btn.textContent=(wrap.hidden?'Show':'Hide')+' sprouts ('+seedlings.length+')';
+  const liveCount=seedlings.filter(p=>!p.removed).length;
+  btn.textContent=(wrap.hidden?'Show':'Hide')+' sprouts ('+liveCount+')';
   if(wrap.hidden) return;
-  wrap.innerHTML = seedlings.length ? '' : '<p class="empty-note">No seedlings in trays right now.</p>';
+  if(!seedlings.length){ wrap.innerHTML='<p class="empty-note">No seedlings in trays right now.</p>'; return; }
+  // ---- styles copied verbatim from the app's ledger card (renderTracker) ----
+  const lbl="font-family:Jost,sans-serif;font-size:0.48rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:2px;";
+  const val="font-size:0.82rem;color:var(--ink);";
+  const valm="font-size:0.78rem;color:var(--muted);";
+  function gcell(i,total,label,vstyle,vhtml){          // grid cell with the app's per-cell borders
+    const col=i%4, row=Math.floor(i/4), lastRow=Math.floor((total-1)/4);
+    let b=''; if(col<3) b+='border-right:1px solid var(--divider);'; if(row<lastRow) b+='border-bottom:1px solid var(--divider);';
+    return '<div style="padding:8px 12px;'+b+'"><span style="'+lbl+'">'+label+'</span><span style="'+vstyle+'">'+vhtml+'</span></div>';
+  }
+  let html='';
   seedlings.forEach(p=>{
-    const pl=byId(p.variety); const st=p.sprouted?'sprouted':'seeded';
-    const card=document.createElement('div'); card.className='pc-card';
-    card.innerHTML=
-      '<div class="pc-head" style="background:linear-gradient(100deg,'+tint(pl.color,.13)+' 8%,'+tint(pl.color,.34)+' 100%)">'+
-        '<span class="pc-dot" style="background:'+pl.color+'"></span>'+
-        '<span class="pc-title">'+pl.name+'</span>'+
-        '<span class="stage '+st+'">'+st+'</span>'+
+    const pl=byId(p.variety);
+    if(p.removed){   // soft-delete tombstone with undo — same pattern as the ledger page
+      html+='<div class="sk-tomb" style="min-height:'+(p.remH||0)+'px"><span class="accent"></span><div class="arc-body">'+
+        '<div class="eyebrow">'+trayName(p.loc.trayId)+' · R'+(p.loc.r+1)+' C'+(p.loc.c+1)+'</div>'+
+        '<div class="headline">'+pl.name+' <span class="arc">removed</span></div>'+
+        '<div class="phrase">Won\'t be saved — undo to keep it.</div></div>'+
+        '<button class="undo-btn" onclick="undoRemoveSprout(\''+p.id+'\')">Undo</button></div>';
+      return;
+    }
+    const s2sp=pl.s2sp||7, age=daysSince(p.seededOn);
+    const lightDot=pl.light==='high'?'#e8a020':pl.light==='medium'?'#6aaa50':'#5a8abf';
+    const petColor=pl.pets==='Safe'?'#2d6a2d':'#b85c38';
+    const sproutedBtn = p.sprouted
+      ? '<button onclick="setSprouted(\''+p.id+'\',false)" style="background:#d0f0d0;color:#2d6a2d;border:none;border-radius:3px;padding:2px 9px;font-size:0.7rem;cursor:pointer;white-space:nowrap;font-family:Jost,sans-serif;">Sprouted</button>'
+      : '<button onclick="setSprouted(\''+p.id+'\',true)" style="background:#f5edda;color:#c4962a;border:none;border-radius:3px;padding:2px 9px;font-size:0.7rem;cursor:pointer;white-space:nowrap;font-family:Jost,sans-serif;">Not Sprouted</button>';
+
+    html+='<div id="skc-'+p.id+'" style="background:var(--cream);border:1.5px solid var(--divider);border-radius:8px;overflow:hidden;">'+
+      // top bar — same layout as the app, POD swapped for the cell coordinate
+      '<div style="display:flex;align-items:center;gap:10px;padding:8px 12px;background:#dcecd4;flex-wrap:wrap;">'+
+        '<span style="font-size:0.7rem;color:var(--muted);font-family:Jost,sans-serif;text-transform:uppercase;letter-spacing:0.1em;">Cell</span>'+
+        '<span style="font-size:0.85rem;font-weight:600;color:var(--ink);">R'+(p.loc.r+1)+'·C'+(p.loc.c+1)+'</span>'+
+        '<span style="color:var(--divider);">|</span>'+
+        '<select onchange="updateSprout(\''+p.id+'\',\'variety\',this.value)" style="border:none;background:transparent;font-size:0.9rem;font-weight:600;color:var(--ink);cursor:pointer;max-width:170px;font-family:Jost,sans-serif;">'+plantOptions(p.variety)+'</select>'+
+        '<span style="color:var(--divider);">|</span>'+
+        '<input type="date" value="'+p.seededOn+'" onchange="updateSprout(\''+p.id+'\',\'seededOn\',this.value)" style="border:none;background:transparent;font-size:0.8rem;color:var(--muted);cursor:pointer;font-family:Jost,sans-serif;">'+
+        '<span style="color:var(--divider);">|</span>'+
+        sproutedBtn+
+        '<span style="margin-left:auto;display:flex;gap:6px;">'+
+          '<button onclick="openTransplant(\''+p.id+'\')" style="background:#e2f1ec;border:1px solid #78b39c;color:#2e7d68;cursor:pointer;font-size:0.7rem;padding:4px 10px;border-radius:3px;font-family:Jost,sans-serif;letter-spacing:0.08em;text-transform:uppercase;white-space:nowrap;">Transplant</button>'+
+          '<button onclick="removeSprout(\''+p.id+'\')" title="Remove" style="background:#fde8e8;border:1px solid #f0c0b0;color:#b85c38;cursor:pointer;font-size:0.7rem;padding:4px 9px;border-radius:3px;font-family:Jost,sans-serif;">✕</button>'+
+        '</span>'+
       '</div>'+
-      '<div class="pc-body">'+
-        '<div class="pc-field"><span class="pc-k">Tray</span><span class="pc-v">'+trayName(p.loc.trayId)+'</span></div>'+
-        '<div class="pc-field"><span class="pc-k">Location</span><span class="pc-v">Cell '+(p.loc.r+1)+'·'+(p.loc.c+1)+'</span></div>'+
-        '<div class="pc-field"><span class="pc-k">Seeds</span><span class="pc-v">'+(p.seeds||1)+'</span></div>'+
-        '<div class="pc-field"><span class="pc-k">Seeded</span><span class="pc-v">'+p.seededOn+' &middot; day '+daysSince(p.seededOn)+'</span></div>'+
-      '</div>';
-    wrap.appendChild(card);
+      // 4-column data grid
+      '<div style="display:grid;grid-template-columns:repeat(4,1fr);">'+
+        gcell(0,8,'Seed → Sprout',val,s2sp+' days')+
+        gcell(1,8,(p.sprouted?'Sprout Date':'Expected Sprout'),valm,(p.sprouted?fmtDate(p.sproutedOn||isoToday()):fmtDate(addDaysISO(p.seededOn,s2sp))))+
+        gcell(2,8,'Transplant By',valm,fmtDate(addDaysISO(p.seededOn,s2sp+7)))+
+        gcell(3,8,'In Tray',val,age+' days')+
+        gcell(4,8,'Tray',valm,trayName(p.loc.trayId))+
+        gcell(5,8,'Seeds',val,'<input type="number" min="1" max="99" value="'+(p.seeds||1)+'" onchange="updateSprout(\''+p.id+'\',\'seeds\',this.value)" style="border:none;background:transparent;font-size:0.82rem;color:var(--ink);width:46px;font-family:Jost,sans-serif;">')+
+        gcell(6,8,'Light · Pets · pH',valm,'<span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:'+lightDot+';margin-right:3px;vertical-align:middle;"></span>'+pl.light+' · <span style="color:'+petColor+';">'+pl.pets+'</span> · pH '+pl.ph)+
+        gcell(7,8,'Notes',valm,'<input type="text" value="'+(p.notes||'')+'" placeholder="add notes…" onchange="updateSprout(\''+p.id+'\',\'notes\',this.value)" style="border:none;background:transparent;font-size:0.78rem;color:var(--muted);width:100%;font-family:Jost,sans-serif;">')+
+      '</div>'+
+    '</div>';
   });
+  wrap.innerHTML=html;
 }
 
 /* ───────── modal ───────── */
@@ -429,29 +553,13 @@ function createCustom(){
   addTray('custom',r,c,document.getElementById('t-name').value); closeModal();
 }
 
-function openSeed(trayId,r,c){
+function openSeed(trayId,r,c,sel){
+  sel = sel || 'lettuce';
   openModal(
-    '<div class="card-head"><button class="x" onclick="closeModal()">×</button>Seed cell <span class="loc">'+(r+1)+'·'+(c+1)+'</span></div>'+
+    '<div class="card-head"><button class="x" onclick="closeModal()">×</button>Seed cell <span class="loc">Row '+(r+1)+', Cell '+(c+1)+'</span></div>'+
     '<div class="field"><label style="display:flex;justify-content:space-between;align-items:center">Plant'+
-      '<button class="btn sm ghost" type="button" onclick="toggleCustomPlant()">+ Custom plant</button></label>'+
-      '<select id="s-var">'+plantOptions('lettuce')+'</select></div>'+
-    '<div id="custom-plant" style="display:none;border:1.5px dashed var(--divider);border-radius:10px;padding:6px 12px 12px;margin:-4px 0 4px;background:#fbfffb">'+
-      '<div class="field"><label>New plant name</label><input id="cp-name" type="text" placeholder="e.g. Genovese Basil"></div>'+
-      '<div class="row2">'+
-        '<div class="field"><label>Light / heat</label><select id="cp-light"><option value="low">Low</option><option value="medium" selected>Medium</option><option value="high">High</option></select></div>'+
-        '<div class="field"><label>pH range</label><input id="cp-ph" type="text" placeholder="6.0-7.0"></div>'+
-      '</div>'+
-      '<div class="row2">'+
-        '<div class="field"><label>Pet safe?</label><select id="cp-pets"><option>Safe</option><option>Toxic</option></select></div>'+
-        '<div class="field"><label>Seed→sprout (days)</label><input id="cp-s2sp" type="number" min="1" value="7"></div>'+
-      '</div>'+
-      '<div class="row2">'+
-        '<div class="field"><label>Sprout→harvest (days)</label><input id="cp-sp2h" type="number" min="1" value="28"></div>'+
-        '<div class="field"><label>Notes</label><input id="cp-notes" type="text" placeholder="optional"></div>'+
-      '</div>'+
-      '<div class="actions"><button class="btn sm" type="button" onclick="addCustomPlant()">Add to list</button>'+
-        '<button class="btn sm ghost" type="button" onclick="toggleCustomPlant()">Cancel</button></div>'+
-    '</div>'+
+      '<button class="btn sm ghost" type="button" onclick="openCustomDialog(\''+trayId+'\','+r+','+c+')">+ Custom plant</button></label>'+
+      '<select id="s-var">'+plantOptions(sel)+'</select></div>'+
     '<div class="row2">'+
       '<div class="field"><label>Number of seeds</label><input id="s-seeds" type="number" min="1" max="99" value="3"></div>'+
       '<div class="field"><label>Seeded on</label><input id="s-date" type="date" value="'+isoToday()+'"></div>'+
@@ -462,16 +570,34 @@ function openSeed(trayId,r,c){
     '</div>'
   );
 }
+function openCustomDialog(trayId,r,c){
+  openModal(
+    '<div class="card-head"><button class="x" onclick="closeModal();render()">×</button>New custom plant</div>'+
+    '<div class="field"><label>Plant name</label><input id="cp-name" type="text" placeholder="e.g. Genovese Basil"></div>'+
+    '<div class="row2">'+
+      '<div class="field"><label>Light / heat</label><select id="cp-light"><option value="low">Low</option><option value="medium" selected>Medium</option><option value="high">High</option></select></div>'+
+      '<div class="field"><label>pH range</label><input id="cp-ph" type="text" placeholder="6.0-7.0"></div>'+
+    '</div>'+
+    '<div class="row2">'+
+      '<div class="field"><label>Pet safe?</label><select id="cp-pets"><option>Safe</option><option>Toxic</option></select></div>'+
+      '<div class="field"><label>Seed→sprout (days)</label><input id="cp-s2sp" type="number" min="1" value="7"></div>'+
+    '</div>'+
+    '<div class="row2">'+
+      '<div class="field"><label>Sprout→harvest (days)</label><input id="cp-sp2h" type="number" min="1" value="28"></div>'+
+      '<div class="field"><label>Notes</label><input id="cp-notes" type="text" placeholder="optional"></div>'+
+    '</div>'+
+    '<div class="actions">'+
+      '<button class="btn" onclick="addCustomPlant(\''+trayId+'\','+r+','+c+')">Add plant</button>'+
+      '<button class="btn ghost" onclick="closeModal();render()">Cancel</button>'+
+    '</div>'
+  );
+}
 function doSeed(trayId,r,c){
   seedCell(trayId,r,c,document.getElementById('s-var').value,document.getElementById('s-date').value,
     Math.max(1,+document.getElementById('s-seeds').value||1));
   closeModal();
 }
-function toggleCustomPlant(){
-  const el=document.getElementById('custom-plant');
-  el.style.display = el.style.display==='none' ? 'block' : 'none';
-}
-function addCustomPlant(){
+function addCustomPlant(trayId,r,c){
   const name=(document.getElementById('cp-name').value||'').trim();
   if(!name){ document.getElementById('cp-name').focus(); return; }
   const p={ id:'cust-'+uid(), name, custom:true, color:hashColor(name),
@@ -482,27 +608,50 @@ function addCustomPlant(){
     sp2h:Math.max(1,+document.getElementById('cp-sp2h').value||28),
     gf:90, thin:1,
     notes:(document.getElementById('cp-notes').value||'').trim() };
-  state.customPlants=state.customPlants||[]; state.customPlants.push(p); save();
-  document.getElementById('s-var').innerHTML=plantOptions(p.id);   // re-list with the new plant selected
-  document.getElementById('custom-plant').style.display='none';
+  state.customPlants=state.customPlants||[]; state.customPlants.push(p);
+  const ex=plantInCell(trayId,r,c);
+  if(ex){ ex.variety=p.id; save(); render(); }       // changing an existing cell's plant
+  else seedCell(trayId,r,c,p.id,isoToday(),3);        // seeding an empty cell
+  closeModal();
+}
+function editCellSeeds(span,id){          // click the "N seeds" text to edit it inline (like the tray name)
+  const p=state.plants.find(x=>x.id===id); if(!p) return;
+  const inp=document.createElement('input'); inp.type='number'; inp.min='1'; inp.max='99'; inp.value=p.seeds||1;
+  inp.className='cell-seeds-edit';
+  inp.onclick=function(e){ e.stopPropagation(); };
+  inp.onkeydown=function(e){ if(e.key==='Enter') inp.blur(); };
+  inp.onblur=function(){ updateSprout(id,'seeds',inp.value); };
+  span.replaceWith(inp); inp.focus(); inp.select();
+}
+function cellPick(trayId,r,c,val){
+  if(val==='__custom__'){ openCustomDialog(trayId,r,c); return; }
+  const p=plantInCell(trayId,r,c);
+  if(!val){ render(); return; }                        // blank — just reset the dropdown
+  if(p){ p.variety=val; save(); render(); }            // change the plant in a filled cup
+  else seedCell(trayId,r,c,val,isoToday(),3);           // seed an empty cup
 }
 
 function openCell(p){
   const pl=byId(p.variety); const pods=emptyPods();
-  const podSel = pods.length
+  const s2sp=pl.s2sp||7, lo=s2sp+7, hi=s2sp+14, age=daysSince(p.seededOn);
+  const target=addDaysISO(p.seededOn,lo);
+  const readyTag = age>=lo ? ' · ready now' : ' · ~'+(lo-age)+' days';
+  const info =
+    '<div class="tp-info">'+
+      '<div class="pc-field"><span class="pc-k">Tray start</span><span class="pc-v">'+p.seededOn+'</span></div>'+
+      '<div class="pc-field"><span class="pc-k">In tray</span><span class="pc-v">'+age+' days</span></div>'+
+      '<div class="pc-field"><span class="pc-k">Tray time</span><span class="pc-v">~'+lo+'–'+hi+' days recommended</span></div>'+
+      '<div class="pc-field"><span class="pc-k">Transplant</span><span class="pc-v">around '+target+readyTag+'</span></div>'+
+    '</div>';
+  const podBtn = pods.length
     ? '<div class="actions"><button class="btn" onclick="doTransplant(\''+p.id+'\')">Move to tower'+
         '<input class="pod-in" id="c-pod" type="number" min="1" max="'+TOWER_PODS+'" value="'+pods[0]+'" '+
-        'onclick="event.stopPropagation()" onkeydown="if(event.key===\'Enter\'){event.preventDefault();doTransplant(\''+p.id+'\');}">pod</button></div>'+
-      '<p class="meta-line">Empty pods: '+pods.join(', ')+'</p>'
+        'onclick="event.stopPropagation()" onkeydown="if(event.key===\'Enter\'){event.preventDefault();doTransplant(\''+p.id+'\');}">pod</button></div>'
     : '<p class="meta-line">No empty pods — free one in the tower first.</p>';
   openModal(
-    '<div class="card-head" style="background:linear-gradient(100deg,'+tint(pl.color,.2)+' 8%,'+tint(pl.color,.5)+' 100%)"><button class="x" onclick="closeModal()">×</button>'+pl.name+' <span class="loc">seeded day '+daysSince(p.seededOn)+'</span></div>'+
-    '<div class="actions">'+
-      '<button class="btn '+(p.sprouted?'ghost':'')+'" onclick="setSprouted(\''+p.id+'\','+(!p.sprouted)+');closeModal()">'+(p.sprouted?'Sprouted ✓ (undo)':'Mark sprouted')+'</button>'+
-      '<button class="btn ghost" onclick="if(confirm(\'Clear this cell?\')){clearPlant(\''+p.id+'\');closeModal();}">Clear</button>'+
-    '</div>'+
-    '<hr style="border:none;border-top:1px dotted var(--divider);margin:18px 0 4px">'+
-    podSel
+    '<div class="card-head" style="background:linear-gradient(100deg,'+tint(pl.color,.2)+' 8%,'+tint(pl.color,.5)+' 100%)"><button class="x" onclick="closeModal()">×</button>'+pl.name+' <span class="loc">in tray '+age+' days</span></div>'+
+    info+
+    podBtn
   );
 }
 function doTransplant(id){
@@ -511,6 +660,16 @@ function doTransplant(id){
   if(plantInPod(v)){ alert('Pod '+v+' is taken — pick an empty one.'); return; }
   transplant(id, v); closeModal();
 }
+/* card buttons: transplant reuses the move-to-tower modal; edit opens a small form */
+function openTransplant(id){ const p=state.plants.find(x=>x.id===id); if(p) openCell(p); }
+function updateSprout(id,field,val){
+  const p=state.plants.find(x=>x.id===id); if(!p) return;
+  if(field==='seeds') p.seeds=Math.max(1,+val||1); else p[field]=val;
+  save(); render();
+}
+function removeSprout(id){ const el=document.getElementById('skc-'+id); const p=state.plants.find(x=>x.id===id);
+  if(p){ p.remH = el?el.offsetHeight:0; p.removed=true; save(); render(); } }                                        // soft-delete, keep card height
+function undoRemoveSprout(id){ const p=state.plants.find(x=>x.id===id); if(p){ delete p.removed; save(); render(); } }
 
 document.getElementById('addTray').onclick=openAddTray;
 document.getElementById('toggleSprouts').onclick=function(){
