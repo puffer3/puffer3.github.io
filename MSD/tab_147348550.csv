@@ -1,0 +1,40 @@
+Bank 1,,
+Fader,CC #,Name
+1,11,Expression
+2,1,Modulation
+3,7,Volume
+4,2,Breath
+5,77,Vibrato Depth
+6,76,Vibrato Rate
+7,73,Attack
+8,72,Release
+Bank 2,,
+Fader,CC #,
+1,,
+2,,
+3,,
+4,,
+5,,
+6,,
+7,,
+8,,
+Bank 3,,
+Fader,CC #,
+1,,
+2,,
+3,,
+4,,
+5,,
+6,,
+7,,
+8,,
+Bank 4,,
+Fader,CC #,
+1,,
+2,,
+3,,
+4,,
+5,,
+6,,
+7,,
+8,,
