@@ -7,10 +7,9 @@
   ║  `WEED:` — run  grep -n "WEED:" TrackerMbile.html  to list every one.        ║
   ║  Pull them all before shipping; this block is the index.                    ║
   ║                                                                             ║
-  ║  1. DEV_SOW (fn bdSow, near the migrated tracker script)                    ║
-  ║     Hardcodes Start-of-Watering = 2026-04-23 so the Tasks day-grid is       ║
-  ║     populated regardless of the app's real sowDate.                         ║
-  ║     Pull: delete DEV_SOW + the active return, uncomment the two lines below.║
+  ║  (none currently — all pulled)                                              ║
+  ║  1. DEV_SOW — PULLED. bdSow() now uses the app's real sowDate, falling back  ║
+  ║     to ~6 weeks ago only when Start-of-Watering is unset.                    ║
   ╚═══════════════════════════════════════════════════════════════════════════╝
 -->
 <html lang="en">
@@ -25,6 +24,7 @@
     --parchment: #dff0da;
     --ink: #0f1a0f;
     --moss: #0f6b22;
+    --btn-green: #2c6e3a;   /* softer, less-saturated green for filled action buttons (Add Plant, etc.) */
     --sage: #6aaa50;
     --terracotta: #b85c38;
     --gold: #c4962a;
@@ -67,7 +67,7 @@
     margin-bottom: 10px;
   }
   .header h1 {
-    font-family: 'Papyrus', fantasy;
+    font-family: 'Cormorant Garamond', serif;
     font-size: 3rem;
     font-weight: 400;
     line-height: 1.1;
@@ -189,7 +189,7 @@
     align-items: center;
     justify-content: center;
     gap: 10px;
-    font-family: 'Papyrus', fantasy;
+    font-family: 'Cormorant Garamond', serif;
     font-size: 1.4rem;
     font-weight: 400;
     color: var(--moss);
@@ -253,7 +253,7 @@
   }
   .check-content { flex: 1; }
   .check-title {
-    font-family: 'Papyrus', fantasy;
+    font-family: 'Cormorant Garamond', serif;
     font-size: 1rem;
     font-weight: 700;
     color: var(--ink);
@@ -284,16 +284,19 @@
     font-family: 'Jost', sans-serif;
     font-size: 0.88rem;
     color: #2a402a;
-    line-height: 1.5;
-    padding: 1px 0 1px 14px;
+    line-height: 1.55;
+    padding: 0 0 0 16px;
+    margin-bottom: 8px;
     position: relative;
   }
+  .check-steps li:last-child { margin-bottom: 0; }
   .check-steps li::before {
-    content: '—';
+    content: '•';
     position: absolute;
-    left: 0;
+    left: 1px;
+    top: -1px;
     color: var(--sage);
-    font-size: 0.75rem;
+    font-size: 1rem;
   }
 
   .badge {
@@ -346,7 +349,7 @@
   }
   .section-icon { font-size: 1.25rem; flex-shrink: 0; }
   .section-title {
-    font-family: 'Papyrus', fantasy;
+    font-family: 'Cormorant Garamond', serif;
     font-size: 1.5rem;
     font-weight: 400;
     color: var(--moss);
@@ -384,7 +387,7 @@
   }
   .item:last-child { margin-bottom: 0; }
   .item-name {
-    font-family: 'Papyrus', fantasy;
+    font-family: 'Cormorant Garamond', serif;
     font-size: 1rem;
     font-weight: 700;
     color: var(--ink);
@@ -420,16 +423,19 @@
     font-family: 'Jost', sans-serif;
     font-size: 0.9rem;
     color: var(--ink);
-    line-height: 1.5;
-    padding: 1px 0 1px 14px;
+    line-height: 1.55;
+    padding: 0 0 0 16px;
+    margin-bottom: 8px;
     position: relative;
   }
+  .steps li:last-child { margin-bottom: 0; }
   .steps li::before {
-    content: '—';
+    content: '•';
     position: absolute;
-    left: 0;
+    left: 1px;
+    top: -1px;
     color: var(--sage);
-    font-size: 0.75rem;
+    font-size: 1rem;
   }
   .callout {
     background: var(--parchment);
@@ -503,7 +509,7 @@
   .light-card.high { border-left: 4px solid #e8a020; background: #fffaf0; }
   .light-card.medium { border-left: 4px solid #6aaa50; background: #edf7e8; }
   .light-card.low { border-left: 4px solid #5a8abf; background: #f0f6fc; }
-  .lc-name { font-family: 'Papyrus', fantasy; font-size: 1rem; font-weight: 700; color: var(--ink); margin-bottom: 4px; }
+  .lc-name { font-family: 'Cormorant Garamond', serif; font-size: 1rem; font-weight: 700; color: var(--ink); margin-bottom: 4px; }
   .lc-detail { font-family: 'Jost', sans-serif; font-size: 0.85rem; color: var(--muted); font-style: italic; line-height: 1.45; margin-bottom: 7px; }
   .lc-tags { display: flex; gap: 5px; flex-wrap: wrap; }
   .lc-tag { font-family: 'Jost', sans-serif; font-size: 0.58rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; padding: 2px 7px; border-radius: 2px; background: var(--parchment); color: var(--muted); }
@@ -521,6 +527,17 @@
   .del-btn:hover { background: var(--terracotta); color: white; }
   .edit-btn { background: #eaf2fb; border: 1px solid #b8d4ee; color: #2a6496; cursor: pointer; font-size: 0.7rem; padding: 4px 10px; border-radius: 3px; font-family: 'Jost', sans-serif; letter-spacing: 0.08em; text-transform: uppercase; white-space: nowrap; }
   .edit-btn:hover { background: #2a6496; color: white; }
+  /* inline edit-mode: clicking Edit turns just that card blue, surfaces the fields, and flips the button to Done */
+  .tk-card.editing { background: #e8f1fb !important; border-color: #2a6496 !important; box-shadow: 0 0 0 2px rgba(42,100,150,0.22); }
+  .tk-card.editing .tk-top { background: #d3e6f7 !important; }
+  .tk-card.editing .edit-btn { background: #2a6496; color: #fff; }
+  .tk-card.editing input, .tk-card.editing .tk-top select {
+    background: #fff !important; border: 1.5px solid #9cc0e0 !important; border-radius: 4px !important;
+    padding: 3px 7px !important; color: var(--ink) !important;
+  }
+  /* edit-mode pod button — opens the move-plant pod picker */
+  .pod-move-btn { font-family: 'Jost', sans-serif; font-size: 0.85rem; font-weight: 700; color: #2a6496; background: #fff; border: 1.5px solid #9cc0e0; border-radius: 5px; padding: 2px 9px; min-width: 28px; cursor: pointer; }
+  .pod-move-btn:hover { background: #eaf2fb; }
   .archive-btn { background: #f9f0d3; border: 1px solid #e2c878; color: #8f6a12; cursor: pointer; font-size: 0.7rem; padding: 4px 10px; border-radius: 3px; font-family: 'Jost', sans-serif; letter-spacing: 0.08em; text-transform: uppercase; white-space: nowrap; }
   .archive-btn:hover { background: var(--gold); color: white; }
   .undo-btn { background: #e2f1ec; border: 1px solid #78b39c; color: #2e7d68; cursor: pointer; font-size: 0.7rem; padding: 4px 10px; border-radius: 3px; font-family: 'Jost', sans-serif; letter-spacing: 0.08em; text-transform: uppercase; white-space: nowrap; }
@@ -558,7 +575,7 @@
     color: var(--muted);
     transition: all 0.2s;
   }
-  .acc-nav-btn:hover, .acc-nav-btn.active { background: var(--moss); color: white; border-color: var(--moss); }
+  .acc-nav-btn:hover, .acc-nav-btn.active { background: var(--btn-green); color: white; border-color: var(--btn-green); }
   .acc-section { display: none; }
   .acc-section.active { display: block; }
 
@@ -571,7 +588,7 @@
     background: white;
   }
   .accessory-card h4 {
-    font-family: 'Papyrus', fantasy;
+    font-family: 'Cormorant Garamond', serif;
     font-size: 1.1rem;
     color: var(--moss);
     margin-bottom: 6px;
@@ -633,6 +650,8 @@
     padding: 20px;
   }
   .settings-overlay.open { display: flex; }
+  .pd-lbl { display: block; font-family: 'Jost', sans-serif; font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+  .pd-inp { width: 100%; box-sizing: border-box; padding: 9px 10px; border: 1.5px solid var(--divider); border-radius: 6px; background: #fff; font-family: 'Jost', sans-serif; font-size: 16px; color: var(--ink); }
   .settings-modal {
     background: var(--cream, #f5fdf5);
     border: 1px solid var(--divider);
@@ -648,7 +667,7 @@
     color: var(--muted); cursor: pointer; line-height: 1;
   }
   .settings-title {
-    font-family: 'Papyrus', fantasy;
+    font-family: 'Cormorant Garamond', serif;
     font-size: 1.5rem; color: var(--moss);
     margin-bottom: 14px;
   }
@@ -681,14 +700,17 @@
     /* tighten the empty space above the logo on phones */
     .header { padding: 10px 0 16px; }
 
-    /* add-pod form: collapse 12-col → 4-col, fields stack into tidy rows */
-    .pod-form-grid { grid-template-columns:repeat(4,1fr); gap:12px; }
-    .pf-pod      { grid-column:span 1; }
-    .pf-plant    { grid-column:span 3; }
-    .pf-date     { grid-column:span 2; }
-    .pf-qty      { grid-column:span 1; }
-    .pf-sprouted { grid-column:span 1; }
-    .pf-notes    { grid-column:span 4; }
+    /* add-pod form: 2-col layout, reordered for comfortable tap targets.
+       Rows: Plant (full) · Pod|Date · Qty|Sprouted · Notes (full) */
+    .pod-form-grid { grid-template-columns:repeat(2,1fr); gap:12px 10px; }
+    .pf-plant    { grid-column:span 2; order:1; min-width:0; }
+    .pf-pod      { grid-column:span 1; order:2; min-width:0; }
+    .pf-date     { grid-column:span 1; order:3; min-width:0; }
+    .pf-qty      { grid-column:span 1; order:4; min-width:0; }
+    .pf-sprouted { grid-column:span 1; order:5; min-width:0; }
+    .pf-notes    { grid-column:span 2; order:6; min-width:0; }
+    /* fields fill their cell and never overflow; 16px font stops iOS focus auto-zoom */
+    .pod-form-grid input, .pod-form-grid select { width:100%; box-sizing:border-box; font-size:16px !important; }
 
     /* BOTTOM TAB BAR — fixed to bottom edge */
     .tab-nav {
@@ -809,8 +831,12 @@
 /* tooltip = TaskTipBubble shapes filled with recipe-card content */
 #bd .tlabel .tip{visibility:hidden; opacity:0; position:absolute; left:-2px; top:50%; transform:translateY(-58.5%);
   z-index:40; width:360px; pointer-events:none; transition:opacity .15s;}
-#bd .tlabel:hover .tip,#bd .tlabel.tip-open .tip{visibility:visible; opacity:1;}
-#bd .tlabel:hover,#bd .tlabel.tip-open{color:#406c50; text-shadow:0 0 .4px currentColor, 0 0 .4px currentColor;}
+#bd .tlabel.tip-open .tip{visibility:visible; opacity:1;}
+#bd .tlabel.tip-open{color:#406c50; text-shadow:0 0 .4px currentColor, 0 0 .4px currentColor;}
+@media (hover:hover){
+  #bd .tlabel:hover .tip{visibility:visible; opacity:1;}
+  #bd .tlabel:hover{color:#406c50; text-shadow:0 0 .4px currentColor, 0 0 .4px currentColor;}
+}
 #bd .tip .tipsvg{display:block; width:100%; height:auto; overflow:visible;}
 #bd .tip .tiphead{position:absolute; left:31%; right:7%; top:8.6%; height:8.6%;
   display:flex; align-items:center; justify-content:flex-start; overflow:hidden;
@@ -999,6 +1025,8 @@
       .tt-card span { font-family:'Jost',sans-serif; font-size:0.78rem; color:var(--ink); line-height:1.5; display:none; padding:10px 12px 14px; text-align:center; border-top:1px solid var(--divider); }
       .tt-card.open span { display:block; }
       .tt-card.open b { background:var(--cream); }
+      /* when a sibling card is open and the row stretches, keep closed-card titles centered (not floating at top) */
+      .tt-card:not(.open) b { flex:1; }
     </style>
     <div class="layout-outer">
       <div class="layout-img-wrap" style="margin-bottom: 38px;">
@@ -3296,7 +3324,7 @@
       <div id="sprout-trays"></div>
       <div class="tank-tips">
         <div class="tt-card" onclick="this.classList.toggle('open')"><b>💧 Water</b><span>Check every 2-3 days.<br>Top up with plain water only between nutrient feeds.</span></div>
-        <div class="tt-card" onclick="this.classList.toggle('open')"><b>🌿 Plant Food</b><span>Weeks 1-2: water only.<br>Week 3: half dose.<br>Week 4+: full dose weekly.</span></div>
+        <div class="tt-card" onclick="this.classList.toggle('open')"><b>🌿 Plant Food</b><span>Weeks 1-2: water only.<br>Week 3: half dose.<br>Week 4+: full dose weekly.<br><br>Target EC:<br>greens 1.0-1.6 · herbs 1.4-2.0 · fruiting 2.0-3.0.<br><br>Top up with plain water between feeds.<br>Gardyn pods: follow their dosing exactly.</span></div>
         <div class="tt-card" onclick="this.classList.toggle('open')"><b>⚗️ pH Target</b><span>Aim for 5.5-6.5.<br>Tap water is often pH 7-8.<br>Use pH Down or white vinegar to reach 6.0.</span></div>
         <div class="tt-card" onclick="this.classList.toggle('open')"><b>🔄 Full Drain</b><span>Every 2-3 weeks.<br>Add a few ml of 3% H₂O₂ to fresh water on refill.</span></div>
         <div class="tt-card" onclick="this.classList.toggle('open')"><b>⚠️ Overfeed</b><span>Brown tips or white crust:<br>flush plain water for one week,<br>then restart at half dose.</span></div>
@@ -3405,14 +3433,14 @@
       <div class="divider"></div>
       <div class="item">
         <div class="item-left">
-          <div class="item-name">Rockwool Prep — The 5-Minute Soak</div>
+          <div class="item-name">Rockwool Prep · The 5-Minute Soak</div>
           <div class="item-desc">Use the Gardyn Sprout Nursery tray · plain fresh water only, no pH adjustment</div>
           <ul class="steps">
             <li>Insert tray into nursery base · add plain water up to the indent between tray squares</li>
             <li>Place yCubes in tray and soak for exactly 5 minutes</li>
             <li>Lift tray and drain all water from the base completely</li>
             <li>Return tray into empty base and place the lid on top</li>
-            <li>Goal: moist but never sitting in standing water — oversaturation slows germination</li>
+            <li>Goal: moist but never sitting in standing water · oversaturation slows germination</li>
           </ul>
         </div>
         <div class="item-freq">Each new pod</div>
@@ -3420,15 +3448,15 @@
       <div class="item">
         <div class="item-left">
           <div class="item-name">Seeding & Germination</div>
-          <div class="item-desc">Nursery goes on top of the Gardyn lid — not inside the tower yet</div>
+          <div class="item-desc">Nursery goes on top of the Gardyn lid · not inside the tower yet</div>
           <ul class="steps">
-            <li>Sow several seeds per cube, ¼ inch deep — Gardyn cubes are sown densely, not one-per-cube</li>
-            <li>Leafy greens &amp; herbs (lettuce, arugula, cilantro, chives): sow 6–10 and grow as a bunch — just prune, don't thin to one</li>
+            <li>Sow several seeds per cube, ¼ inch deep · Gardyn cubes are sown densely, not one-per-cube</li>
+            <li>Leafy greens &amp; herbs (lettuce, arugula, cilantro, chives): sow 6–10 and grow as a bunch · just prune, don't thin to one</li>
             <li>Fruiting &amp; large plants (tomato, pepper, cucumber, kale): sow 2–3, then thin to the strongest seedling</li>
             <li>Place covered nursery on top of Gardyn lid to benefit from lights and ambient warmth</li>
-            <li>Check moisture weekly — dark green & moist = fine · light green & dry = re-soak 5 min</li>
+            <li>Check moisture weekly · dark green & moist = fine · light green & dry = re-soak 5 min</li>
             <li>Lettuce & leafy greens: 3–7 days · Herbs: 5–14 days · Flowers: 5–21 days</li>
-            <li>Never add plant food during germination — plain water only the entire time</li>
+            <li>Never add plant food during germination · plain water only the entire time</li>
           </ul>
         </div>
         <div class="item-freq">Each new pod</div>
@@ -3440,7 +3468,7 @@
           <ul class="steps">
             <li>True leaves are visible (not just the first seed leaves)</li>
             <li>Roots are 0.5 inches long emerging from the yCube</li>
-            <li>Cotyledons (first seed leaves) are yellowing — seed's stored energy is running out</li>
+            <li>Cotyledons (first seed leaves) are yellowing · seed's stored energy is running out</li>
           </ul>
         </div>
         <div class="item-freq">Per seedling</div>
@@ -3448,7 +3476,7 @@
       <div class="item">
         <div class="item-left">
           <div class="item-name">Pod Placement</div>
-          <div class="item-desc">Light intensity increases toward the top — position plants accordingly</div>
+          <div class="item-desc">Light intensity increases toward the top · position plants accordingly</div>
           <ul class="steps">
             <li>Lettuce → lower pods (bolts faster under intense LED heat)</li>
             <li>Kale & spinach → mid to upper pods</li>
@@ -3461,7 +3489,7 @@
       <div class="item">
         <div class="item-left">
           <div class="item-name">Pod Placement in Tower</div>
-          <div class="item-desc">Light intensity increases toward the top — position plants accordingly</div>
+          <div class="item-desc">Light intensity increases toward the top · position plants accordingly</div>
           <ul class="steps">
             <li>Lettuce → lower pods (bolts faster under intense LED heat)</li>
             <li>Kale & spinach → mid to upper pods</li>
@@ -3488,12 +3516,12 @@
         <div class="item">
           <div class="item-left">
             <div class="item-name">Prepping Store-Bought Rockwool (Grodan / Cultilene)</div>
-            <div class="item-desc">Rockwool is alkaline from the factory — skip the pH prep and germination rates drop significantly</div>
+            <div class="item-desc">Rockwool is alkaline from the factory · skip the pH prep and germination rates drop significantly</div>
             <ul class="steps">
               <li>Use 1-inch cubes (Grodan Hugo or Delta are standard fits for Gardyn pod sleeves)</li>
               <li>Mix a bucket of water to pH 5.5 using pH Down or a small splash of white vinegar</li>
-              <li>Submerge cubes fully and soak for 30–60 minutes — this neutralizes the alkaline pH</li>
-              <li>Drain but do not squeeze or wring — rockwool retains the right moisture level on its own</li>
+              <li>Submerge cubes fully and soak for 30–60 minutes · this neutralizes the alkaline pH</li>
+              <li>Drain but do not squeeze or wring · rockwool retains the right moisture level on its own</li>
               <li>Plant seeds immediately: push 2–3 seeds ¼ inch into the center dimple of each cube</li>
               <li>Place seeded cubes into Gardyn pod sleeves or 3D-printed pod shells before going into the tower</li>
             </ul>
@@ -3503,10 +3531,10 @@
         <div class="item">
           <div class="item-left">
             <div class="item-name">DIY Sprouting Tray</div>
-            <div class="item-desc">No need to buy the official Gardyn Sprout Nursery — a disposable aluminum baking pan or a clear-lidded takeout container makes an excellent germination tray.</div>
+            <div class="item-desc">No need to buy the official Gardyn Sprout Nursery · a disposable aluminum baking pan or a clear-lidded takeout container makes an excellent germination tray.</div>
             <ul class="steps">
               <li>A half-size foil baking pan or any clear takeout container with a lid both work well</li>
-              <li>Add only a shallow layer of pH 5.5 water — just enough to keep cubes damp, never submerged</li>
+              <li>Add only a shallow layer of pH 5.5 water · just enough to keep cubes damp, never submerged</li>
               <li>The clear lid (or loosely tented plastic wrap) acts as a humidity dome to speed germination</li>
               <li>Set the tray on top of the Gardyn lid so LED warmth from below keeps cubes cozy</li>
               <li>Vent or remove the lid once sprouts appear to prevent damping-off</li>
@@ -3517,11 +3545,11 @@
         <div class="item">
           <div class="item-left">
             <div class="item-name">Running the Nursery</div>
-            <div class="item-desc">However you build your tray, the method is the same — keep it humid and warm until the seedlings are ready for the tower</div>
+            <div class="item-desc">However you build your tray, the method is the same · keep it humid and warm until the seedlings are ready for the tower</div>
             <ul class="steps">
-              <li>Use any shallow container with a lid or plastic wrap — maintains humidity for germination</li>
+              <li>Use any shallow container with a lid or plastic wrap · maintains humidity for germination</li>
               <li>Place pH-prepped rockwool cubes inside, add a small amount of pH 5.5 water to the bottom (just enough to keep cubes moist, not submerged)</li>
-              <li>Place on top of the Gardyn — the LED warmth from below improves germination rates</li>
+              <li>Place on top of the Gardyn · the LED warmth from below improves germination rates</li>
               <li>Check moisture every 2 days: cubes should feel damp, never dry, never sitting in pooled water</li>
               <li>Remove lid once seedlings emerge to prevent damping off (fungal rot from humidity)</li>
               <li>Transfer to tower once true leaves appear or roots reach 0.5 inches</li>
@@ -3532,11 +3560,11 @@
         <div class="item">
           <div class="item-left">
             <div class="item-name">Using 3D Printed or Third-Party Pod Shells</div>
-            <div class="item-desc">Community-designed pod shells are available on Printables and Thingiverse — standard Gardyn pod dimensions are 1.5 inches diameter</div>
+            <div class="item-desc">Community-designed pod shells are available on Printables and Thingiverse · standard Gardyn pod dimensions are 1.5 inches diameter</div>
             <ul class="steps">
-              <li>Ensure the pod outer diameter matches the Gardyn column slot — 1.5" is the standard</li>
+              <li>Ensure the pod outer diameter matches the Gardyn column slot · 1.5" is the standard</li>
               <li>Rinse new 3D-printed pods in pH-neutral water before use to remove any print residue</li>
-              <li>Insert pH-prepped 1-inch rockwool cube snugly — it should be held in place but not crushed</li>
+              <li>Insert pH-prepped 1-inch rockwool cube snugly · it should be held in place but not crushed</li>
               <li>Works identically to official yCubes once seeded and transferred to the tower</li>
             </ul>
           </div>
@@ -3556,7 +3584,7 @@
       <div class="item">
         <div class="item-left">
           <div class="item-name">Feeding Schedule</div>
-          <div class="item-desc">Seedlings are sensitive — introduce nutrients gradually</div>
+          <div class="item-desc">Seedlings are sensitive · introduce nutrients gradually</div>
           <ul class="steps">
             <li>Weeks 1–2: plain pH-adjusted water only, zero nutrients</li>
             <li>Week 3: start at half the recommended dose</li>
@@ -3569,10 +3597,10 @@
       <div class="item">
         <div class="item-left">
           <div class="item-name">Nutrient Mix for Leafy Greens</div>
-          <div class="item-desc">Nitrogen-forward formulas — lighter EC than fruiting plants</div>
+          <div class="item-desc">Nitrogen-forward formulas · lighter EC than fruiting plants</div>
           <ul class="steps">
             <li>Target EC: 1.0–1.6 for lettuce, spinach, kale</li>
-            <li>Target pH in reservoir: 5.5–6.5 — check weekly</li>
+            <li>Target pH in reservoir: 5.5–6.5 · check weekly</li>
             <li>Good options: General Hydroponics Flora Series, Masterblend 4-18-38</li>
             <li>Overfeeding signs: brown crispy leaf edges, white salt crust on rockwool → flush with plain water for 1 week</li>
           </ul>
@@ -3584,10 +3612,10 @@
           <div class="item-name">Reservoir Maintenance</div>
           <div class="item-desc">Clean water is the foundation of healthy roots and strong growth</div>
           <ul class="steps">
-            <li>Top up with plain water between weekly nutrient additions — plants drink more water than nutrients</li>
-            <li>Full drain + clean every 2–3 weeks — prevents salt buildup and algae</li>
-            <li>Keep reservoir lid tight — light entering causes algae blooms</li>
-            <li>Keep water temperature below 72°F — warm water holds less oxygen and accelerates root rot</li>
+            <li>Top up with plain water between weekly nutrient additions · plants drink more water than nutrients</li>
+            <li>Full drain + clean every 2–3 weeks · prevents salt buildup and algae</li>
+            <li>Keep reservoir lid tight · light entering causes algae blooms</li>
+            <li>Keep water temperature below 72°F · warm water holds less oxygen and accelerates root rot</li>
             <li>Add a few ml of 3% H₂O₂ to clean water on refill to kill root rot bacteria</li>
           </ul>
         </div>
@@ -3604,26 +3632,26 @@
       <div class="divider"></div>
       <div class="item">
         <div class="item-left">
-          <div class="item-name">Leafy Greens — Outer Leaf Method</div>
-          <div class="item-desc">Always from the outside in — the center crown is sacred</div>
+          <div class="item-name">Leafy Greens · Outer Leaf Method</div>
+          <div class="item-desc">Always from the outside in · the center crown is sacred</div>
           <ul class="steps">
-            <li>Cut at the base of each leaf stem with sharp scissors — never pull or tear</li>
+            <li>Cut at the base of each leaf stem with sharp scissors · never pull or tear</li>
             <li>Never remove more than ⅓ of the plant in one session</li>
             <li>Leave the center growing point completely untouched</li>
-            <li>Harvest before leaves touch the LEDs or neighboring pods — contact scorches leaves</li>
+            <li>Harvest before leaves touch the LEDs or neighboring pods · contact scorches leaves</li>
           </ul>
         </div>
         <div class="item-freq">Weekly</div>
       </div>
       <div class="item">
         <div class="item-left">
-          <div class="item-name">Basil — Node Pruning</div>
+          <div class="item-name">Basil · Node Pruning</div>
           <div class="item-desc">Pinching above nodes triggers bushier lateral growth and delays bolting</div>
           <ul class="steps">
-            <li>Cut stem just above a pair of leaves (the node) — never mid-stem</li>
-            <li>Pinch flower buds the moment they appear — do not let them open</li>
+            <li>Cut stem just above a pair of leaves (the node) · never mid-stem</li>
+            <li>Pinch flower buds the moment they appear · do not let them open</li>
             <li>Bolted basil: cut back 50%, leaving 2–3 nodes above the base</li>
-            <li>Bolted basil leaves are still edible — more bitter, best cooked or in pesto</li>
+            <li>Bolted basil leaves are still edible · more bitter, best cooked or in pesto</li>
           </ul>
         </div>
         <div class="item-freq">Weekly</div>
@@ -3633,7 +3661,7 @@
           <div class="item-name">Rosemary & Woody Herbs</div>
           <div class="item-desc">Light, frequent trimming keeps shape and pushes new growth</div>
           <ul class="steps">
-            <li>Snip 1–2 inches from stem tips only — never cut into old woody growth</li>
+            <li>Snip 1–2 inches from stem tips only · never cut into old woody growth</li>
             <li>Harvest sprigs regularly; neglect causes legginess</li>
           </ul>
         </div>
@@ -3642,9 +3670,9 @@
       <div class="item">
         <div class="item-left">
           <div class="item-name">Mint</div>
-          <div class="item-desc">Aggressive grower — cut it hard, it always comes back</div>
+          <div class="item-desc">Aggressive grower · cut it hard, it always comes back</div>
           <ul class="steps">
-            <li>Cut back to 3–4 inches tall when overgrown — it will bush back within days</li>
+            <li>Cut back to 3–4 inches tall when overgrown · it will bush back within days</li>
             <li>Trim runners that escape into neighboring pods regularly</li>
           </ul>
         </div>
@@ -3652,11 +3680,11 @@
       </div>
       <div class="item">
         <div class="item-left">
-          <div class="item-name">Flowers — Deadheading</div>
+          <div class="item-name">Flowers · Deadheading</div>
           <div class="item-desc">Removing spent blooms forces the plant to produce new ones</div>
           <ul class="steps">
             <li>Pinch or snip spent flowers at the base of the bloom stem as soon as petals fade</li>
-            <li>Remove fallen petals from the reservoir area immediately — they cause rot</li>
+            <li>Remove fallen petals from the reservoir area immediately · they cause rot</li>
             <li>Best flowers for your Gardyn: nasturtiums, violas, marigolds, chamomile, borage</li>
           </ul>
         </div>
@@ -3674,12 +3702,12 @@
       <div class="item">
         <div class="item-left">
           <div class="item-name">Active Outbreak Protocol <span class="badge badge-red">In Order</span></div>
-          <div class="item-desc">Follow these steps in sequence — don't skip to sprays before removing affected leaves</div>
+          <div class="item-desc">Follow these steps in sequence · don't skip to sprays before removing affected leaves</div>
           <ul class="steps">
-            <li><strong>Step 1:</strong> Remove any leaf more than 30% white — bag and trash immediately</li>
-            <li><strong>Step 2 (Day 1):</strong> H₂O₂ spray — 1 part 3% H₂O₂ to 3 parts water, both sides of all leaves</li>
-            <li><strong>Step 3 (Day 3):</strong> Baking soda spray — 1 tsp baking soda + 1 tsp dish soap + 1 quart water</li>
-            <li><strong>Step 4 (Day 5):</strong> Neem oil spray — few drops neem + 1 tsp dish soap + 1 quart water</li>
+            <li><strong>Step 1:</strong> Remove any leaf more than 30% white · bag and trash immediately</li>
+            <li><strong>Step 2 (Day 1):</strong> H₂O₂ spray · 1 part 3% H₂O₂ to 3 parts water, both sides of all leaves</li>
+            <li><strong>Step 3 (Day 3):</strong> Baking soda spray · 1 tsp baking soda + 1 tsp dish soap + 1 quart water</li>
+            <li><strong>Step 4 (Day 5):</strong> Neem oil spray · few drops neem + 1 tsp dish soap + 1 quart water</li>
             <li><strong>Step 5:</strong> Rotate all three weekly until fully clear (2–3 weeks typically)</li>
           </ul>
         </div>
@@ -3688,11 +3716,11 @@
       <div class="item">
         <div class="item-left">
           <div class="item-name">Weekly Prevention Sprays</div>
-          <div class="item-desc">Alternate to prevent resistance building — apply in the morning only</div>
+          <div class="item-desc">Alternate to prevent resistance building · apply in the morning only</div>
           <ul class="steps">
             <li>Week A: Baking soda spray (1 tsp baking soda + 1 tsp dish soap + 1 qt water)</li>
             <li>Week B: Neem oil spray (few drops neem + 1 tsp dish soap + 1 qt water, shake constantly)</li>
-            <li>Always apply in the morning — leaves must dry fully before lights cycle off</li>
+            <li>Always apply in the morning · leaves must dry fully before lights cycle off</li>
           </ul>
         </div>
         <div class="item-freq">Weekly</div>
@@ -3700,12 +3728,12 @@
       <div class="item">
         <div class="item-left">
           <div class="item-name">Environmental Controls</div>
-          <div class="item-desc">Airflow is more effective than any spray — fix the environment first</div>
+          <div class="item-desc">Airflow is more effective than any spray · fix the environment first</div>
           <ul class="steps">
-            <li>Place a small USB fan near the towers — even gentle airflow stops spore settlement</li>
+            <li>Place a small USB fan near the towers · even gentle airflow stops spore settlement</li>
             <li>Keep room temperature 65–80°F and humidity 50–70%</li>
             <li>Keep leaves from touching each other or the tower walls</li>
-            <li>Thin dense canopies regularly — mildew thrives in stagnant air pockets</li>
+            <li>Thin dense canopies regularly · mildew thrives in stagnant air pockets</li>
           </ul>
         </div>
         <div class="item-freq">Ongoing</div>
@@ -3717,7 +3745,7 @@
     <!-- ROOT CARE -->
     <div class="section">
       <div class="section-header"><span class="section-icon">🌿</span><span class="section-title">Root Care & Tower Upkeep</span></div>
-      <div class="section-subtitle">Below the surface — most overlooked part of hydro maintenance</div>
+      <div class="section-subtitle">Below the surface · most overlooked part of hydro maintenance</div>
       <div class="divider"></div>
       <div class="item">
         <div class="item-left">
@@ -3725,10 +3753,10 @@
           <div class="item-desc">Healthy roots are white or cream-colored and slightly fuzzy</div>
           <ul class="steps">
             <li>Gently pull each pod slightly to check roots below</li>
-            <li><strong>White & fuzzy:</strong> perfect — leave alone</li>
-            <li><strong>Light tan/beige:</strong> normal nutrient staining — fine</li>
-            <li><strong>Brown & slimy:</strong> root rot — treat immediately</li>
-            <li><strong>Dark brown & mushy:</strong> too far gone — remove the pod</li>
+            <li><strong>White & fuzzy:</strong> perfect · leave alone</li>
+            <li><strong>Light tan/beige:</strong> normal nutrient staining · fine</li>
+            <li><strong>Brown & slimy:</strong> root rot · treat immediately</li>
+            <li><strong>Dark brown & mushy:</strong> too far gone · remove the pod</li>
           </ul>
         </div>
         <div class="item-freq">Every 2 weeks</div>
@@ -3740,7 +3768,7 @@
           <ul class="steps">
             <li>Do during reservoir drain so roots are fully visible</li>
             <li>Sterilize scissors with rubbing alcohol before starting</li>
-            <li>Trim only roots clogging the reservoir or wrapping the pump — not roots inside the column</li>
+            <li>Trim only roots clogging the reservoir or wrapping the pump · not roots inside the column</li>
             <li>Never remove more than ⅓ of root mass at once</li>
             <li>Rinse trimmed roots under clean water before returning pod</li>
           </ul>
@@ -3750,7 +3778,7 @@
       <div class="item">
         <div class="item-left">
           <div class="item-name">Root Rot Treatment <span class="badge badge-red">Act Fast</span></div>
-          <div class="item-desc">Spreads to neighboring pods quickly — don't wait</div>
+          <div class="item-desc">Spreads to neighboring pods quickly · don't wait</div>
           <ul class="steps">
             <li>Remove affected pod from tower immediately</li>
             <li>Rinse roots gently under cool running water</li>
@@ -3765,9 +3793,9 @@
       <div class="item">
         <div class="item-left">
           <div class="item-name">Pump & Water Flow Check</div>
-          <div class="item-desc">A failing pump can kill every plant in under 24 hours — check regularly</div>
+          <div class="item-desc">A failing pump can kill every plant in under 24 hours · check regularly</div>
           <ul class="steps">
-            <li>Listen for the pump — should run quietly and consistently</li>
+            <li>Listen for the pump · should run quietly and consistently</li>
             <li>Confirm water is flowing from the top and trickling through all pods</li>
             <li>Weak flow: check for root clog first, then inspect pump inlet</li>
             <li>Remove pump monthly, rinse under warm water, clear intake debris</li>
@@ -3783,7 +3811,7 @@
             <li>Remove all pods, rinse column interior with warm water</li>
             <li>Bottle brush for green algae growth inside columns</li>
             <li>White crusty deposits: soak with 1:1 white vinegar + water for 15 min, then scrub</li>
-            <li>Rinse thoroughly — vinegar residue affects pH</li>
+            <li>Rinse thoroughly · vinegar residue affects pH</li>
           </ul>
         </div>
         <div class="item-freq">Every 4–6 weeks</div>
@@ -3791,9 +3819,9 @@
       <div class="item">
         <div class="item-left">
           <div class="item-name">Pod & Rockwool Hygiene</div>
-          <div class="item-desc">Old rockwool harbors bacteria — replace between every crop</div>
+          <div class="item-desc">Old rockwool harbors bacteria · replace between every crop</div>
           <ul class="steps">
-            <li>Always remove rockwool when pulling a finished plant — never leave it in</li>
+            <li>Always remove rockwool when pulling a finished plant · never leave it in</li>
             <li>Soak empty pods in H₂O₂ or white vinegar solution for 30 min</li>
             <li>Scrub root debris from inside pod, let air dry fully before new rockwool</li>
             <li>Never reuse rockwool from a plant that had root rot or mildew</li>
@@ -3818,8 +3846,8 @@
           <ul class="steps">
             <li>Herbs & leafy greens: 16 hrs on / 8 hrs off</li>
             <li>Flowers: 12 hrs on / 12 hrs off encourages more blooming</li>
-            <li>Never change the cycle suddenly — shift by 30 min per day if adjusting</li>
-            <li>Use the Gardyn app timer if available — inconsistency causes stress bolting</li>
+            <li>Never change the cycle suddenly · shift by 30 min per day if adjusting</li>
+            <li>Use the Gardyn app timer if available · inconsistency causes stress bolting</li>
           </ul>
         </div>
         <div class="item-freq">Set & leave</div>
@@ -3830,8 +3858,8 @@
           <div class="item-desc">Outside these ranges is when mildew, root rot, and bolting spike</div>
           <ul class="steps">
             <li>Ideal temperature: 65–80°F (18–27°C)</li>
-            <li>Ideal humidity: 50–70% — above 70% is mildew territory</li>
-            <li>Reservoir water: keep below 72°F — warm water holds less oxygen → root rot</li>
+            <li>Ideal humidity: 50–70% · above 70% is mildew territory</li>
+            <li>Reservoir water: keep below 72°F · warm water holds less oxygen → root rot</li>
             <li>A small USB fan near the garden helps with both airflow and humidity</li>
           </ul>
         </div>
@@ -3840,12 +3868,12 @@
       <div class="item">
         <div class="item-left">
           <div class="item-name">pH Management Without a Pen</div>
-          <div class="item-desc">pH 5.5–6.5 is the sweet spot — outside this range plants can't absorb nutrients</div>
+          <div class="item-desc">pH 5.5–6.5 is the sweet spot · outside this range plants can't absorb nutrients</div>
           <ul class="steps">
-            <li>Best option: API pH test kit (~$10 at pet stores) — accurate enough for home hydro</li>
+            <li>Best option: API pH test kit (~$10 at pet stores) · accurate enough for home hydro</li>
             <li>DIY: a few drops of white vinegar or lemon juice per gallon lowers tap water pH</li>
             <li>Upgrade option: Apera PH20 or BlueLab pH pen ($35–50) for long-term use</li>
-            <li>Check reservoir pH weekly — nutrients and evaporation both shift it</li>
+            <li>Check reservoir pH weekly · nutrients and evaporation both shift it</li>
           </ul>
         </div>
         <div class="item-freq">Weekly</div>
@@ -3860,10 +3888,10 @@
       <div class="item">
         <div class="item-left">
           <div class="item-name">Fungus Gnats <span class="badge badge-gold">Most Common</span></div>
-          <div class="item-desc">Tiny flies hovering near the base — larvae live in wet growing medium and damage roots</div>
+          <div class="item-desc">Tiny flies hovering near the base · larvae live in wet growing medium and damage roots</div>
           <ul class="steps">
             <li>Yellow sticky traps placed near base catch adults immediately</li>
-            <li>Let rockwool dry slightly between watering cycles — larvae need moisture</li>
+            <li>Let rockwool dry slightly between watering cycles · larvae need moisture</li>
             <li>Apply diluted H₂O₂ (1:4 ratio) directly to rockwool to kill larvae</li>
             <li>Neem oil drench in the reservoir as ongoing prevention</li>
           </ul>
@@ -3873,12 +3901,12 @@
       <div class="item">
         <div class="item-left">
           <div class="item-name">Spider Mites</div>
-          <div class="item-desc">Tiny dots on leaves, fine webbing underneath — thrive in hot dry conditions</div>
+          <div class="item-desc">Tiny dots on leaves, fine webbing underneath · thrive in hot dry conditions</div>
           <ul class="steps">
-            <li>Check leaf undersides with a magnifying glass — look for tiny moving dots</li>
+            <li>Check leaf undersides with a magnifying glass · look for tiny moving dots</li>
             <li>Wipe leaves with damp cloth first to remove visible mites physically</li>
             <li>Spray neem oil solution every 3 days for 2 weeks to break the egg cycle</li>
-            <li>Increase humidity slightly — mites hate moisture</li>
+            <li>Increase humidity slightly · mites hate moisture</li>
           </ul>
         </div>
         <div class="item-freq">As needed</div>
@@ -3886,11 +3914,11 @@
       <div class="item">
         <div class="item-left">
           <div class="item-name">Aphids</div>
-          <div class="item-desc">Soft-bodied clusters on new growth and stem tips — reproduce fast</div>
+          <div class="item-desc">Soft-bodied clusters on new growth and stem tips · reproduce fast</div>
           <ul class="steps">
-            <li>Blast off with a firm stream of water first — effective for small infestations</li>
+            <li>Blast off with a firm stream of water first · effective for small infestations</li>
             <li>Follow with neem oil spray on all affected areas</li>
-            <li>Check daily until gone — aphid populations double every few days if untreated</li>
+            <li>Check daily until gone · aphid populations double every few days if untreated</li>
           </ul>
         </div>
         <div class="item-freq">As needed</div>
@@ -3915,7 +3943,7 @@
           <tr><td>Harvest outer leaves</td><td>Never more than ⅓ of plant</td><td>Weekly</td></tr>
           <tr><td>Add plant food</td><td>From week 3 onward; half dose first week</td><td>Weekly</td></tr>
           <tr><td>Check reservoir pH</td><td>Target 5.5–6.5</td><td>Weekly</td></tr>
-          <tr><td>Mildew prevention spray</td><td>Alternate baking soda / neem — morning only</td><td>Weekly</td></tr>
+          <tr><td>Mildew prevention spray</td><td>Alternate baking soda / neem · morning only</td><td>Weekly</td></tr>
           <tr><td>Inspect for pests & mildew</td><td>Check leaf undersides carefully</td><td>Weekly</td></tr>
           <tr><td>Prune & shape herbs</td><td>Pinch basil buds before they open</td><td>Weekly</td></tr>
           <tr><td>Deadhead spent flowers</td><td>Remove fallen petals from reservoir area too</td><td>Weekly</td></tr>
@@ -3938,13 +3966,13 @@
       <div class="divider"></div>
       <div class="item">
         <div class="item-left">
-          <div class="item-name">About pH — Should You Adjust?</div>
-          <div class="item-desc">Gardyn says tap water is fine — and it often is. But optimizing pH is the single biggest yield improvement you can make.</div>
+          <div class="item-name">About pH · Should You Adjust?</div>
+          <div class="item-desc">Gardyn says tap water is fine · and it often is. But optimizing pH is the single biggest yield improvement you can make.</div>
           <ul class="steps">
-            <li>Plants absorb nutrients best between pH 5.5–6.5. Outside this range, nutrients are present but locked out — the plant can't use them even if you're feeding correctly.</li>
-            <li>LA tap water typically runs pH 7.5–8.0. At this level, iron and manganese become unavailable, causing yellowing leaves even with good nutrition.</li>
+            <li>Plants absorb nutrients best between pH 5.5–6.5. Outside this range, nutrients are present but locked out · the plant can't use them even if you're feeding correctly.</li>
+            <li>Most tap water runs pH 7.5–8.0. At this level, iron and manganese become unavailable, causing yellowing leaves even with good nutrition.</li>
             <li>Gardyn's tap water guidance works for casual growing. For serious yield and health, pH adjustment makes a noticeable difference within 2–3 weeks.</li>
-            <li>You don't need to adjust every fill — just check weekly and correct when outside the 5.5–6.5 range.</li>
+            <li>You don't need to adjust every fill · just check weekly and correct when outside the 5.5–6.5 range.</li>
           </ul>
         </div>
         <div class="item-freq">Weekly check</div>
@@ -3954,10 +3982,10 @@
           <div class="item-name">Buy a pH Pen <span class="badge badge-green">Recommended</span></div>
           <div class="item-desc">The single best investment for your Gardyn after the machine itself</div>
           <ul class="steps">
-            <li><strong>Best value:</strong> Apera PH20 (~$35) — accurate, reliable, widely used by hydro growers</li>
-            <li><strong>Also excellent:</strong> BlueLab pH Pen (~$50) — industry standard, very durable</li>
-            <li><strong>Budget option:</strong> API Freshwater Master Test Kit (~$10 at pet stores) — liquid drop test, less precise but works</li>
-            <li>Store pH pen tip submerged in storage solution (or KCl solution) — never let it dry out</li>
+            <li><strong>Best value:</strong> Apera PH20 (~$35) · accurate, reliable, widely used by hydro growers</li>
+            <li><strong>Also excellent:</strong> BlueLab pH Pen (~$50) · industry standard, very durable</li>
+            <li><strong>Budget option:</strong> API Freshwater Master Test Kit (~$10 at pet stores) · liquid drop test, less precise but works</li>
+            <li>Store pH pen tip submerged in storage solution (or KCl solution) · never let it dry out</li>
             <li>Calibrate monthly with pH 7.0 calibration solution for accurate readings</li>
           </ul>
         </div>
@@ -3966,23 +3994,23 @@
       <div class="item">
         <div class="item-left">
           <div class="item-name">How to Adjust pH</div>
-          <div class="item-desc">Simple once you have a pen — takes 2 minutes per reservoir fill</div>
+          <div class="item-desc">Simple once you have a pen · takes 2 minutes per reservoir fill</div>
           <ul class="steps">
             <li><strong>Lower pH:</strong> add a few drops of white vinegar or pH Down solution, stir, re-test</li>
             <li><strong>Raise pH:</strong> add a few drops of baking soda solution or pH Up solution</li>
-            <li>Add slowly — pH swings are worse than being slightly off. Aim for 6.0 as your target.</li>
-            <li>After adding nutrients, always re-check pH — nutrients shift it</li>
+            <li>Add slowly · pH swings are worse than being slightly off. Aim for 6.0 as your target.</li>
+            <li>After adding nutrients, always re-check pH · nutrients shift it</li>
           </ul>
         </div>
         <div class="item-freq">Each reservoir fill</div>
       </div>
       <div class="item">
         <div class="item-left">
-          <div class="item-name">Hydroboost — Nutrient Feeding Guide</div>
+          <div class="item-name">Hydroboost · Nutrient Feeding Guide</div>
           <div class="item-desc">What to use, when to start, and how much</div>
           <ul class="steps">
-            <li><strong>Gardyn brand:</strong> Follow their pod dosing exactly — designed for the system</li>
-            <li><strong>General Hydroponics Flora Series:</strong> 3-part system (Grow, Micro, Bloom) — most flexible, excellent results. Use the "Vegetative" schedule for herbs and greens.</li>
+            <li><strong>Gardyn brand:</strong> Follow their pod dosing exactly · designed for the system</li>
+            <li><strong>General Hydroponics Flora Series:</strong> 3-part system (Grow, Micro, Bloom) · most flexible, excellent results. Use the "Vegetative" schedule for herbs and greens.</li>
             <li><strong>Masterblend 4-18-38:</strong> Popular DIY option, very cost-effective, mix with calcium nitrate and Epsom salt per standard ratios</li>
             <li>Start at half dose in week 3, full dose from week 4 onward</li>
             <li>Target EC 1.0–1.6 for leafy greens, 1.4–2.0 for herbs, 2.0–3.0 for fruiting plants</li>
@@ -4004,13 +4032,13 @@
       <div class="item">
         <div class="item-left">
           <div class="item-name">How to Identify Nutrient Burn</div>
-          <div class="item-desc">Burn starts at the leaf tips and edges — it always moves inward from the outside</div>
+          <div class="item-desc">Burn starts at the leaf tips and edges · it always moves inward from the outside</div>
           <ul class="steps">
-            <li><strong>Stage 1 — Tip burn:</strong> leaf tips turn yellow, then brown and crispy. Very common and easy to catch early.</li>
-            <li><strong>Stage 2 — Edge burn:</strong> browning spreads along the whole leaf margin, leaves curl slightly</li>
-            <li><strong>Stage 3 — Full leaf damage:</strong> large brown patches, leaves become papery and brittle — hard to recover from</li>
+            <li><strong>Stage 1 · Tip burn:</strong> leaf tips turn yellow, then brown and crispy. Very common and easy to catch early.</li>
+            <li><strong>Stage 2 · Edge burn:</strong> browning spreads along the whole leaf margin, leaves curl slightly</li>
+            <li><strong>Stage 3 · Full leaf damage:</strong> large brown patches, leaves become papery and brittle · hard to recover from</li>
             <li>White crusty deposits on rockwool = salt buildup from overfeeding, a sure sign of burn</li>
-            <li>Don't confuse with mildew — burn is brown/crispy, mildew is white/powdery</li>
+            <li>Don't confuse with mildew · burn is brown/crispy, mildew is white/powdery</li>
           </ul>
         </div>
         <div class="item-freq">Check weekly</div>
@@ -4018,12 +4046,12 @@
       <div class="item">
         <div class="item-left">
           <div class="item-name">Treating Active Nutrient Burn</div>
-          <div class="item-desc">Act at stage 1 or 2 — stage 3 leaves won't recover but the plant can still be saved</div>
+          <div class="item-desc">Act at stage 1 or 2 · stage 3 leaves won't recover but the plant can still be saved</div>
           <ul class="steps">
             <li><strong>Step 1:</strong> Drain the reservoir completely</li>
-            <li><strong>Step 2:</strong> Refill with plain pH-adjusted water only — zero nutrients</li>
+            <li><strong>Step 2:</strong> Refill with plain pH-adjusted water only · zero nutrients</li>
             <li><strong>Step 3:</strong> Run plain water for a full week to flush salt buildup from the rockwool and roots</li>
-            <li><strong>Step 4:</strong> Remove all visibly burned leaves — they won't recover and drain energy from the plant</li>
+            <li><strong>Step 4:</strong> Remove all visibly burned leaves · they won't recover and drain energy from the plant</li>
             <li><strong>Step 5:</strong> After 1 week, reintroduce nutrients at half dose and build back up gradually</li>
           </ul>
         </div>
@@ -4035,7 +4063,7 @@
           <div class="item-desc">Both look similar but have different causes and fixes</div>
           <ul class="steps">
             <li><strong>Nutrient burn:</strong> starts at tips and edges of all leaves across the plant</li>
-            <li><strong>Light burn:</strong> affects only the leaves closest to the LEDs — tops of plants touching or near the lights</li>
+            <li><strong>Light burn:</strong> affects only the leaves closest to the LEDs · tops of plants touching or near the lights</li>
             <li>Fix for light burn: prune the plant back so no leaves are within 2–3 inches of the LED bar</li>
             <li>Fix for nutrient burn: flush reservoir as above</li>
           </ul>
@@ -4047,10 +4075,10 @@
           <div class="item-name">Prevention</div>
           <div class="item-desc">Burn is almost entirely preventable with consistent habits</div>
           <ul class="steps">
-            <li>Always start new plants at half dose — never go straight to full strength</li>
-            <li>Top up reservoir with plain water between nutrient additions — don't add nutrients every top-up</li>
+            <li>Always start new plants at half dose · never go straight to full strength</li>
+            <li>Top up reservoir with plain water between nutrient additions · don't add nutrients every top-up</li>
             <li>Do a full drain + clean every 2–3 weeks to reset salt accumulation</li>
-            <li>Leafy greens are more sensitive than herbs — keep EC at 1.0–1.6, not higher</li>
+            <li>Leafy greens are more sensitive than herbs · keep EC at 1.0–1.6, not higher</li>
             <li>If in doubt, less nutrients is always safer than more</li>
           </ul>
         </div>
@@ -4063,7 +4091,7 @@
     <div id="acc-transplanting" class="acc-section">
     <div class="section">
       <div class="section-header"><span class="section-icon">🌺</span><span class="section-title">Large Plants & Transplanting</span></div>
-      <div class="section-subtitle">Hibiscus · staking · moving to soil</div>
+      <div class="section-subtitle">Staking · moving to soil · large plants</div>
       <div class="divider"></div>
       <div class="item">
         <div class="item-left">
@@ -4071,8 +4099,8 @@
           <div class="item-desc">When a plant leans due to an uneven rockwool cube or top-heavy growth</div>
           <ul class="steps">
             <li><strong>Wedge method:</strong> gently pack a small piece of damp sponge or foam alongside the rockwool cube inside the pod to prop it upright</li>
-            <li><strong>Staking method:</strong> push a bamboo skewer or chopstick down into the pod alongside the stem — tie loosely with a twist tie or soft plant tape, never tight</li>
-            <li>Reposition the pod itself — some Gardyn pod openings allow slight angle adjustment</li>
+            <li><strong>Staking method:</strong> push a bamboo skewer or chopstick down into the pod alongside the stem · tie loosely with a twist tie or soft plant tape, never tight</li>
+            <li>Reposition the pod itself · some Gardyn pod openings allow slight angle adjustment</li>
             <li>Trim heavy growth on the leaning side to rebalance the plant's weight</li>
           </ul>
         </div>
@@ -4080,37 +4108,23 @@
       </div>
       <div class="item">
         <div class="item-left">
-          <div class="item-name">Transplanting to Soil — Step by Step</div>
-          <div class="item-desc">For plants that have outgrown the Gardyn — hibiscus, fruiting plants, large herbs</div>
+          <div class="item-name">Transplanting to Soil · Step by Step</div>
+          <div class="item-desc">For plants that have outgrown the Gardyn · hibiscus, fruiting plants, large herbs</div>
           <ul class="steps">
             <li>Prep a pot (12–14 inches minimum for hibiscus) ⅓ filled with well-draining potting mix</li>
-            <li>Remove pod slowly — unwind any roots tangled in the column, never yank</li>
-            <li>Leave the rockwool cube intact around the roots — it breaks down in soil naturally</li>
+            <li>Remove pod slowly · unwind any roots tangled in the column, never yank</li>
+            <li>Leave the rockwool cube intact around the roots · it breaks down in soil naturally</li>
             <li>Set plant in pot center, rockwool about 1 inch below the rim, fill and press gently</li>
             <li>Water thoroughly until it drains from the bottom</li>
-            <li><strong>Critical:</strong> keep in indirect light for 1 week — never straight into full sun from indoor LEDs</li>
+            <li><strong>Critical:</strong> keep in indirect light for 1 week · never straight into full sun from indoor LEDs</li>
             <li>Gradually increase sun exposure over the following week</li>
-            <li>Expect some drooping for 2–3 days — normal transplant shock, don't overwater</li>
+            <li>Expect some drooping for 2–3 days · normal transplant shock, don't overwater</li>
           </ul>
         </div>
         <div class="item-freq">Per plant</div>
       </div>
-      <div class="item">
-        <div class="item-left">
-          <div class="item-name">Hibiscus Outdoor Care (Post-Transplant)</div>
-          <div class="item-desc">Once outside in LA, hibiscus will thrive and flower prolifically</div>
-          <ul class="steps">
-            <li>Full sun once acclimated — south or west facing is ideal in LA</li>
-            <li>Water deeply but let soil dry slightly between waterings</li>
-            <li>Feed with a bloom/phosphorus-forward fertilizer 2 weeks after transplanting</li>
-            <li>Hibiscus blooms on new growth — pinch stem tips occasionally to encourage branching and more flowers</li>
-            <li>Expect flower buds within 4–6 weeks once in proper sun</li>
-          </ul>
-        </div>
-        <div class="item-freq">Ongoing</div>
-      </div>
       <div class="callout">
-        <strong>Flowers that actually thrive in the Gardyn:</strong> Nasturtiums, violas, marigolds, chamomile, borage — all compact, edible, and happy under indoor LEDs. Petunias work too with consistent deadheading. Avoid anything that gets large or needs a dormancy period.
+        <strong>Flowers that actually thrive in the Gardyn:</strong> Nasturtiums, violas, marigolds, chamomile, borage · all compact, edible, and happy under indoor LEDs. Petunias work too with consistent deadheading. Avoid anything that gets large or needs a dormancy period.
       </div>
     </div>
 
@@ -4124,24 +4138,24 @@
 
       <div class="accessory-card">
         <h4>pH Pen / Digital pH Meter</h4>
-        <p>The single most impactful tool you can add to your Gardyn routine. Tap water typically runs pH 7–8, which is too alkaline for hydroponic growing — nutrients become unavailable to roots at the wrong pH, even when the water looks perfect. A reliable pH pen lets you hit the 5.5–6.5 sweet spot every time. Look for one with automatic temperature compensation (ATC). Calibrate monthly with pH 4.0 and 7.0 calibration solution.<br><br>
-        Recommended: Apera Instruments PH20 or BlueLab pH Pen — both are accurate, durable, and calibrate easily.</p>
-        <span class="affiliate-placeholder">🔗 Amazon link — coming soon</span>
+        <p>The single most impactful tool you can add to your Gardyn routine. Tap water typically runs pH 7–8, which is too alkaline for hydroponic growing · nutrients become unavailable to roots at the wrong pH, even when the water looks perfect. A reliable pH pen lets you hit the 5.5–6.5 sweet spot every time. Look for one with automatic temperature compensation (ATC). Calibrate monthly with pH 4.0 and 7.0 calibration solution.<br><br>
+        Recommended: Apera Instruments PH20 or BlueLab pH Pen · both are accurate, durable, and calibrate easily.</p>
+        <span class="affiliate-placeholder">🔗 Amazon link · coming soon</span>
       </div>
 
       <div class="accessory-card">
         <h4>Rockwool / Stonewool Grow Cubes</h4>
-        <p>The growing medium inside every Gardyn yCube is rockwool — spun basalt rock that holds moisture and air simultaneously, which is why roots love it. When DIY-ing pods, you need the right cube size to fit Gardyn pod slots: 1-inch cubes (Grodan Hugo or similar) are the standard fit.<br><br>
+        <p>The growing medium inside every Gardyn yCube is rockwool · spun basalt rock that holds moisture and air simultaneously, which is why roots love it. When DIY-ing pods, you need the right cube size to fit Gardyn pod slots: 1-inch cubes (Grodan Hugo or similar) are the standard fit.<br><br>
         Key prep note: rockwool is alkaline out of the bag (pH ~7.5–8.0). Always pre-soak in pH 5.5 water for 30–60 minutes before use or seeds will struggle to germinate.</p>
-        <span class="affiliate-placeholder">🔗 Amazon link — coming soon</span>
+        <span class="affiliate-placeholder">🔗 Amazon link · coming soon</span>
       </div>
 
       <div class="accessory-card">
-        <h4>Plant Nutrients — GH Flora Series or Masterblend 4-18-38</h4>
-        <p><strong>General Hydroponics Flora Series</strong> is a 3-part liquid system (Grow, Micro, Bloom) — the most flexible option and excellent for mixed Gardyn pods. Use the Vegetative schedule for herbs and greens. Widely available.<br><br>
-        <strong>Masterblend 4-18-38</strong> is a dry powder alternative — very cost-effective and popular in the DIY hydro community. Mix with calcium nitrate and Epsom salt per standard ratios (12g Masterblend + 12g calcium nitrate + 6g Epsom salt per 5 gallons).<br><br>
-        Either way: weeks 1-2 plain water only, week 3 half dose, week 4 onward full dose. Never add nutrients to a dry reservoir — mix into water first.</p>
-        <span class="affiliate-placeholder">🔗 Amazon link — coming soon</span>
+        <h4>Plant Nutrients · GH Flora Series or Masterblend 4-18-38</h4>
+        <p><strong>General Hydroponics Flora Series</strong> is a 3-part liquid system (Grow, Micro, Bloom) · the most flexible option and excellent for mixed Gardyn pods. Use the Vegetative schedule for herbs and greens. Widely available.<br><br>
+        <strong>Masterblend 4-18-38</strong> is a dry powder alternative · very cost-effective and popular in the DIY hydro community. Mix with calcium nitrate and Epsom salt per standard ratios (12g Masterblend + 12g calcium nitrate + 6g Epsom salt per 5 gallons).<br><br>
+        Either way: weeks 1-2 plain water only, week 3 half dose, week 4 onward full dose. Never add nutrients to a dry reservoir · mix into water first.</p>
+        <span class="affiliate-placeholder">🔗 Amazon link · coming soon</span>
       </div>
 
       <div class="callout">
@@ -4157,7 +4171,7 @@
     </div>
 
     <div class="today-section">
-      <div class="today-section-title"><span>☀️</span> High Light — Upper Pods (1–10)</div>
+      <div class="today-section-title"><span>☀️</span> High Light · Upper Pods (1–10)</div>
       <div class="today-section-sub">Full LED intensity · 16 hrs on / 8 hrs off · strongest growers, herbs &amp; fruiting plants go here</div>
       <div class="today-divider"></div>
       <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-top:4px;">
@@ -4365,7 +4379,7 @@
     </div>
 
     <div class="today-section">
-      <div class="today-section-title"><span>🌤️</span> Medium Light — Mid Pods (6–20)</div>
+      <div class="today-section-title"><span>🌤️</span> Medium Light · Mid Pods (6–20)</div>
       <div class="today-section-sub">Moderate intensity · suits most herbs, leafy greens and companion flowers</div>
       <div class="today-divider"></div>
       <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-top:4px;">
@@ -4463,7 +4477,7 @@
     </div>
 
     <div class="today-section">
-      <div class="today-section-title"><span>🌙</span> Low Light — Lower Pods (16–30)</div>
+      <div class="today-section-title"><span>🌙</span> Low Light · Lower Pods (16–30)</div>
       <div class="today-section-sub">Gentler intensity · ideal for lettuces, shade-tolerant flowers and cool-season greens</div>
       <div class="today-divider"></div>
       <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-top:4px;">
@@ -4570,132 +4584,14 @@
       <button class="layout-btn primary" onclick="saveLayout()">Save</button>
     </div>
 
-    <button id="add-pod-toggle" onclick="showAddPodForm()" style="width:100%;padding:11px 14px;background:var(--moss);color:white;border:none;border-radius:6px;font-family:'Jost',sans-serif;font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;cursor:pointer;margin-bottom:10px;">+ Add Pod</button>
-    <div id="add-pod-form" style="display:none;">
-      <div id="tracker-error" style="display:none;background:#fde8e8;border-left:3px solid #b85c38;padding:8px 12px;border-radius:0 4px 4px 0;font-family:Jost,sans-serif;font-size:0.88rem;color:#b85c38;margin-bottom:10px;">Please select a plant and enter the date planted.</div>
-    <div class="pod-form-grid">
-      <div class="pf-pod">
-        <label style="font-family:'Jost',sans-serif;font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:4px;">Pod #</label>
-        <input type="text" id="new-pod" inputmode="numeric" maxlength="2" placeholder="" oninput="clampPod(this);updateTrackerPlantOptions()" style="width:100%;padding:7px 9px;border:1.5px solid var(--divider);border-radius:4px;font-family:Jost,sans-serif;font-size:0.92rem;color:var(--ink);background:white;text-align:center;">
-      </div>
-      <div class="pf-plant">
-        <label style="font-family:'Jost',sans-serif;font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:4px;">Plant *</label>
-        <select id="new-plant" style="width:100%;padding:7px 9px;border:1.5px solid var(--divider);border-radius:4px;background:white;font-family:Jost,sans-serif;font-size:0.92rem;color:var(--ink);">
-          <option value="">— Select plant —</option>
-          <optgroup label="Leafy Greens">
-            <option>Arugula</option>
-            <option>Buttercrunch</option>
-            <option>Butterhead</option>
-            <option>Celery</option>
-            <option>Classic Kale</option>
-            <option>Endive Lettuce</option>
-            <option>Green Bok Choy</option>
-            <option>Green Mustard</option>
-            <option>Green Tatsoi</option>
-            <option>Kale</option>
-            <option>Kale Lacinato</option>
-            <option>Lettuce</option>
-            <option>Mini Cauliflower</option>
-            <option>Red Amaranth</option>
-            <option>Red Sails</option>
-            <option>Red Salad Bowl</option>
-            <option>Red Sorrel</option>
-            <option>Red Swiss Chard</option>
-            <option>Red Tatsoi</option>
-            <option>Romaine</option>
-            <option>Spinach</option>
-            <option>Watercress</option>
-            <option>Wheatgrass</option>
-          </optgroup>
-          <optgroup label="Herbs">
-            <option>Basil</option>
-            <option>Bunching Onions</option>
-            <option>Chervil</option>
-            <option>Chives</option>
-            <option>Cilantro</option>
-            <option>Dill</option>
-            <option>Holy Basil</option>
-            <option>Italian Parsley</option>
-            <option>Lavender</option>
-            <option>Lemongrass</option>
-            <option>Mint</option>
-            <option>Oregano</option>
-            <option>Purple Basil</option>
-            <option>Rosemary</option>
-            <option>Sage</option>
-            <option>Savory</option>
-            <option>Stevia</option>
-            <option>Sweet Marjoram</option>
-            <option>Sweet Thai Basil</option>
-            <option>Thyme</option>
-          </optgroup>
-          <optgroup label="Fruiting">
-            <option>Banana Peppers</option>
-            <option>Cherry Tomatoes</option>
-            <option>Cucumbers</option>
-            <option>Dragon Beans</option>
-            <option>Fairytale Eggplant</option>
-            <option>Green Beans</option>
-            <option>Jalapeños</option>
-            <option>Lemon Hot Pepper</option>
-            <option>Mini Strawberries</option>
-            <option>Peas</option>
-            <option>Strawberries</option>
-            <option>Sweet Peppers</option>
-          </optgroup>
-          <optgroup label="Flowers">
-            <option>Borage</option>
-            <option>Chamomile</option>
-            <option>Dianthus</option>
-            <option>Hibiscus</option>
-            <option>Marietta Marigold</option>
-            <option>Nasturtium</option>
-            <option>Petunia</option>
-            <option>Pink Petunia</option>
-            <option>Purple Campanula</option>
-            <option>Purple Snapdragon</option>
-            <option>Radio Calendula</option>
-            <option>Scarlet Snapdragon</option>
-            <option>Torenia</option>
-            <option>Viola</option>
-            <option>White Petunia</option>
-            <option>Yellow Snapdragon</option>
-          </optgroup>
-        </select>
-      </div>
-      <div class="pf-date">
-        <label style="font-family:'Jost',sans-serif;font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:4px;">Date Planted *</label>
-        <input type="date" id="new-date" style="width:100%;padding:7px 9px;border:1.5px solid var(--divider);border-radius:4px;font-family:Jost,sans-serif;font-size:0.92rem;color:var(--ink);background:white;">
-      </div>
-      <div class="pf-qty">
-        <label style="font-family:'Jost',sans-serif;font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:4px;">Seed Quantity</label>
-        <input type="number" id="new-qty" min="1" max="30" value="1" style="width:100%;padding:7px 9px;border:1.5px solid var(--divider);border-radius:4px;font-family:Jost,sans-serif;font-size:0.92rem;color:var(--ink);background:white;">
-      </div>
-      <div class="pf-sprouted">
-        <label style="font-family:'Jost',sans-serif;font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:4px;">Sprouted?</label>
-        <select id="new-sprouted" style="width:100%;padding:7px 9px;border:1.5px solid var(--divider);border-radius:4px;background:white;font-family:Jost,sans-serif;font-size:0.92rem;color:var(--ink);">
-          <option value="No">No</option>
-          <option value="Yes">Yes</option>
-        </select>
-      </div>
-      <div class="pf-notes">
-        <label style="font-family:'Jost',sans-serif;font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:4px;">Notes</label>
-        <input type="text" id="new-notes" placeholder="optional notes..." style="width:100%;padding:7px 9px;border:1.5px solid var(--divider);border-radius:4px;font-family:Jost,sans-serif;font-size:0.92rem;color:var(--ink);background:white;">
-      </div>
-    </div>
-      <button id="add-pod-btn" onclick="doAddPlant()" style="width:100%;padding:11px 14px;background:var(--moss);color:white;border:none;border-radius:6px;font-family:'Jost',sans-serif;font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;cursor:pointer;margin-bottom:8px;">Finish Pod</button>
-      <div style="text-align:center;margin-bottom:6px;">
-        <button onclick="cancelAddPod()" style="background:none;border:none;color:var(--muted);font-family:'Jost',sans-serif;font-size:0.7rem;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;text-decoration:underline;">Cancel</button>
-      </div>
-    </div>
-
+    <!-- Plant adding happens on the Tower page (pod dropdowns); the ledger is view/edit only. -->
     <div id="tracker-cards" style="margin-top:10px;"></div>
 
-    <!-- Sprouts — seedlings in trays, collapsed by default -->
-    <details id="sprout-details" style="margin-top:14px;">
-      <summary id="sprout-summary" style="cursor:pointer;font-family:'Jost',sans-serif;font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--moss);padding:8px 0;list-style:none;">▸ Sprouts (0)</summary>
+    <!-- Sprouts — seedlings in trays -->
+    <div id="sprout-section" style="margin-top:14px;">
+      <h3 id="sprout-summary" style="text-align:center;font-family:'Jost',sans-serif;font-size:0.72rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--moss);padding:8px 0;margin:0;">Sprouts (0)</h3>
       <div id="sprout-cards" style="margin-top:8px;display:flex;flex-direction:column;gap:12px;"></div>
-    </details>
+    </div>
     <div id="tracker-summary" style="display:none;margin-top:12px;padding:10px 14px;background:#eaf7ea;border-radius:6px;font-size:0.8rem;color:var(--muted);">Tracking <strong id="pod-count">0</strong> pods · Avg pH <strong id="ph-range">—</strong></div>
   </div>
 
@@ -4766,40 +4662,69 @@
     var newVal = sel.value;
     var oldVal = layoutData[sel.id] || '';
 
-    // Update visual state
-    if (newVal) { sel.classList.add('pod-filled'); }
-    else { sel.classList.remove('pod-filled'); }
-    layoutData[sel.id] = newVal;
-
-    // Remove old tracker entry for this pod if plant changed or cleared
-    if (oldVal) {
-      trackerPlants = trackerPlants.filter(function(p) {
-        return !(p.pod === podNum && p.name === oldVal && p.fromLayout);
-      });
+    if (!newVal) {
+      // pod cleared
+      sel.classList.remove('pod-filled');
+      layoutData[sel.id] = '';
+      if (oldVal) trackerPlants = trackerPlants.filter(function(p) { return !(p.pod === podNum && p.name === oldVal && p.fromLayout); });
+      renderTracker();
+      if (typeof autosave === 'function') autosave();
+      return;
     }
 
-    // Auto-add new plant to tracker
-    if (newVal && PLANT_DATA[newVal]) {
-      var d = PLANT_DATA[newVal];
-      var today = new Date();
-      var yyyy = today.getFullYear();
-      var mm = String(today.getMonth()+1).padStart(2,'0');
-      var dd = String(today.getDate()).padStart(2,'0');
-      trackerPlants.push({
-        id: Date.now() + Math.random(),
-        name: newVal,
-        date: yyyy+'-'+mm+'-'+dd,
-        qty: 1,
-        pod: podNum,
-        notes: '',
-        sprouted: 'No',
-        s2sp: d.s2sp, sp2h: d.sp2h, gf: d.gf,
-        thin: d.thin, ph: d.ph, light: d.light, pets: d.pets,
-        fromLayout: true
-      });
-    }
+    // a plant was placed — capture date/qty/sprouted/notes before committing
+    openPodDetails(sel, podNum, newVal, oldVal);
+  }
 
+  // ── ADD-DETAILS modal (Tower add) ──
+  var _pendingPod = null;
+  function isoTodayMain() { var t = new Date(); return t.getFullYear() + '-' + String(t.getMonth()+1).padStart(2,'0') + '-' + String(t.getDate()).padStart(2,'0'); }
+  function openPodDetails(sel, podNum, name, oldVal) {
+    _pendingPod = { sel: sel, podNum: podNum, name: name, oldVal: oldVal };
+    document.getElementById('pd-pod').textContent = podNum;
+    document.getElementById('pd-plant').textContent = name;
+    document.getElementById('pd-date').value = isoTodayMain();
+    document.getElementById('pd-qty').value = 1;
+    document.getElementById('pd-sprouted').value = 'No';
+    document.getElementById('pd-notes').value = '';
+    document.getElementById('pod-details-overlay').classList.add('open');
+  }
+  function confirmPodDetails() {
+    if (!_pendingPod) return;
+    var pp = _pendingPod, name = pp.name, podNum = pp.podNum;
+    var d = PLANT_DATA[name] || {};
+    var sprouted = document.getElementById('pd-sprouted').value;
+    var rec = {
+      id: Date.now() + Math.random(),
+      name: name,
+      date: document.getElementById('pd-date').value || isoTodayMain(),
+      qty: parseInt(document.getElementById('pd-qty').value, 10) || 1,
+      pod: podNum,
+      notes: document.getElementById('pd-notes').value || '',
+      sprouted: sprouted,
+      s2sp: d.s2sp||7, sp2h: d.sp2h||28, gf: d.gf||90,
+      thin: d.thin||1, ph: d.ph||'6.0-7.0', light: d.light||'medium', pets: d.pets||'Safe',
+      fromLayout: true
+    };
+    if (sprouted === 'Yes') rec.sproutedOn = isoTodayMain();
+    // replace any prior plant on this pod
+    if (pp.oldVal) trackerPlants = trackerPlants.filter(function(p) { return !(p.pod === podNum && p.name === pp.oldVal && p.fromLayout); });
+    trackerPlants.push(rec);
+    pp.sel.classList.add('pod-filled');
+    layoutData[pp.sel.id] = name;
+    document.getElementById('pod-details-overlay').classList.remove('open');
+    _pendingPod = null;
     renderTracker();
+    if (typeof autosave === 'function') autosave();
+  }
+  function cancelPodDetails() {
+    document.getElementById('pod-details-overlay').classList.remove('open');
+    if (_pendingPod) {
+      var pp = _pendingPod;
+      pp.sel.value = pp.oldVal || '';
+      pp.sel.classList.toggle('pod-filled', !!pp.oldVal);
+      _pendingPod = null;
+    }
   }
   function triggerLoadLayout() {
     document.getElementById('load-layout-file').click();
@@ -4868,10 +4793,11 @@
       var s = document.getElementById('pod-' + i);
       if (s) { s.value = ''; s.classList.remove('pod-filled'); }
     }
-    // Remove all layout-sourced tracker entries
-    trackerPlants = trackerPlants.filter(function(p){ return !p.fromLayout; });
+    // Remove every plant assigned to a tower pod (1–30), regardless of how it was added
+    trackerPlants = trackerPlants.filter(function(p){ var n = parseInt(p.pod, 10); return !(n >= 1 && n <= 30); });
     layoutData = {};
     renderTracker();
+    if (typeof autosave === 'function') autosave();
   }
 
   // ── LOCK: make tower pod dropdowns read-only to prevent accidental edits ──
@@ -4997,6 +4923,7 @@
     renderTracker();
     if (typeof updateProgress === 'function') updateProgress();
     if (window.__bdRender) window.__bdRender();   // refresh the day-grid with freshly loaded completions
+    window.__sproutState = state;   // cache so the sprout module can restore once its loader is defined (it lives in a later <script>)
     if (typeof window.__sproutLoad === 'function') window.__sproutLoad(state);   // restore sprout trays + seedlings
   }
 
@@ -5112,6 +5039,8 @@
 
   var trackerPlants = [];
   var editingId = null;
+  var editCardId = null;   // which ledger card is in inline edit-mode (blue highlight + Done button)
+  function toggleCardEdit(id){ editCardId = (editCardId === id) ? null : id; renderTracker(); }
 
   // ── Plant family → drives the archived-card accent + funny line.
   //    Only herbs and flowers are listed; everything else (leafy greens +
@@ -5329,11 +5258,19 @@
   function doRemovePlant(id) {
     var el = document.getElementById('card-' + id);
     var h = el ? el.offsetHeight : 0;
-    trackerPlants.forEach(function(p){ if (p.id === id) { p.removed = true; p.remH = h; } });
+    trackerPlants.forEach(function(p){ if (p.id === id) { p.removed = true; p.remH = h;
+      var n = parseInt(p.pod, 10);
+      if (n >= 1 && n <= 30) { var ls = document.getElementById('pod-' + n);
+        if (ls && ls.value === p.name) { ls.value = ''; ls.classList.remove('pod-filled'); if (typeof layoutData !== 'undefined') layoutData['pod-' + n] = ''; } }
+    } });
     renderTracker();
   }
   function doUndoRemove(id) {
-    trackerPlants.forEach(function(p){ if (p.id === id) { p.removed = false; delete p.remH; } });
+    trackerPlants.forEach(function(p){ if (p.id === id) { p.removed = false; delete p.remH;
+      var n = parseInt(p.pod, 10);
+      if (n >= 1 && n <= 30) { var ls = document.getElementById('pod-' + n);
+        if (ls) { for (var i = 0; i < ls.options.length; i++) { if (ls.options[i].value === p.name) { ls.value = p.name; ls.classList.add('pod-filled'); if (typeof layoutData !== 'undefined') layoutData['pod-' + n] = p.name; break; } } } }
+    } });
     renderTracker();
   }
 
@@ -5393,7 +5330,11 @@
 
   function toggleSprouted(id) {
     trackerPlants.forEach(function(p) {
-      if (p.id === id) p.sprouted = (p.sprouted === 'Yes') ? 'No' : 'Yes';
+      if (p.id === id) { p.sprouted = (p.sprouted === 'Yes') ? 'No' : 'Yes';
+        if (p.sprouted === 'Yes') {
+          var _t = new Date();
+          p.sproutedOn = _t.getFullYear() + '-' + String(_t.getMonth()+1).padStart(2,'0') + '-' + String(_t.getDate()).padStart(2,'0');
+        } else delete p.sproutedOn; }
     });
     renderTracker();
   }
@@ -5448,12 +5389,14 @@
       var val  = 'font-size:0.82rem;color:var(--ink);';
       var valm = 'font-size:0.78rem;color:var(--muted);';
 
-      html += '<div class="tk-card" id="card-' + p.id + '" style="background:var(--cream);border:1.5px solid var(--divider);border-radius:8px;margin-bottom:12px;overflow:hidden;">'
+      html += '<div class="tk-card' + (p.id === editCardId ? ' editing' : '') + '" id="card-' + p.id + '" style="background:var(--cream);border:1.5px solid var(--divider);border-radius:8px;margin-bottom:12px;overflow:hidden;">'
 
         // ── TOP BAR: pod, plant, date, sprouted, actions ──
         + '<div class="tk-top" style="display:flex;align-items:center;gap:10px;padding:8px 12px;background:#dcecd4;flex-wrap:wrap;">'
           + '<span style="font-size:0.7rem;color:var(--muted);font-family:Jost,sans-serif;text-transform:uppercase;letter-spacing:0.1em;">Pod</span>'
-          + '<input type="text" value="' + p.pod + '" onchange="editField(' + p.id + ',\'pod\',this.value)" style="width:30px;border:none;background:transparent;font-size:0.85rem;font-weight:600;color:var(--ink);text-align:center;">'
+          + (p.id === editCardId
+              ? '<button class="pod-move-btn" onclick="openMovePlant(' + p.id + ')" title="Move to another pod">' + ((p.pod && p.pod !== '—') ? p.pod : '+') + '</button>'
+              : '<span style="font-size:0.85rem;font-weight:600;color:var(--ink);min-width:18px;text-align:center;display:inline-block;">' + (p.pod || '—') + '</span>')
           + '<span style="color:var(--divider);">|</span>'
           + '<select onchange="editField(' + p.id + ',\'name\',this.value)" style="border:none;background:transparent;font-size:0.9rem;font-weight:600;color:var(--ink);cursor:pointer;max-width:180px;">'
             + plantOpts
@@ -5463,7 +5406,7 @@
           + '<span style="color:var(--divider);">|</span>'
           + sproutedBtn
           + '<span style="margin-left:auto;display:flex;gap:6px;">'
-            + '<button class="edit-btn" onclick="doEditPlant(' + p.id + ')">✎ Edit</button>'
+            + '<button class="edit-btn" onclick="toggleCardEdit(' + p.id + ')">' + (p.id === editCardId ? '✓ Done' : '✎ Edit') + '</button>'
             + '<button class="archive-btn" onclick="doArchivePlant(' + p.id + ')" title="Archive — keep this plant in memory but hide it from the active tracker">⌗ Archive</button>'
             + '<button class="del-btn" onclick="doRemovePlant(' + p.id + ')">✕</button>'
           + '</span>'
@@ -5492,8 +5435,10 @@
 
           // Row 2: dates
           + '<div class="tk-cell" style="padding:8px 12px;border-right:1px solid var(--divider);border-bottom:1px solid var(--divider);">'
-            + '<span style="' + lbl + '">Expected Sprout</span>'
-            + '<span style="' + valm + '">' + fmtDate(sproutDate) + '</span>'
+            + '<span style="' + lbl + '">' + (p.sprouted === 'Yes' ? 'Sprout Date' : 'Expected Sprout') + '</span>'
+            + '<span style="' + valm + '">' + ((p.id === editCardId && p.sprouted === 'Yes')
+                ? '<input type="date" value="' + (p.sproutedOn || '') + '" onchange="editField(' + p.id + ',\'sproutedOn\',this.value)" style="' + valm + '">'
+                : ((p.sprouted === 'Yes' && p.sproutedOn) ? fmtDate(new Date(p.sproutedOn + 'T12:00:00')) : fmtDate(sproutDate))) + '</span>'
           + '</div>'
           + '<div class="tk-cell" style="padding:8px 12px;border-right:1px solid var(--divider);border-bottom:1px solid var(--divider);">'
             + '<span style="' + lbl + '">1st Harvest</span>'
@@ -5543,14 +5488,45 @@
     if (typeof updateSowDisplay === 'function') updateSowDisplay();
   }
 
+  // Sync a tower pod dropdown to a plant name (''/no-match clears it). Keeps tower ↔ ledger aligned.
+  function setPodSelect(n, name) {
+    var ls = document.getElementById('pod-' + n); if (!ls) return;
+    var match = '';
+    if (name) { for (var i = 0; i < ls.options.length; i++) { if (ls.options[i].value === name) { match = name; break; } } }
+    ls.value = match;
+    ls.classList.toggle('pod-filled', !!match);
+    if (typeof layoutData !== 'undefined') layoutData['pod-' + n] = match;
+  }
+  // Ledger "move plant": open the tower pod picker (occupied pods greyed) and relocate on pick.
+  function openMovePlant(id) {
+    var p = null; trackerPlants.forEach(function(t){ if (t.id === id) p = t; });
+    if (!p || typeof window.__spMovePlant !== 'function') return;
+    window.__spMovePlant(p.name, p.pod, function(pod) {
+      var oldN = parseInt(p.pod, 10);
+      if (oldN >= 1 && oldN <= 30 && oldN !== pod) setPodSelect(oldN, '');
+      p.pod = String(pod);
+      setPodSelect(pod, p.name);
+      renderTracker();
+      if (typeof autosave === 'function') autosave();
+    });
+  }
   function editField(id, field, value) {
     trackerPlants.forEach(function(p) {
       if (p.id !== id) return;
+      var oldPod = parseInt(p.pod, 10);
       p[field] = value;
       if (field === 'name' && PLANT_DATA[value]) {
         var d = PLANT_DATA[value];
         p.s2sp = d.s2sp; p.sp2h = d.sp2h; p.gf = d.gf;
         p.thin = d.thin; p.ph = d.ph; p.light = d.light; p.pets = d.pets;
+      }
+      // keep the tower layout in sync with ledger edits
+      if (field === 'pod') {
+        if (oldPod >= 1 && oldPod <= 30) setPodSelect(oldPod, '');
+        var newPod = parseInt(value, 10);
+        if (newPod >= 1 && newPod <= 30) setPodSelect(newPod, p.name);
+      } else if (field === 'name' && oldPod >= 1 && oldPod <= 30) {
+        setPodSelect(oldPod, p.name);
       }
     });
     renderTracker();
@@ -5571,7 +5547,7 @@
 <div class="footer">
     <div class="footer-ornament">🌿</div>
     <p style="margin-top:6px; font-size:0.8rem;">Water. Light. Patience.</p>
-    <p style="margin-top:10px; font-size:1rem; font-family:'Papyrus',fantasy; color:var(--moss);">Enjoy Your Journey</p>
+    <p style="margin-top:10px; font-size:1rem; font-family:'Cormorant Garamond', serif; color:var(--moss);">Enjoy Your Journey</p>
     <p style="margin-top:8px; margin-bottom:40px; font-size:0.75rem; color:var(--muted);">Created by Henry Glover with help from Claude and foundational work from Taylor Brewer.</p>
   </div>
 
@@ -5586,6 +5562,24 @@
       <p style="font-family:'Jost',sans-serif;color:var(--muted);font-size:0.9rem;line-height:1.7;">
         Settings are coming soon. This is where you will be able to adjust preferences for your Thryve tracker.
       </p>
+    </div>
+  </div>
+</div>
+
+<!-- ADD-DETAILS MODAL — captures date/qty/sprouted/notes when a plant is placed on the Tower -->
+<div id="pod-details-overlay" class="settings-overlay" onclick="if(event.target===this)cancelPodDetails()">
+  <div class="settings-modal" onclick="event.stopPropagation()">
+    <button class="settings-close" onclick="cancelPodDetails()" aria-label="Close">&times;</button>
+    <div class="settings-title">Add to Pod <span id="pd-pod"></span></div>
+    <div class="settings-body">
+      <div id="pd-plant" style="font-size:1rem;font-weight:600;color:var(--moss);margin:0 0 16px;font-family:'Jost',sans-serif;"></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+        <div><label class="pd-lbl">Date Planted</label><input id="pd-date" type="date" class="pd-inp"></div>
+        <div><label class="pd-lbl">Seed Quantity</label><input id="pd-qty" type="number" min="1" max="30" value="1" class="pd-inp"></div>
+        <div><label class="pd-lbl">Sprouted?</label><select id="pd-sprouted" class="pd-inp"><option value="No">No</option><option value="Yes">Yes</option></select></div>
+        <div><label class="pd-lbl">Notes</label><input id="pd-notes" type="text" class="pd-inp" placeholder="optional"></div>
+      </div>
+      <button onclick="confirmPodDetails()" style="width:100%;margin-top:20px;padding:13px;background:var(--btn-green);color:#fff;border:none;border-radius:8px;font-family:'Jost',sans-serif;font-size:0.74rem;letter-spacing:0.12em;text-transform:uppercase;cursor:pointer;">Add Plant</button>
     </div>
   </div>
 </div>
@@ -5652,11 +5646,9 @@ const TASKS = [
 let view = startOfMonth(new Date());
 let scrub = 0;   // days the visible day-window is panned from its default frame (drag the date strip)
 
-const DEV_SOW = '2026-04-23';   // WEED: #1 forces a fixed Start-of-Watering so the grid is populated
 function bdSow(){
-  return new Date(DEV_SOW + 'T12:00:00');   // WEED: #1 ignore app sowDate. Pull: restore the two lines below.
-  // if (typeof sowDate === 'string' && sowDate) return new Date(sowDate + 'T12:00:00');
-  // return new Date(Date.now() - 42*DAY);   // fall back to ~6 weeks ago if start-of-watering unset
+  if (typeof sowDate === 'string' && sowDate) return new Date(sowDate + 'T12:00:00');
+  return new Date(Date.now() - 42*DAY);   // fall back to ~6 weeks ago if start-of-watering unset
 }
 function doneMap(){ if (!taskData || typeof taskData !== 'object') taskData = {}; return taskData; }
 function isDone(id,date){ const a = doneMap()[iso(date)]; return !!a && a.indexOf(id) >= 0; }
@@ -5907,7 +5899,7 @@ function renderCards(){
   const wrap=document.getElementById('cards'); if(!wrap) return;
   const today=startOfDay(new Date());
   const due=TASKS.filter(function(t){ return isDue(t,today); });   // all of today's tasks — completed ones stay, just go green
-  wrap.innerHTML = due.length ? due.map(cardHTML).join('') : '<p class="nocards">Nothing due today — enjoy the day off.</p>';
+  wrap.innerHTML = due.length ? due.map(cardHTML).join('') : '<p class="nocards">No tasks today</p>';
   wrap.querySelectorAll('.rc-check').forEach(function(el){
     el.onclick=function(){ toggleDone(el.getAttribute('data-id'), today); render(); };   // re-render grid (today squares) + cards
   });
@@ -5964,7 +5956,7 @@ window.__bdRender = render;
   var trays=[], sprouts=[];   // sprouts = seedlings living in tray cells
 
   /* persistence bridge to the app's unified state */
-  window.__sproutSave=function(){ return { trays:trays, sprouts:sprouts.filter(function(s){return !s.removed;}) }; };
+  window.__sproutSave=function(){ return { trays:trays.filter(function(t){return !t.removed;}), sprouts:sprouts.filter(function(s){return !s.removed;}) }; };
   window.__sproutLoad=function(state){
     trays=(state&&state.trays)||[]; sprouts=(state&&state.sprouts)||[];
     trays.forEach(function(t){ if(t.type==='gardyn'){ t.rows=GARDYN.rows; t.cols=GARDYN.cols; } });
@@ -6018,7 +6010,16 @@ window.__bdRender = render;
   function addTray(type,rows,cols,name){ var n=trays.filter(function(t){return t.type===type;}).length+1;
     trays.push({ id:uid(), type:type, rows:rows, cols:cols, name:(name&&name.trim())||(type==='gardyn'?'Gardyn Nursery'+(n>1?' '+n:''):'Custom Tray '+n) });
     save(); renderTrays(); }
-  window.__spRemoveTray=function(id){ trays=trays.filter(function(t){return t.id!==id;}); sprouts=sprouts.filter(function(s){return s.trayId!==id;}); save(); renderTrays(); renderCards(); };
+  window.__spRemoveTray=function(id){ var el=document.getElementById('tray-'+id), t=null;
+    for(var i=0;i<trays.length;i++){ if(trays[i].id===id){ t=trays[i]; break; } }
+    if(!t) return;
+    t.remH=el?el.offsetHeight:0; t.removed=true;
+    sprouts.forEach(function(s){ if(s.trayId===id && !s.removed){ s.removed=true; s.byTray=id; } });
+    save(); renderTrays(); renderCards(); };
+  window.__spUndoTray=function(id){
+    for(var i=0;i<trays.length;i++){ if(trays[i].id===id){ delete trays[i].removed; delete trays[i].remH; break; } }
+    sprouts.forEach(function(s){ if(s.byTray===id){ delete s.removed; delete s.byTray; } });
+    save(); renderTrays(); renderCards(); };
   window.__spRenameTray=function(span,id){ var cur=span.textContent; var inp=document.createElement('input'); inp.value=cur; inp.className='sp-name-edit';
     inp.onkeydown=function(e){ if(e.key==='Enter')inp.blur(); else if(e.key==='Escape'){inp.value=cur;inp.blur();} };
     inp.onblur=function(){ var v=(inp.value||cur).trim(); trays.forEach(function(t){ if(t.id===id&&v) t.name=v; }); save(); renderTrays(); };
@@ -6031,6 +6032,11 @@ window.__bdRender = render;
     if(s){ s.name=val; } else sprouts.push({ id:uid(), name:val, date:isoToday(), seeds:6, sprouted:'No', trayId:tid, r:r, c:c });
     save(); renderTrays(); renderCards();
   };
+  /* tray cell remove: tap the X to ask, tap "Remove plant?" to confirm; tapping elsewhere cancels */
+  window.__spCellAskRemove=function(btn,id){ var cell=btn.closest('.sp-cell'); if(!cell) return;
+    cell.innerHTML='<button class="sp-cell-confirm" onclick="event.stopPropagation();window.__spCellDelete(\''+id+'\')">Remove plant?</button>';
+    setTimeout(function(){ function onDoc(e){ if(cell.contains(e.target)) return; document.removeEventListener('click',onDoc,true); renderTrays(); } document.addEventListener('click',onDoc,true); },0); };
+  window.__spCellDelete=function(id){ sprouts=sprouts.filter(function(s){return s.id!==id;}); save(); renderTrays(); renderCards(); };
   window.__spSeeds=function(span,id){ var s=byId(id); if(!s) return; var inp=document.createElement('input'); inp.type='number'; inp.min='1'; inp.max='99'; inp.value=s.seeds||1; inp.className='sp-seeds-edit';
     inp.onclick=function(e){ e.stopPropagation(); }; inp.onkeydown=function(e){ if(e.key==='Enter')inp.blur(); };
     inp.onblur=function(){ s.seeds=Math.max(1,+inp.value||1); save(); renderTrays(); renderCards(); }; span.replaceWith(inp); inp.focus(); inp.select(); };
@@ -6038,14 +6044,71 @@ window.__bdRender = render;
   window.__spDate=function(id,v){ var s=byId(id); if(s){ s.date=v; save(); renderTrays(); renderCards(); } };
   window.__spName=function(id,v){ var s=byId(id); if(s){ s.name=v; save(); renderTrays(); renderCards(); } };
   window.__spRemove=function(id){ var el=document.getElementById('spc-'+id), s=byId(id); if(s){ s.remH=el?el.offsetHeight:0; s.removed=true; save(); renderTrays(); renderCards(); } };
-  window.__spUndo=function(id){ var s=byId(id); if(s){ delete s.removed; save(); renderTrays(); renderCards(); } };
-  window.__spTransplant=function(id){ var s=byId(id); if(!s) return; var pod=parseInt(prompt('Transplant '+s.name+' to which pod? (1-30)'),10);
-    if(!pod||pod<1||pod>30){ return; }
+  window.__spUndo=function(id){ var s=byId(id); if(s){
+    if(s.transplanted){
+      if(s.tpPlantId!=null && typeof trackerPlants!=='undefined'){
+        for(var i=trackerPlants.length-1;i>=0;i--){ if(trackerPlants[i].id===s.tpPlantId) trackerPlants.splice(i,1); }
+        if(typeof renderTracker==='function') renderTracker();
+      }
+      var sel=document.getElementById('pod-'+s.tpPod);
+      if(sel && sel.value===s.name){ sel.value=''; sel.classList.remove('pod-filled'); if(typeof layoutData!=='undefined') layoutData[sel.id]=''; }
+    }
+    delete s.removed; delete s.transplanted; delete s.tpPod; delete s.tpPlantId;
+    save(); renderTrays(); renderCards(); } };
+  /* zone colours: sw = exact swatch from transplant_tower.svg (legend + ring), c = darker readable label text. yellow = low, orange = med, red = high light */
+  var TP_ZONE={ low:{name:'Yellow',sw:'#f8d366',c:'#c08f12'}, medium:{name:'Orange',sw:'#ffc087',c:'#d97a2b'}, high:{name:'Red',sw:'#c2492a',c:'#c2492a'} };
+  /* read a pod's recommended light zone straight from its existing <select> optgroups */
+  function tpPodZone(n){ var sel=document.getElementById('pod-'+n); if(!sel) return 'medium';
+    var ogs=sel.getElementsByTagName('optgroup');
+    for(var i=0;i<ogs.length;i++){ var l=ogs[i].label||''; if(l.indexOf('Recommended')>=0){
+      if(l.indexOf('Low')>=0) return 'low'; if(l.indexOf('Medium')>=0) return 'medium'; if(l.indexOf('High')>=0) return 'high'; } }
+    return 'medium'; }
+  /* occupancy from the live layout selects + any tracker plant already assigned to a pod */
+  function tpOccupied(){ var set={};
+    for(var n=1;n<=30;n++){ var sel=document.getElementById('pod-'+n); if(sel&&sel.value) set[n]=sel.value; }
+    if(typeof trackerPlants!=='undefined'){ trackerPlants.forEach(function(p){ if(p.pod&&!p.removed&&!p.archived){
+      var n=parseInt(p.pod,10); if(n>=1&&n<=30&&!set[n]) set[n]=p.name; } }); }
+    return set; }
+
+  /* pod-number centre positions as % of the tower artwork (transplant_tower.svg), measured from the .ai */
+  /* exact pill-marker centres as % of transplant_tower.svg, measured from the .ai shapes (Rectangle 1*) */
+  var TP_XY={
+    1:[19.11,9.57],2:[7.55,17.59],3:[19.01,25.0],4:[7.55,32.91],5:[19.11,39.18],6:[7.45,47.09],7:[19.01,54.61],8:[7.55,62.52],9:[19.01,69.67],10:[7.55,77.56],
+    11:[54.28,9.57],12:[42.99,17.42],13:[54.17,25.0],14:[43.09,32.84],15:[54.28,39.18],16:[42.99,47.03],17:[54.17,54.61],18:[43.09,62.45],19:[54.17,69.67],20:[43.09,77.5],
+    21:[89.55,9.57],22:[78.37,17.19],23:[89.45,25.0],24:[78.47,32.61],25:[89.55,39.18],26:[78.37,46.8],27:[89.45,54.61],28:[78.47,62.22],29:[89.45,69.67],30:[78.47,77.27]
+  };
+  var TP_DX=0, TP_DY=0;
+  /* generic pod picker. opts={plantName,title,currentPod,onPick(pod)} — occupied pods (except the current one) are greyed/disabled */
+  window.__spPodPicker=function(opts){
+    var name=opts.plantName||'', light=pd(name).light||'medium', z=TP_ZONE[light]||TP_ZONE.medium, occ=tpOccupied(), spots='';
+    var cur=(opts.currentPod!=null && opts.currentPod!=='') ? parseInt(opts.currentPod,10) : null;
+    window.__spPickPod=function(n){ close(); if(typeof opts.onPick==='function') opts.onPick(n); };
+    for(var n=1;n<=30;n++){ var xy=TP_XY[n]; if(!xy) continue; var pz=tpPodZone(n), zc=TP_ZONE[pz], rec=(pz===light), isCur=(cur===n), pos='left:'+(xy[0]+TP_DX)+'%;top:'+(xy[1]+TP_DY)+'%;';
+      if(occ[n] && !isCur){ spots+='<button class="tp-spot taken" disabled style="'+pos+'" title="Pod '+n+' — '+occ[n]+'"></button>'; }
+      else { spots+='<button class="tp-spot'+(rec?' rec':'')+(isCur?' current':'')+'" style="'+pos+(rec?'border-color:'+zc.sw+';':'')+'" onclick="window.__spPickPod('+n+')" title="Pod '+n+(isCur?' (current)':'')+'"></button>'; } }
+    open('<div class="spm-head"><button class="spm-x" onclick="window.__spClose()">×</button>'+(opts.title||'Choose a pod')+'</div>'+
+      '<p class="tp-rec"><b>'+name+'</b> &mdash; recommended <span style="color:'+z.c+';">'+z.name+' zone</span></p>'+
+      '<div class="tp-legend"><span><i style="background:'+TP_ZONE.low.sw+';"></i>Yellow &middot; low</span><span><i style="background:'+TP_ZONE.medium.sw+';"></i>Orange &middot; med</span><span><i style="background:'+TP_ZONE.high.sw+';"></i>Red &middot; high</span><span><i class="tk"></i>Occupied</span></div>'+
+      '<div class="tp-art"><div class="tp-imgwrap"><img src="transplant_tower.svg" alt="Gardyn tower pods">'+spots+'</div></div>');
+  };
+  window.__spTransplant=function(id){ var s=byId(id); if(!s) return;
+    window.__spPodPicker({ plantName:s.name, title:'Transplant to a pod', currentPod:null, onPick:function(pod){ window.__spDoTransplant(id,pod); } }); };
+  /* moving an existing tracker plant to another pod — called from the ledger card */
+  window.__spMovePlant=function(plantName,currentPod,onPick){
+    window.__spPodPicker({ plantName:plantName, title:'Move plant to a pod', currentPod:currentPod, onPick:onPick }); };
+  window.__spDoTransplant=function(id,pod){ var s=byId(id); if(!s) return;
+    var el=document.getElementById('spc-'+id); s.remH=el?el.offsetHeight:0;
+    var newId=null;
     if(typeof trackerPlants!=='undefined'){ var d=pd(s.name);
-      trackerPlants.push({ id:Date.now()+Math.random(), name:s.name, date:isoToday(), qty:s.seeds||1, pod:pod, notes:'', sprouted:'Yes',
+      newId=Date.now()+Math.random();
+      trackerPlants.push({ id:newId, name:s.name, date:(s.date||isoToday()), qty:s.seeds||1, pod:String(pod), notes:'', sprouted:'Yes', sproutedOn:(s.sproutedOn||isoToday()), fromLayout:true,
         s2sp:d.s2sp,sp2h:d.sp2h,gf:d.gf,thin:d.thin,ph:d.ph,light:d.light,pets:d.pets });
       if(typeof renderTracker==='function') renderTracker(); }
-    s.removed=true; save(); renderTrays(); renderCards();
+    /* reflect in the tower layout so the pod shows filled (only if the plant is an option there) */
+    var sel=document.getElementById('pod-'+pod);
+    if(sel){ for(var i=0;i<sel.options.length;i++){ if(sel.options[i].value===s.name){
+      sel.value=s.name; sel.classList.add('pod-filled'); if(typeof layoutData!=='undefined') layoutData[sel.id]=s.name; break; } } }
+    s.transplanted=true; s.tpPod=pod; s.tpPlantId=newId; s.removed=true; close(); save(); renderTrays(); renderCards();
   };
 
   function openCustom(tid,r,c){
@@ -6072,8 +6135,12 @@ window.__bdRender = render;
   function renderTrays(){
     var wrap=document.getElementById('sprout-trays'); if(!wrap) return; var html='';
     trays.forEach(function(tray){
+      if(tray.removed){
+        html+='<div class="sp-tomb sp-tray-tomb" style="min-height:'+(tray.remH||0)+'px"><span class="acc"></span><div class="sp-tb"><div class="eb">Sprout Tray</div><div class="hl">'+tray.name+' <span>removed</span></div><div class="ph">Won\'t be saved &mdash; undo to keep it.</div></div><button class="sp-undo" onclick="window.__spUndoTray(\''+tray.id+'\')">Undo</button></div>';
+        return;
+      }
       var seeded=sprouts.filter(function(s){return !s.removed&&s.trayId===tray.id;}).length;
-      html+='<div class="sp-wrap"><div class="sp-tray-head">'+
+      html+='<div class="sp-wrap" id="tray-'+tray.id+'"><div class="sp-tray-head">'+
         '<span class="sp-tray-name" onclick="window.__spRenameTray(this,\''+tray.id+'\')" title="Tap to rename">'+tray.name+'</span>'+
         '<span class="sp-tray-right"><span class="sp-tray-meta">'+tray.rows+' × '+tray.cols+' · '+seeded+' seeded</span>'+
         '<button class="sp-del" onclick="window.__spRemoveTray(\''+tray.id+'\')">Remove</button></span></div>'+
@@ -6081,25 +6148,32 @@ window.__bdRender = render;
       for(var r=0;r<tray.rows;r++) for(var c=0;c<tray.cols;c++){
         var s=inCell(tray.id,r,c); var col=s?hashColor(s.name):null;
         html+='<div class="sp-cell'+(s?' full':'')+'"'+(s?' style="background:'+tint(col,.28)+';border-color:'+col+'"':'')+'>'+
+          ((s&&s.sprouted==='Yes')?'<button class="sp-cell-tp" title="Transplant to tower" onclick="event.stopPropagation();window.__spTransplant(\''+s.id+'\')">&#9650;</button>':'')+
           '<select class="sp-cell-sel" onchange="window.__spCellPick(\''+tray.id+'\','+r+','+c+',this.value)">'+
             '<option value="">'+(s?'':'＋')+'</option>'+opts(s?s.name:'')+'<option value="__custom__">＋ Custom…</option></select>'+
           (s?'<span class="sp-d">day '+daysSince(s.date)+'</span>'+
              '<button class="sp-cell-sprout'+(s.sprouted==='Yes'?' on':'')+'" onclick="event.stopPropagation();window.__spSprout(\''+s.id+'\')">'+(s.sprouted==='Yes'?'Sprouted':'Not sprouted')+'</button>'+
-             '<span class="sp-cell-seeds" onclick="event.stopPropagation();window.__spSeeds(this,\''+s.id+'\')">'+(s.seeds||1)+' seeds</span>':'')+
+             '<span class="sp-cell-seeds" onclick="event.stopPropagation();window.__spSeeds(this,\''+s.id+'\')">'+(s.seeds||1)+' seeds</span>'+
+             '<button class="sp-cell-x" title="Remove plant" onclick="event.stopPropagation();window.__spCellAskRemove(this,\''+s.id+'\')">&times;</button>':'')+
         '</div>';
       }
       html+='</div></div></div>';
     });
-    wrap.innerHTML=html;
+    /* transplant notifications (with Undo) for sprouts moved to the tower from a tray cell */
+    var banners='';
+    sprouts.filter(function(s){return s.removed && s.transplanted;}).forEach(function(s){
+      banners+='<div class="sp-tomb sp-tp sp-tray-tomb"><span class="acc"></span><div class="sp-tb"><div class="eb">Transplanted</div><div class="hl">'+s.name+' <span>&rarr; Pod '+s.tpPod+'</span></div><div class="ph">Moved to the tower &mdash; undo to keep it in the tray.</div></div><button class="sp-undo" onclick="window.__spUndo(\''+s.id+'\')">Undo</button></div>';
+    });
+    wrap.innerHTML=banners+html;
   }
 
   /* ---- render: sprout recipe cards in the Ledger collapsible ---- */
   function renderCards(){
     var wrap=document.getElementById('sprout-cards'); if(!wrap) return;
-    var sum=document.getElementById('sprout-summary'); var det=document.getElementById('sprout-details');
+    var sum=document.getElementById('sprout-summary');
     var live=sprouts.filter(function(s){return s.loc!=='pod';}).sort(function(a,b){return a.date<b.date?1:-1;});
     var liveCount=live.filter(function(s){return !s.removed;}).length;
-    if(sum) sum.textContent=(det&&det.open?'▾':'▸')+' Sprouts ('+liveCount+')';
+    if(sum) sum.textContent='Sprouts ('+liveCount+')';
     var lbl="font-family:Jost,sans-serif;font-size:0.48rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:2px;";
     var val="font-size:0.82rem;color:var(--ink);", valm="font-size:0.78rem;color:var(--muted);";
     function gc(i,t,label,vs,vh){ var col=i%4,row=Math.floor(i/4),lr=Math.floor((t-1)/4),b=''; if(col<3)b+='border-right:1px solid var(--divider);'; if(row<lr)b+='border-bottom:1px solid var(--divider);';
@@ -6109,7 +6183,9 @@ window.__bdRender = render;
     live.forEach(function(s){
       var d=pd(s.name), s2sp=d.s2sp||7, age=daysSince(s.date);
       var ldot=d.light==='high'?'#e8a020':d.light==='medium'?'#6aaa50':'#5a8abf', pc=d.pets==='Safe'?'#2d6a2d':'#b85c38';
-      if(s.removed){ html+='<div class="sp-tomb" style="min-height:'+(s.remH||0)+'px"><span class="acc"></span><div class="sp-tb"><div class="eb">'+trayName(s.trayId)+' · R'+(s.r+1)+' C'+(s.c+1)+'</div><div class="hl">'+s.name+' <span>removed</span></div><div class="ph">Won\'t be saved — undo to keep it.</div></div><button class="sp-undo" onclick="window.__spUndo(\''+s.id+'\')">Undo</button></div>'; return; }
+      if(s.removed){
+        if(s.transplanted){ html+='<div class="sp-tomb sp-tp" style="min-height:'+(s.remH||0)+'px"><span class="acc"></span><div class="sp-tb"><div class="eb">'+trayName(s.trayId)+' · R'+(s.r+1)+' C'+(s.c+1)+'</div><div class="hl">'+s.name+' <span>&rarr; Pod '+s.tpPod+'</span></div><div class="ph">Moved to the tracker &mdash; undo to keep it in the tray.</div></div><button class="sp-undo" onclick="window.__spUndo(\''+s.id+'\')">Undo</button></div>'; return; }
+        html+='<div class="sp-tomb" style="min-height:'+(s.remH||0)+'px"><span class="acc"></span><div class="sp-tb"><div class="eb">'+trayName(s.trayId)+' · R'+(s.r+1)+' C'+(s.c+1)+'</div><div class="hl">'+s.name+' <span>removed</span></div><div class="ph">Won\'t be saved — undo to keep it.</div></div><button class="sp-undo" onclick="window.__spUndo(\''+s.id+'\')">Undo</button></div>'; return; }
       var sb = s.sprouted==='Yes'
         ? '<button onclick="window.__spSprout(\''+s.id+'\')" style="background:#d0f0d0;color:#2d6a2d;border:none;border-radius:3px;padding:2px 9px;font-size:0.7rem;cursor:pointer;white-space:nowrap;font-family:Jost,sans-serif;">Sprouted</button>'
         : '<button onclick="window.__spSprout(\''+s.id+'\')" style="background:#f5edda;color:#c4962a;border:none;border-radius:3px;padding:2px 9px;font-size:0.7rem;cursor:pointer;white-space:nowrap;font-family:Jost,sans-serif;">Not Sprouted</button>';
@@ -6144,12 +6220,13 @@ window.__bdRender = render;
   window.__spNotes=function(id,v){ var s=byId(id); if(s){ s.notes=v; save(); } };
 
   /* keep the collapsible arrow in sync */
-  document.addEventListener('DOMContentLoaded',function(){ var det=document.getElementById('sprout-details'); if(det) det.addEventListener('toggle',renderCards); renderTrays(); renderCards(); });
+  document.addEventListener('DOMContentLoaded',function(){ if(window.__sproutState){ window.__sproutLoad(window.__sproutState); } else { renderTrays(); renderCards(); } });
 
   /* scoped CSS */
   var css=document.createElement('style'); css.textContent=
     '#sprout-trays{margin:14px 0 6px;}'+
     '.sp-wrap{margin-bottom:18px;}'+
+    '.sp-tray-tomb{margin-bottom:18px;}'+
     '.sp-tray-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0 4px 8px;}'+
     '.sp-tray-name{font-weight:700;font-size:.92rem;color:#2f4a38;cursor:text;}'+
     '.sp-tray-name:hover{text-decoration:underline dotted;text-underline-offset:3px;}'+
@@ -6163,7 +6240,12 @@ window.__bdRender = render;
     '.sp-tray.gardyn{background:#fff;border-color:var(--divider);}'+
     '.sp-grid{display:grid;gap:8px;}'+
     '.sp-tray.gardyn .sp-grid{max-width:560px;margin:0 auto;gap:10px;}'+
-    '.sp-cell{aspect-ratio:1;border-radius:8px;border:1.5px dashed var(--divider);background:var(--cream);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;overflow:hidden;padding:3px;text-align:center;}'+
+    '.sp-cell{position:relative;aspect-ratio:1;border-radius:8px;border:1.5px dashed var(--divider);background:var(--cream);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;overflow:hidden;padding:3px;text-align:center;}'+
+    '.sp-cell-tp{position:absolute;top:0;left:50%;transform:translateX(-50%);border:none;background:transparent;color:#2d6a2d;font-size:.62rem;line-height:1;cursor:pointer;padding:1px 6px;opacity:.85;transition:opacity .12s ease,transform .12s ease;}'+
+    '.sp-cell-tp:hover{opacity:1;transform:translateX(-50%) translateY(-1px);}'+
+    '.sp-cell-x{position:absolute;bottom:-1px;left:50%;transform:translateX(-50%);border:none;background:transparent;color:#b85c38;font-size:.82rem;line-height:1;cursor:pointer;padding:0 6px;opacity:.5;transition:opacity .12s ease;}'+
+    '.sp-cell-x:hover{opacity:1;}'+
+    '.sp-cell-confirm{font-family:Jost,sans-serif;font-size:.5rem;font-weight:700;color:#fff;background:#b85c38;border:none;border-radius:5px;padding:4px 6px;cursor:pointer;line-height:1.15;white-space:normal;}'+
     '.sp-tray.gardyn .sp-cell{border-radius:50%;}'+
     '.sp-cell.full{border-style:solid;border-color:transparent;}'+
     '.sp-cell-sel{appearance:none;-webkit-appearance:none;width:100%;border:none;background:transparent;font-family:Jost,sans-serif;font-size:.6rem;font-weight:700;color:#16361a;text-align:center;text-align-last:center;cursor:pointer;padding:0;line-height:1.05;}'+
@@ -6180,6 +6262,21 @@ window.__bdRender = render;
     '.sp-tomb .hl{font-size:1.2rem;color:var(--ink);font-weight:700;line-height:1.15;}'+
     '.sp-tomb .hl span{color:var(--muted);font-weight:500;}'+
     '.sp-tomb .ph{font-size:.85rem;font-style:italic;margin-top:5px;color:#b85c38;}'+
+    '.sp-tp .acc{background:#2e7d68;}'+
+    '.sp-tp .ph{color:#2e7d68;}'+
+    '.tp-rec{font-size:.92rem;color:var(--ink);margin:2px 0 12px;text-align:center;}'+
+    '.tp-legend{display:flex;justify-content:center;flex-wrap:wrap;gap:12px;font-size:.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:14px;}'+
+    '.tp-legend span{display:flex;align-items:center;gap:5px;}'+
+    '.tp-legend i{width:11px;height:11px;border-radius:3px;display:inline-block;}'+
+    '.tp-legend i.tk{background:#a7a59a;}'+
+    '.tp-art{max-width:320px;margin:4px auto 0;}'+
+    '.tp-imgwrap{position:relative;width:100%;padding-bottom:160.16%;}'+
+    '.tp-imgwrap img{position:absolute;inset:0;width:100%;height:100%;object-fit:fill;pointer-events:none;}'+
+    '.tp-spot{position:absolute;transform:translate(-50%,-50%);width:8.4%;height:3.72%;border-radius:999px;border:2.5px solid transparent;background:transparent;padding:0;cursor:pointer;transition:border-color .12s ease,background .12s ease,box-shadow .12s ease;}'+
+    '.tp-spot:hover:not(:disabled){border-color:#2e7d68;background:rgba(46,125,104,.14);box-shadow:0 0 0 3px rgba(46,125,104,.16);}'+
+    '.tp-spot.rec{box-shadow:0 0 7px rgba(0,0,0,.22);}'+
+    '.tp-spot.taken{background:rgba(120,118,108,.62);border-color:transparent;cursor:not-allowed;}'+
+    '.tp-spot.current{border-color:#2a6496 !important;box-shadow:0 0 0 2px rgba(42,100,150,.3);}'+
     '.sp-undo{background:#e2f1ec;border:1px solid #78b39c;color:#2e7d68;cursor:pointer;font-size:.66rem;letter-spacing:.06em;text-transform:uppercase;font-weight:700;padding:7px 12px;border-radius:8px;white-space:nowrap;font-family:Jost,sans-serif;}'+
     '.spm{position:fixed;inset:0;background:rgba(15,26,15,.42);display:none;align-items:flex-end;justify-content:center;z-index:1000;}'+
     '.spm.open{display:flex;}'+
@@ -6195,8 +6292,7 @@ window.__bdRender = render;
     '.spm-actions{display:flex;gap:8px;margin-top:16px;}'+
     '.spm-btn{font-family:Jost,sans-serif;font-weight:700;font-size:.72rem;letter-spacing:.05em;text-transform:uppercase;background:#78b39c;color:#fff;border:2px solid #54ac9b;border-radius:10px;padding:14px 14px;cursor:pointer;}'+
     '.spm-btn.ghost{background:transparent;color:var(--muted);border-color:var(--divider);}'+
-    '.spm-btn span{font-weight:400;font-size:.6rem;}'+
-    '#sprout-details summary::-webkit-details-marker{display:none;}';
+    '.spm-btn span{font-weight:400;font-size:.6rem;}';
   document.head.appendChild(css);
 })();
 </script>
