@@ -1,0 +1,531 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 365.22 584.92">
+  <g id="Rectangle_3" data-name="Rectangle 3" isolation="isolate">
+    <g id="Rectangle_3-2" data-name="Rectangle 3">
+      <rect x=".57" y="492.16" width="364.09" height="92.26" rx="16.03" ry="16.03" fill="#fff"/>
+      <rect x=".57" y="492.16" width="364.09" height="92.26" rx="16.03" ry="16.03" fill="none" stroke="#454545" stroke-miterlimit="100"/>
+    </g>
+  </g>
+  <g id="Rectangle_3-3" data-name="Rectangle 3" isolation="isolate">
+    <g id="Rectangle_3-4" data-name="Rectangle 3">
+      <path d="M348.5,491.44H16.53c-8.85,0-16.03,7.18-16.03,16.03s7.18,16.03,16.03,16.03h331.97c8.85,0,16.03-7.18,16.03-16.03s-7.18-16.03-16.03-16.03Z" fill="none" stroke="#454545" stroke-miterlimit="100"/>
+    </g>
+  </g>
+  <g id="Rectangle_3-5" data-name="Rectangle 3" isolation="isolate">
+    <g id="Rectangle_3-6" data-name="Rectangle 3">
+      <path d="M348.69,486.84H16.72c-8.85,0-16.03,7.18-16.03,16.03s7.18,16.03,16.03,16.03h331.97c8.85,0,16.03-7.18,16.03-16.03s-7.18-16.03-16.03-16.03Z" fill="#fff" fill-rule="evenodd"/>
+      <path d="M348.69,486.84H16.72c-8.85,0-16.03,7.18-16.03,16.03s7.18,16.03,16.03,16.03h331.97c8.85,0,16.03-7.18,16.03-16.03s-7.18-16.03-16.03-16.03Z" fill="none" stroke="#454545" stroke-miterlimit="100"/>
+    </g>
+  </g>
+  <g id="Rectangle_2" data-name="Rectangle 2" isolation="isolate">
+    <g id="Rectangle_2-2" data-name="Rectangle 2">
+      <path d="M178.58.5c-6.84,0-12.38,5.54-12.38,12.38v476.93c0,6.84,5.54,12.38,12.38,12.38s12.38-5.54,12.38-12.38V12.88c0-6.84-5.54-12.38-12.38-12.38Z" fill="#fff" fill-rule="evenodd"/>
+      <path d="M178.58.5c-6.84,0-12.38,5.54-12.38,12.38v476.93c0,6.84,5.54,12.38,12.38,12.38s12.38-5.54,12.38-12.38V12.88c0-6.84-5.54-12.38-12.38-12.38Z" fill="none" stroke="#454545" stroke-miterlimit="100"/>
+    </g>
+  </g>
+  <g id="Rectangle_2-3" data-name="Rectangle 2" isolation="isolate">
+    <g id="Rectangle_2-4" data-name="Rectangle 2">
+      <path d="M307.22.5c-6.84,0-12.38,5.54-12.38,12.38v476.93c0,6.84,5.54,12.38,12.38,12.38s12.38-5.54,12.38-12.38V12.88c0-6.84-5.54-12.38-12.38-12.38Z" fill="#fff" fill-rule="evenodd"/>
+      <path d="M307.22.5c-6.84,0-12.38,5.54-12.38,12.38v476.93c0,6.84,5.54,12.38,12.38,12.38s12.38-5.54,12.38-12.38V12.88c0-6.84-5.54-12.38-12.38-12.38Z" fill="none" stroke="#454545" stroke-miterlimit="100"/>
+    </g>
+  </g>
+  <g id="Rectangle_2-5" data-name="Rectangle 2" isolation="isolate">
+    <g id="Rectangle_2-6" data-name="Rectangle 2">
+      <path d="M48.02,1.65c-6.84,0-12.38,5.54-12.38,12.38v476.93c0,6.84,5.54,12.38,12.38,12.38s12.38-5.54,12.38-12.38V14.04c0-6.84-5.54-12.38-12.38-12.38Z" fill="#fff" fill-rule="evenodd"/>
+      <path d="M48.02,1.65c-6.84,0-12.38,5.54-12.38,12.38v476.93c0,6.84,5.54,12.38,12.38,12.38s12.38-5.54,12.38-12.38V14.04c0-6.84-5.54-12.38-12.38-12.38Z" fill="none" stroke="#454545" stroke-miterlimit="100"/>
+    </g>
+  </g>
+  <g id="Triangle_2" data-name="Triangle 2" isolation="isolate">
+    <g id="Triangle_2-2" data-name="Triangle 2">
+      <path d="M45.63,111.46l-4.19-12.89c-1.79-5.49-8.45-7.59-13.07-4.12l-7.05,5.31c-4.61,3.48-4.43,10.47.36,13.7l11.24,7.58c6.64,4.47,15.18-1.97,12.7-9.58Z" fill="#ffc087" fill-rule="evenodd"/>
+      <path d="M45.63,111.46l-4.19-12.89c-1.79-5.49-8.45-7.59-13.07-4.12l-7.05,5.31c-4.61,3.48-4.43,10.47.36,13.7l11.24,7.58c6.64,4.47,15.18-1.97,12.7-9.58Z" fill="none" stroke="#454545" stroke-miterlimit="100"/>
+    </g>
+  </g>
+  <g id="Triangle_2-3" data-name="Triangle 2" isolation="isolate">
+    <g id="Triangle_2-4" data-name="Triangle 2">
+      <path d="M46.01,201.7l-4.19-12.89c-1.79-5.49-8.45-7.59-13.07-4.12l-7.05,5.31c-4.61,3.48-4.43,10.47.36,13.7l11.24,7.58c6.64,4.47,15.18-1.97,12.7-9.58Z" fill="#ffc087" fill-rule="evenodd"/>
+      <path d="M46.01,201.7l-4.19-12.89c-1.79-5.49-8.45-7.59-13.07-4.12l-7.05,5.31c-4.61,3.48-4.43,10.47.36,13.7l11.24,7.58c6.64,4.47,15.18-1.97,12.7-9.58Z" fill="none" stroke="#454545" stroke-miterlimit="100"/>
+    </g>
+  </g>
+  <g id="Rectangle_1-2" data-name="Rectangle 1" isolation="isolate">
+    <g id="Rectangle_1-3" data-name="Rectangle 1">
+      <path d="M31.99,182.13h-8.8c-5.73,0-10.37,4.64-10.37,10.37s4.64,10.37,10.37,10.37h8.8c5.73,0,10.37-4.64,10.37-10.37s-4.64-10.37-10.37-10.37Z" fill="#fff" fill-rule="evenodd"/>
+      <path d="M31.99,182.13h-8.8c-5.73,0-10.37,4.64-10.37,10.37s4.64,10.37,10.37,10.37h8.8c5.73,0,10.37-4.64,10.37-10.37s-4.64-10.37-10.37-10.37Z" fill="none" stroke="#454545" stroke-miterlimit="100"/>
+    </g>
+    <g id="Rectangle_1-4" data-name="Rectangle 1">
+      <path d="M31.99,92.53h-8.8c-5.73,0-10.37,4.64-10.37,10.37s4.64,10.37,10.37,10.37h8.8c5.73,0,10.37-4.64,10.37-10.37s-4.64-10.37-10.37-10.37Z" fill="#fff" fill-rule="evenodd"/>
+      <path d="M31.99,92.53h-8.8c-5.73,0-10.37,4.64-10.37,10.37s4.64,10.37,10.37,10.37h8.8c5.73,0,10.37-4.64,10.37-10.37s-4.64-10.37-10.37-10.37Z" fill="none" stroke="#454545" stroke-miterlimit="100"/>
+    </g>
+  </g>
+  <g id="Triangle_2_copy" data-name="Triangle 2 copy" isolation="isolate">
+    <g id="Triangle_2_copy-2" data-name="Triangle 2 copy">
+      <path d="M45.63,284.64l-4.19-12.89c-1.79-5.49-8.45-7.59-13.07-4.12l-7.05,5.31c-4.61,3.48-4.43,10.47.36,13.7l11.24,7.58c6.64,4.47,15.18-1.97,12.7-9.58Z" fill="#ffc087" fill-rule="evenodd"/>
+      <path d="M45.63,284.64l-4.19-12.89c-1.79-5.49-8.45-7.59-13.07-4.12l-7.05,5.31c-4.61,3.48-4.43,10.47.36,13.7l11.24,7.58c6.64,4.47,15.18-1.97,12.7-9.58Z" fill="none" stroke="#454545" stroke-miterlimit="100"/>
+    </g>
+  </g>
+  <g id="Rectangle_1_copy" data-name="Rectangle 1 copy" isolation="isolate">
+    <g id="Rectangle_1_copy-2" data-name="Rectangle 1 copy">
+      <path d="M31.6,265.08h-8.8c-5.73,0-10.37,4.64-10.37,10.37s4.64,10.37,10.37,10.37h8.8c5.73,0,10.37-4.64,10.37-10.37s-4.64-10.37-10.37-10.37Z" fill="#fff" fill-rule="evenodd"/>
+      <path d="M31.6,265.08h-8.8c-5.73,0-10.37,4.64-10.37,10.37s4.64,10.37,10.37,10.37h8.8c5.73,0,10.37-4.64,10.37-10.37s-4.64-10.37-10.37-10.37Z" fill="none" stroke="#454545" stroke-miterlimit="100"/>
+    </g>
+  </g>
+  <g id="Triangle_2_copy-3" data-name="Triangle 2 copy" isolation="isolate">
+    <g id="Triangle_2_copy-4" data-name="Triangle 2 copy">
+      <path d="M46.01,374.88l-4.19-12.89c-1.79-5.49-8.45-7.59-13.07-4.12l-7.05,5.31c-4.61,3.48-4.43,10.47.36,13.7l11.24,7.58c6.64,4.47,15.18-1.97,12.7-9.58Z" fill="#ffc087" fill-rule="evenodd"/>
+      <path d="M46.01,374.88l-4.19-12.89c-1.79-5.49-8.45-7.59-13.07-4.12l-7.05,5.31c-4.61,3.48-4.43,10.47.36,13.7l11.24,7.58c6.64,4.47,15.18-1.97,12.7-9.58Z" fill="none" stroke="#454545" stroke-miterlimit="100"/>
+    </g>
+  </g>
+  <g id="Triangle_2_copy_2" data-name="Triangle 2 copy 2" isolation="isolate">
+    <g id="Triangle_2_copy_2-2" data-name="Triangle 2 copy 2">
+      <path d="M46.01,463.01l-4.19-12.89c-1.79-5.49-8.45-7.59-13.07-4.12l-7.05,5.31c-4.61,3.48-4.43,10.47.36,13.7l11.24,7.58c6.64,4.47,15.18-1.97,12.7-9.58Z" fill="#f8d366" fill-rule="evenodd"/>
+      <path d="M46.01,463.01l-4.19-12.89c-1.79-5.49-8.45-7.59-13.07-4.12l-7.05,5.31c-4.61,3.48-4.43,10.47.36,13.7l11.24,7.58c6.64,4.47,15.18-1.97,12.7-9.58Z" fill="none" stroke="#454545" stroke-miterlimit="100"/>
+    </g>
+  </g>
+  <g id="Triangle_2-5" data-name="Triangle 2" isolation="isolate">
+    <g id="Triangle_2-6" data-name="Triangle 2">
+      <path d="M304.64,109.73l-4.19-12.89c-1.79-5.49-8.45-7.59-13.07-4.12l-7.05,5.31c-4.61,3.48-4.43,10.47.36,13.7l11.24,7.58c6.64,4.47,15.18-1.97,12.7-9.58Z" fill="#ffc087" fill-rule="evenodd"/>
+      <path d="M304.64,109.73l-4.19-12.89c-1.79-5.49-8.45-7.59-13.07-4.12l-7.05,5.31c-4.61,3.48-4.43,10.47.36,13.7l11.24,7.58c6.64,4.47,15.18-1.97,12.7-9.58Z" fill="none" stroke="#454545" stroke-miterlimit="100"/>
+    </g>
+  </g>
+  <g id="Rectangle_1-5" data-name="Rectangle 1" isolation="isolate">
+    <g id="Rectangle_1-6" data-name="Rectangle 1">
+      <path d="M290.61,90.16h-8.8c-5.73,0-10.37,4.64-10.37,10.37s4.64,10.37,10.37,10.37h8.8c5.73,0,10.37-4.64,10.37-10.37s-4.64-10.37-10.37-10.37Z" fill="#fff" fill-rule="evenodd"/>
+      <path d="M290.61,90.16h-8.8c-5.73,0-10.37,4.64-10.37,10.37s4.64,10.37,10.37,10.37h8.8c5.73,0,10.37-4.64,10.37-10.37s-4.64-10.37-10.37-10.37Z" fill="none" stroke="#454545" stroke-miterlimit="100"/>
+    </g>
+  </g>
+  <g id="Triangle_2-7" data-name="Triangle 2" isolation="isolate">
+    <g id="Triangle_2-8" data-name="Triangle 2">
+      <path d="M305.02,199.97l-4.19-12.89c-1.79-5.49-8.45-7.59-13.07-4.12l-7.05,5.31c-4.61,3.48-4.43,10.47.36,13.7l11.24,7.58c6.64,4.47,15.18-1.97,12.7-9.58Z" fill="#c2492a" fill-rule="evenodd"/>
+      <path d="M305.02,199.97l-4.19-12.89c-1.79-5.49-8.45-7.59-13.07-4.12l-7.05,5.31c-4.61,3.48-4.43,10.47.36,13.7l11.24,7.58c6.64,4.47,15.18-1.97,12.7-9.58Z" fill="none" stroke="#454545" stroke-miterlimit="100"/>
+    </g>
+  </g>
+  <g id="Rectangle_1-7" data-name="Rectangle 1" isolation="isolate">
+    <g id="Rectangle_1-8" data-name="Rectangle 1">
+      <path d="M291,180.4h-8.8c-5.73,0-10.37,4.64-10.37,10.37s4.64,10.37,10.37,10.37h8.8c5.73,0,10.37-4.64,10.37-10.37s-4.64-10.37-10.37-10.37Z" fill="#fff" fill-rule="evenodd"/>
+      <path d="M291,180.4h-8.8c-5.73,0-10.37,4.64-10.37,10.37s4.64,10.37,10.37,10.37h8.8c5.73,0,10.37-4.64,10.37-10.37s-4.64-10.37-10.37-10.37Z" fill="none" stroke="#454545" stroke-miterlimit="100"/>
+    </g>
+  </g>
+  <g id="Triangle_2_copy-5" data-name="Triangle 2 copy" isolation="isolate">
+    <g id="Triangle_2_copy-6" data-name="Triangle 2 copy">
+      <path d="M304.64,282.92l-4.19-12.89c-1.79-5.49-8.45-7.59-13.07-4.12l-7.05,5.31c-4.61,3.48-4.43,10.47.36,13.7l11.24,7.58c6.64,4.47,15.18-1.97,12.7-9.58Z" fill="#c2492a" fill-rule="evenodd"/>
+      <path d="M304.64,282.92l-4.19-12.89c-1.79-5.49-8.45-7.59-13.07-4.12l-7.05,5.31c-4.61,3.48-4.43,10.47.36,13.7l11.24,7.58c6.64,4.47,15.18-1.97,12.7-9.58Z" fill="none" stroke="#454545" stroke-miterlimit="100"/>
+    </g>
+  </g>
+  <g id="Rectangle_1_copy-3" data-name="Rectangle 1 copy" isolation="isolate">
+    <g id="Rectangle_1_copy-4" data-name="Rectangle 1 copy">
+      <path d="M290.61,263.35h-8.8c-5.73,0-10.37,4.64-10.37,10.37s4.64,10.37,10.37,10.37h8.8c5.73,0,10.37-4.64,10.37-10.37s-4.64-10.37-10.37-10.37Z" fill="#fff" fill-rule="evenodd"/>
+      <path d="M290.61,263.35h-8.8c-5.73,0-10.37,4.64-10.37,10.37s4.64,10.37,10.37,10.37h8.8c5.73,0,10.37-4.64,10.37-10.37s-4.64-10.37-10.37-10.37Z" fill="none" stroke="#454545" stroke-miterlimit="100"/>
+    </g>
+  </g>
+  <g id="Triangle_2_copy-7" data-name="Triangle 2 copy" isolation="isolate">
+    <g id="Triangle_2_copy-8" data-name="Triangle 2 copy">
+      <path d="M305.02,373.16l-4.19-12.89c-1.79-5.49-8.45-7.59-13.07-4.12l-7.05,5.31c-4.61,3.48-4.43,10.47.36,13.7l11.24,7.58c6.64,4.47,15.18-1.97,12.7-9.58Z" fill="#c2492a" fill-rule="evenodd"/>
+      <path d="M305.02,373.16l-4.19-12.89c-1.79-5.49-8.45-7.59-13.07-4.12l-7.05,5.31c-4.61,3.48-4.43,10.47.36,13.7l11.24,7.58c6.64,4.47,15.18-1.97,12.7-9.58Z" fill="none" stroke="#454545" stroke-miterlimit="100"/>
+    </g>
+  </g>
+  <g id="Triangle_2_copy_2-3" data-name="Triangle 2 copy 2" isolation="isolate">
+    <g id="Triangle_2_copy_2-4" data-name="Triangle 2 copy 2">
+      <path d="M305.02,461.28l-4.19-12.89c-1.79-5.49-8.45-7.59-13.07-4.12l-7.05,5.31c-4.61,3.48-4.43,10.47.36,13.7l11.24,7.58c6.64,4.47,15.18-1.97,12.7-9.58Z" fill="#f8d366" fill-rule="evenodd"/>
+      <path d="M305.02,461.28l-4.19-12.89c-1.79-5.49-8.45-7.59-13.07-4.12l-7.05,5.31c-4.61,3.48-4.43,10.47.36,13.7l11.24,7.58c6.64,4.47,15.18-1.97,12.7-9.58Z" fill="none" stroke="#454545" stroke-miterlimit="100"/>
+    </g>
+  </g>
+  <g id="Triangle_2-9" data-name="Triangle 2" isolation="isolate">
+    <g id="Triangle_2-10" data-name="Triangle 2">
+      <path d="M175.42,111.08l-4.19-12.89c-1.79-5.49-8.45-7.59-13.07-4.12l-7.05,5.31c-4.61,3.48-4.43,10.47.36,13.7l11.24,7.58c6.64,4.47,15.18-1.97,12.7-9.58Z" fill="#ffc087" fill-rule="evenodd"/>
+      <path d="M175.42,111.08l-4.19-12.89c-1.79-5.49-8.45-7.59-13.07-4.12l-7.05,5.31c-4.61,3.48-4.43,10.47.36,13.7l11.24,7.58c6.64,4.47,15.18-1.97,12.7-9.58Z" fill="none" stroke="#454545" stroke-miterlimit="100"/>
+    </g>
+  </g>
+  <g id="Rectangle_1-9" data-name="Rectangle 1" isolation="isolate">
+    <g id="Rectangle_1-10" data-name="Rectangle 1">
+      <path d="M161.4,91.51h-8.8c-5.73,0-10.37,4.64-10.37,10.37s4.64,10.37,10.37,10.37h8.8c5.73,0,10.37-4.64,10.37-10.37s-4.64-10.37-10.37-10.37Z" fill="#fff" fill-rule="evenodd"/>
+      <path d="M161.4,91.51h-8.8c-5.73,0-10.37,4.64-10.37,10.37s4.64,10.37,10.37,10.37h8.8c5.73,0,10.37-4.64,10.37-10.37s-4.64-10.37-10.37-10.37Z" fill="none" stroke="#454545" stroke-miterlimit="100"/>
+    </g>
+  </g>
+  <g id="Triangle_2-11" data-name="Triangle 2" isolation="isolate">
+    <g id="Triangle_2-12" data-name="Triangle 2">
+      <path d="M175.81,201.32l-4.19-12.89c-1.79-5.49-8.45-7.59-13.07-4.12l-7.05,5.31c-4.61,3.48-4.43,10.47.36,13.7l11.24,7.58c6.64,4.47,15.18-1.97,12.7-9.58Z" fill="#c2492a" fill-rule="evenodd"/>
+      <path d="M175.81,201.32l-4.19-12.89c-1.79-5.49-8.45-7.59-13.07-4.12l-7.05,5.31c-4.61,3.48-4.43,10.47.36,13.7l11.24,7.58c6.64,4.47,15.18-1.97,12.7-9.58Z" fill="none" stroke="#454545" stroke-miterlimit="100"/>
+    </g>
+  </g>
+  <g id="Rectangle_1-11" data-name="Rectangle 1" isolation="isolate">
+    <g id="Rectangle_1-12" data-name="Rectangle 1">
+      <path d="M161.78,181.75h-8.8c-5.73,0-10.37,4.64-10.37,10.37s4.64,10.37,10.37,10.37h8.8c5.73,0,10.37-4.64,10.37-10.37s-4.64-10.37-10.37-10.37Z" fill="#fff" fill-rule="evenodd"/>
+      <path d="M161.78,181.75h-8.8c-5.73,0-10.37,4.64-10.37,10.37s4.64,10.37,10.37,10.37h8.8c5.73,0,10.37-4.64,10.37-10.37s-4.64-10.37-10.37-10.37Z" fill="none" stroke="#454545" stroke-miterlimit="100"/>
+    </g>
+  </g>
+  <g id="Triangle_2_copy-9" data-name="Triangle 2 copy" isolation="isolate">
+    <g id="Triangle_2_copy-10" data-name="Triangle 2 copy">
+      <path d="M175.42,284.26l-4.19-12.89c-1.79-5.49-8.45-7.59-13.07-4.12l-7.05,5.31c-4.61,3.48-4.43,10.47.36,13.7l11.24,7.58c6.64,4.47,15.18-1.97,12.7-9.58Z" fill="#c2492a" fill-rule="evenodd"/>
+      <path d="M175.42,284.26l-4.19-12.89c-1.79-5.49-8.45-7.59-13.07-4.12l-7.05,5.31c-4.61,3.48-4.43,10.47.36,13.7l11.24,7.58c6.64,4.47,15.18-1.97,12.7-9.58Z" fill="none" stroke="#454545" stroke-miterlimit="100"/>
+    </g>
+  </g>
+  <g id="Rectangle_1_copy-5" data-name="Rectangle 1 copy" isolation="isolate">
+    <g id="Rectangle_1_copy-6" data-name="Rectangle 1 copy">
+      <path d="M161.4,264.69h-8.8c-5.73,0-10.37,4.64-10.37,10.37s4.64,10.37,10.37,10.37h8.8c5.73,0,10.37-4.64,10.37-10.37s-4.64-10.37-10.37-10.37Z" fill="#fff" fill-rule="evenodd"/>
+      <path d="M161.4,264.69h-8.8c-5.73,0-10.37,4.64-10.37,10.37s4.64,10.37,10.37,10.37h8.8c5.73,0,10.37-4.64,10.37-10.37s-4.64-10.37-10.37-10.37Z" fill="none" stroke="#454545" stroke-miterlimit="100"/>
+    </g>
+  </g>
+  <g id="Triangle_2_copy-11" data-name="Triangle 2 copy" isolation="isolate">
+    <g id="Triangle_2_copy-12" data-name="Triangle 2 copy">
+      <path d="M175.81,374.5l-4.19-12.89c-1.79-5.49-8.45-7.59-13.07-4.12l-7.05,5.31c-4.61,3.48-4.43,10.47.36,13.7l11.24,7.58c6.64,4.47,15.18-1.97,12.7-9.58Z" fill="#c2492a" fill-rule="evenodd"/>
+      <path d="M175.81,374.5l-4.19-12.89c-1.79-5.49-8.45-7.59-13.07-4.12l-7.05,5.31c-4.61,3.48-4.43,10.47.36,13.7l11.24,7.58c6.64,4.47,15.18-1.97,12.7-9.58Z" fill="none" stroke="#454545" stroke-miterlimit="100"/>
+    </g>
+  </g>
+  <g id="Rectangle_1_copy-7" data-name="Rectangle 1 copy" isolation="isolate">
+    <g id="Rectangle_1_copy-8" data-name="Rectangle 1 copy">
+      <path d="M161.78,354.93h-8.8c-5.73,0-10.37,4.64-10.37,10.37s4.64,10.37,10.37,10.37h8.8c5.73,0,10.37-4.64,10.37-10.37s-4.64-10.37-10.37-10.37Z" fill="#fff" fill-rule="evenodd"/>
+      <path d="M161.78,354.93h-8.8c-5.73,0-10.37,4.64-10.37,10.37s4.64,10.37,10.37,10.37h8.8c5.73,0,10.37-4.64,10.37-10.37s-4.64-10.37-10.37-10.37Z" fill="none" stroke="#454545" stroke-miterlimit="100"/>
+    </g>
+  </g>
+  <g id="Triangle_2_copy_2-5" data-name="Triangle 2 copy 2" isolation="isolate">
+    <g id="Triangle_2_copy_2-6" data-name="Triangle 2 copy 2">
+      <path d="M175.81,462.63l-4.19-12.89c-1.79-5.49-8.45-7.59-13.07-4.12l-7.05,5.31c-4.61,3.48-4.43,10.47.36,13.7l11.24,7.58c6.64,4.47,15.18-1.97,12.7-9.58Z" fill="#f8d366" fill-rule="evenodd"/>
+      <path d="M175.81,462.63l-4.19-12.89c-1.79-5.49-8.45-7.59-13.07-4.12l-7.05,5.31c-4.61,3.48-4.43,10.47.36,13.7l11.24,7.58c6.64,4.47,15.18-1.97,12.7-9.58Z" fill="none" stroke="#454545" stroke-miterlimit="100"/>
+    </g>
+  </g>
+  <g id="Triangle_2-13" data-name="Triangle 2" isolation="isolate">
+    <g id="Triangle_2-14" data-name="Triangle 2">
+      <path d="M75.68,53.49l-7.05-5.31c-4.61-3.48-11.28-1.38-13.07,4.12l-4.19,12.89c-2.47,7.61,6.07,14.05,12.7,9.58l11.24-7.58c4.79-3.23,4.98-10.22.36-13.7Z" fill="#f8d366" fill-rule="evenodd"/>
+      <path d="M75.68,53.49l-7.05-5.31c-4.61-3.48-11.28-1.38-13.07,4.12l-4.19,12.89c-2.47,7.61,6.07,14.05,12.7,9.58l11.24-7.58c4.79-3.23,4.98-10.22.36-13.7Z" fill="none" stroke="#454545" stroke-miterlimit="100"/>
+    </g>
+  </g>
+  <g id="Rectangle_1-13" data-name="Rectangle 1" isolation="isolate">
+    <g id="Rectangle_1-14" data-name="Rectangle 1">
+      <path d="M74.2,45.62h-8.8c-5.73,0-10.37,4.64-10.37,10.37s4.64,10.37,10.37,10.37h8.8c5.73,0,10.37-4.64,10.37-10.37s-4.64-10.37-10.37-10.37Z" fill="#fff" fill-rule="evenodd"/>
+      <path d="M74.2,45.62h-8.8c-5.73,0-10.37,4.64-10.37,10.37s4.64,10.37,10.37,10.37h8.8c5.73,0,10.37-4.64,10.37-10.37s-4.64-10.37-10.37-10.37Z" fill="none" stroke="#454545" stroke-miterlimit="100"/>
+    </g>
+  </g>
+  <g id="Triangle_2-15" data-name="Triangle 2" isolation="isolate">
+    <g id="Triangle_2-16" data-name="Triangle 2">
+      <path d="M75.3,143.73l-7.05-5.31c-4.61-3.48-11.28-1.38-13.07,4.12l-4.19,12.89c-2.47,7.61,6.07,14.05,12.7,9.58l11.24-7.58c4.79-3.23,4.98-10.22.36-13.7Z" fill="#c2492a" fill-rule="evenodd"/>
+      <path d="M75.3,143.73l-7.05-5.31c-4.61-3.48-11.28-1.38-13.07,4.12l-4.19,12.89c-2.47,7.61,6.07,14.05,12.7,9.58l11.24-7.58c4.79-3.23,4.98-10.22.36-13.7Z" fill="none" stroke="#454545" stroke-miterlimit="100"/>
+    </g>
+  </g>
+  <g id="Rectangle_1-15" data-name="Rectangle 1" isolation="isolate">
+    <g id="Rectangle_1-16" data-name="Rectangle 1">
+      <path d="M73.81,135.86h-8.8c-5.73,0-10.37,4.64-10.37,10.37s4.64,10.37,10.37,10.37h8.8c5.73,0,10.37-4.64,10.37-10.37s-4.64-10.37-10.37-10.37Z" fill="#fff" fill-rule="evenodd"/>
+      <path d="M73.81,135.86h-8.8c-5.73,0-10.37,4.64-10.37,10.37s4.64,10.37,10.37,10.37h8.8c5.73,0,10.37-4.64,10.37-10.37s-4.64-10.37-10.37-10.37Z" fill="none" stroke="#454545" stroke-miterlimit="100"/>
+    </g>
+  </g>
+  <g id="Triangle_2_copy-13" data-name="Triangle 2 copy" isolation="isolate">
+    <g id="Triangle_2_copy-14" data-name="Triangle 2 copy">
+      <path d="M75.68,226.68l-7.05-5.31c-4.61-3.48-11.28-1.38-13.07,4.12l-4.19,12.89c-2.47,7.61,6.07,14.05,12.7,9.58l11.24-7.58c4.79-3.23,4.98-10.22.36-13.7Z" fill="#c2492a" fill-rule="evenodd"/>
+      <path d="M75.68,226.68l-7.05-5.31c-4.61-3.48-11.28-1.38-13.07,4.12l-4.19,12.89c-2.47,7.61,6.07,14.05,12.7,9.58l11.24-7.58c4.79-3.23,4.98-10.22.36-13.7Z" fill="none" stroke="#454545" stroke-miterlimit="100"/>
+    </g>
+  </g>
+  <g id="Rectangle_1_copy-9" data-name="Rectangle 1 copy" isolation="isolate">
+    <g id="Rectangle_1_copy-10" data-name="Rectangle 1 copy">
+      <path d="M74.2,218.8h-8.8c-5.73,0-10.37,4.64-10.37,10.37s4.64,10.37,10.37,10.37h8.8c5.73,0,10.37-4.64,10.37-10.37s-4.64-10.37-10.37-10.37Z" fill="#fff" fill-rule="evenodd"/>
+      <path d="M74.2,218.8h-8.8c-5.73,0-10.37,4.64-10.37,10.37s4.64,10.37,10.37,10.37h8.8c5.73,0,10.37-4.64,10.37-10.37s-4.64-10.37-10.37-10.37Z" fill="none" stroke="#454545" stroke-miterlimit="100"/>
+    </g>
+  </g>
+  <g id="Triangle_2_copy-15" data-name="Triangle 2 copy" isolation="isolate">
+    <g id="Triangle_2_copy-16" data-name="Triangle 2 copy">
+      <path d="M75.3,316.92l-7.05-5.31c-4.61-3.48-11.28-1.38-13.07,4.12l-4.19,12.89c-2.47,7.61,6.07,14.05,12.7,9.58l11.24-7.58c4.79-3.23,4.98-10.22.36-13.7Z" fill="#c2492a" fill-rule="evenodd"/>
+      <path d="M75.3,316.92l-7.05-5.31c-4.61-3.48-11.28-1.38-13.07,4.12l-4.19,12.89c-2.47,7.61,6.07,14.05,12.7,9.58l11.24-7.58c4.79-3.23,4.98-10.22.36-13.7Z" fill="none" stroke="#454545" stroke-miterlimit="100"/>
+    </g>
+  </g>
+  <g id="Rectangle_1_copy-11" data-name="Rectangle 1 copy" isolation="isolate">
+    <g id="Rectangle_1_copy-12" data-name="Rectangle 1 copy">
+      <path d="M73.81,309.04h-8.8c-5.73,0-10.37,4.64-10.37,10.37s4.64,10.37,10.37,10.37h8.8c5.73,0,10.37-4.64,10.37-10.37s-4.64-10.37-10.37-10.37Z" fill="#fff" fill-rule="evenodd"/>
+      <path d="M73.81,309.04h-8.8c-5.73,0-10.37,4.64-10.37,10.37s4.64,10.37,10.37,10.37h8.8c5.73,0,10.37-4.64,10.37-10.37s-4.64-10.37-10.37-10.37Z" fill="none" stroke="#454545" stroke-miterlimit="100"/>
+    </g>
+  </g>
+  <g id="Triangle_2_copy_2-7" data-name="Triangle 2 copy 2" isolation="isolate">
+    <g id="Triangle_2_copy_2-8" data-name="Triangle 2 copy 2">
+      <path d="M75.3,405.04l-7.05-5.31c-4.61-3.48-11.28-1.38-13.07,4.12l-4.19,12.89c-2.47,7.61,6.07,14.05,12.7,9.58l11.24-7.58c4.79-3.23,4.98-10.22.36-13.7Z" fill="#ffc087" fill-rule="evenodd"/>
+      <path d="M75.3,405.04l-7.05-5.31c-4.61-3.48-11.28-1.38-13.07,4.12l-4.19,12.89c-2.47,7.61,6.07,14.05,12.7,9.58l11.24-7.58c4.79-3.23,4.98-10.22.36-13.7Z" fill="none" stroke="#454545" stroke-miterlimit="100"/>
+    </g>
+  </g>
+  <g id="Rectangle_1_copy_2-4" data-name="Rectangle 1 copy 2" isolation="isolate">
+    <g id="Rectangle_1_copy_2-5" data-name="Rectangle 1 copy 2">
+      <path d="M73.81,397.17h-8.8c-5.73,0-10.37,4.64-10.37,10.37s4.64,10.37,10.37,10.37h8.8c5.73,0,10.37-4.64,10.37-10.37s-4.64-10.37-10.37-10.37Z" fill="#fff" fill-rule="evenodd"/>
+      <path d="M73.81,397.17h-8.8c-5.73,0-10.37,4.64-10.37,10.37s4.64,10.37,10.37,10.37h8.8c5.73,0,10.37-4.64,10.37-10.37s-4.64-10.37-10.37-10.37Z" fill="none" stroke="#454545" stroke-miterlimit="100"/>
+    </g>
+  </g>
+  <g id="Triangle_2_copy_3" data-name="Triangle 2 copy 3" isolation="isolate">
+    <g id="Triangle_2_copy_3-2" data-name="Triangle 2 copy 3">
+      <path d="M204.13,53.49l-7.05-5.31c-4.61-3.48-11.28-1.38-13.07,4.12l-4.19,12.89c-2.47,7.61,6.07,14.05,12.7,9.58l11.24-7.58c4.79-3.23,4.98-10.22.36-13.7Z" fill="#f8d366" fill-rule="evenodd"/>
+      <path d="M204.13,53.49l-7.05-5.31c-4.61-3.48-11.28-1.38-13.07,4.12l-4.19,12.89c-2.47,7.61,6.07,14.05,12.7,9.58l11.24-7.58c4.79-3.23,4.98-10.22.36-13.7Z" fill="none" stroke="#454545" stroke-miterlimit="100"/>
+    </g>
+  </g>
+  <g id="Rectangle_1_copy-13" data-name="Rectangle 1 copy" isolation="isolate">
+    <g id="Rectangle_1_copy-14" data-name="Rectangle 1 copy">
+      <path d="M31.99,355.32h-8.8c-5.73,0-10.37,4.64-10.37,10.37s4.64,10.37,10.37,10.37h8.8c5.73,0,10.37-4.64,10.37-10.37s-4.64-10.37-10.37-10.37Z" fill="#fff" fill-rule="evenodd"/>
+      <path d="M31.99,355.32h-8.8c-5.73,0-10.37,4.64-10.37,10.37s4.64,10.37,10.37,10.37h8.8c5.73,0,10.37-4.64,10.37-10.37s-4.64-10.37-10.37-10.37Z" fill="none" stroke="#454545" stroke-miterlimit="100"/>
+    </g>
+    <g id="Rectangle_1_copy-15" data-name="Rectangle 1 copy">
+      <path d="M31.99,443.32h-8.8c-5.73,0-10.37,4.64-10.37,10.37s4.64,10.37,10.37,10.37h8.8c5.73,0,10.37-4.64,10.37-10.37s-4.64-10.37-10.37-10.37Z" fill="#fff" fill-rule="evenodd"/>
+      <path d="M31.99,443.32h-8.8c-5.73,0-10.37,4.64-10.37,10.37s4.64,10.37,10.37,10.37h8.8c5.73,0,10.37-4.64,10.37-10.37s-4.64-10.37-10.37-10.37Z" fill="none" stroke="#454545" stroke-miterlimit="100"/>
+    </g>
+  </g>
+  <g id="Rectangle_1_copy_3" data-name="Rectangle 1 copy 3" isolation="isolate">
+    <g id="Rectangle_1_copy_3-2" data-name="Rectangle 1 copy 3">
+      <path d="M202.64,45.62h-8.8c-5.73,0-10.37,4.64-10.37,10.37s4.64,10.37,10.37,10.37h8.8c5.73,0,10.37-4.64,10.37-10.37s-4.64-10.37-10.37-10.37Z" fill="#fff" fill-rule="evenodd"/>
+      <path d="M202.64,45.62h-8.8c-5.73,0-10.37,4.64-10.37,10.37s4.64,10.37,10.37,10.37h8.8c5.73,0,10.37-4.64,10.37-10.37s-4.64-10.37-10.37-10.37Z" fill="none" stroke="#454545" stroke-miterlimit="100"/>
+    </g>
+  </g>
+  <g id="Triangle_2_copy_3-3" data-name="Triangle 2 copy 3" isolation="isolate">
+    <g id="Triangle_2_copy_3-4" data-name="Triangle 2 copy 3">
+      <path d="M203.74,143.73l-7.05-5.31c-4.61-3.48-11.28-1.38-13.07,4.12l-4.19,12.89c-2.47,7.61,6.07,14.05,12.7,9.58l11.24-7.58c4.79-3.23,4.98-10.22.36-13.7Z" fill="#c2492a" fill-rule="evenodd"/>
+      <path d="M203.74,143.73l-7.05-5.31c-4.61-3.48-11.28-1.38-13.07,4.12l-4.19,12.89c-2.47,7.61,6.07,14.05,12.7,9.58l11.24-7.58c4.79-3.23,4.98-10.22.36-13.7Z" fill="none" stroke="#454545" stroke-miterlimit="100"/>
+    </g>
+  </g>
+  <g id="Triangle_2_copy_5" data-name="Triangle 2 copy 5" isolation="isolate">
+    <g id="Triangle_2_copy_5-2" data-name="Triangle 2 copy 5">
+      <path d="M332.38,143.73l-7.05-5.31c-4.61-3.48-11.28-1.38-13.07,4.12l-4.19,12.89c-2.48,7.61,6.07,14.05,12.7,9.58l11.24-7.58c4.79-3.23,4.98-10.22.36-13.7Z" fill="#ffc087" fill-rule="evenodd"/>
+      <path d="M332.38,143.73l-7.05-5.31c-4.61-3.48-11.28-1.38-13.07,4.12l-4.19,12.89c-2.48,7.61,6.07,14.05,12.7,9.58l11.24-7.58c4.79-3.23,4.98-10.22.36-13.7Z" fill="none" stroke="#454545" stroke-miterlimit="100"/>
+    </g>
+  </g>
+  <g id="Rectangle_1_copy_3-3" data-name="Rectangle 1 copy 3" isolation="isolate">
+    <g id="Rectangle_1_copy_3-4" data-name="Rectangle 1 copy 3">
+      <path d="M202.26,135.86h-8.8c-5.73,0-10.37,4.64-10.37,10.37s4.64,10.37,10.37,10.37h8.8c5.73,0,10.37-4.64,10.37-10.37s-4.64-10.37-10.37-10.37Z" fill="#fff" fill-rule="evenodd"/>
+      <path d="M202.26,135.86h-8.8c-5.73,0-10.37,4.64-10.37,10.37s4.64,10.37,10.37,10.37h8.8c5.73,0,10.37-4.64,10.37-10.37s-4.64-10.37-10.37-10.37Z" fill="none" stroke="#454545" stroke-miterlimit="100"/>
+    </g>
+  </g>
+  <g id="Triangle_2_copy_3-5" data-name="Triangle 2 copy 3" isolation="isolate">
+    <g id="Triangle_2_copy_3-6" data-name="Triangle 2 copy 3">
+      <path d="M204.13,226.68l-7.05-5.31c-4.61-3.48-11.28-1.38-13.07,4.12l-4.19,12.89c-2.47,7.61,6.07,14.05,12.7,9.58l11.24-7.58c4.79-3.23,4.98-10.22.36-13.7Z" fill="#c2492a" fill-rule="evenodd"/>
+      <path d="M204.13,226.68l-7.05-5.31c-4.61-3.48-11.28-1.38-13.07,4.12l-4.19,12.89c-2.47,7.61,6.07,14.05,12.7,9.58l11.24-7.58c4.79-3.23,4.98-10.22.36-13.7Z" fill="none" stroke="#454545" stroke-miterlimit="100"/>
+    </g>
+  </g>
+  <g id="Rectangle_1_copy_3-5" data-name="Rectangle 1 copy 3" isolation="isolate">
+    <g id="Rectangle_1_copy_3-6" data-name="Rectangle 1 copy 3">
+      <path d="M202.64,218.8h-8.8c-5.73,0-10.37,4.64-10.37,10.37s4.64,10.37,10.37,10.37h8.8c5.73,0,10.37-4.64,10.37-10.37s-4.64-10.37-10.37-10.37Z" fill="#fff" fill-rule="evenodd"/>
+      <path d="M202.64,218.8h-8.8c-5.73,0-10.37,4.64-10.37,10.37s4.64,10.37,10.37,10.37h8.8c5.73,0,10.37-4.64,10.37-10.37s-4.64-10.37-10.37-10.37Z" fill="none" stroke="#454545" stroke-miterlimit="100"/>
+    </g>
+  </g>
+  <g id="Triangle_2_copy_3-7" data-name="Triangle 2 copy 3" isolation="isolate">
+    <g id="Triangle_2_copy_3-8" data-name="Triangle 2 copy 3">
+      <path d="M203.74,316.92l-7.05-5.31c-4.61-3.48-11.28-1.38-13.07,4.12l-4.19,12.89c-2.47,7.61,6.07,14.05,12.7,9.58l11.24-7.58c4.79-3.23,4.98-10.22.36-13.7Z" fill="#c2492a" fill-rule="evenodd"/>
+      <path d="M203.74,316.92l-7.05-5.31c-4.61-3.48-11.28-1.38-13.07,4.12l-4.19,12.89c-2.47,7.61,6.07,14.05,12.7,9.58l11.24-7.58c4.79-3.23,4.98-10.22.36-13.7Z" fill="none" stroke="#454545" stroke-miterlimit="100"/>
+    </g>
+  </g>
+  <g id="Rectangle_1_copy_3-7" data-name="Rectangle 1 copy 3" isolation="isolate">
+    <g id="Rectangle_1_copy_3-8" data-name="Rectangle 1 copy 3">
+      <path d="M202.26,309.04h-8.8c-5.73,0-10.37,4.64-10.37,10.37s4.64,10.37,10.37,10.37h8.8c5.73,0,10.37-4.64,10.37-10.37s-4.64-10.37-10.37-10.37Z" fill="#fff" fill-rule="evenodd"/>
+      <path d="M202.26,309.04h-8.8c-5.73,0-10.37,4.64-10.37,10.37s4.64,10.37,10.37,10.37h8.8c5.73,0,10.37-4.64,10.37-10.37s-4.64-10.37-10.37-10.37Z" fill="none" stroke="#454545" stroke-miterlimit="100"/>
+    </g>
+  </g>
+  <g id="Triangle_2_copy_3-9" data-name="Triangle 2 copy 3" isolation="isolate">
+    <g id="Triangle_2_copy_3-10" data-name="Triangle 2 copy 3">
+      <path d="M203.74,405.04l-7.05-5.31c-4.61-3.48-11.28-1.38-13.07,4.12l-4.19,12.89c-2.47,7.61,6.07,14.05,12.7,9.58l11.24-7.58c4.79-3.23,4.98-10.22.36-13.7Z" fill="#ffc087" fill-rule="evenodd"/>
+      <path d="M203.74,405.04l-7.05-5.31c-4.61-3.48-11.28-1.38-13.07,4.12l-4.19,12.89c-2.47,7.61,6.07,14.05,12.7,9.58l11.24-7.58c4.79-3.23,4.98-10.22.36-13.7Z" fill="none" stroke="#454545" stroke-miterlimit="100"/>
+    </g>
+  </g>
+  <g id="Rectangle_1_copy_3-9" data-name="Rectangle 1 copy 3" isolation="isolate">
+    <g id="Rectangle_1_copy_3-10" data-name="Rectangle 1 copy 3">
+      <path d="M202.26,397.17h-8.8c-5.73,0-10.37,4.64-10.37,10.37s4.64,10.37,10.37,10.37h8.8c5.73,0,10.37-4.64,10.37-10.37s-4.64-10.37-10.37-10.37Z" fill="#fff" fill-rule="evenodd"/>
+      <path d="M202.26,397.17h-8.8c-5.73,0-10.37,4.64-10.37,10.37s4.64,10.37,10.37,10.37h8.8c5.73,0,10.37-4.64,10.37-10.37s-4.64-10.37-10.37-10.37Z" fill="none" stroke="#454545" stroke-miterlimit="100"/>
+    </g>
+  </g>
+  <g id="Triangle_2_copy_4" data-name="Triangle 2 copy 4" isolation="isolate">
+    <g id="Triangle_2_copy_4-2" data-name="Triangle 2 copy 4">
+      <path d="M332.96,53.49l-7.05-5.31c-4.61-3.48-11.28-1.38-13.07,4.12l-4.19,12.89c-2.48,7.61,6.07,14.05,12.7,9.58l11.24-7.58c4.79-3.23,4.98-10.22.36-13.7Z" fill="#f8d366" fill-rule="evenodd"/>
+      <path d="M332.96,53.49l-7.05-5.31c-4.61-3.48-11.28-1.38-13.07,4.12l-4.19,12.89c-2.48,7.61,6.07,14.05,12.7,9.58l11.24-7.58c4.79-3.23,4.98-10.22.36-13.7Z" fill="none" stroke="#454545" stroke-miterlimit="100"/>
+    </g>
+  </g>
+  <g id="Rectangle_1_copy_4" data-name="Rectangle 1 copy 4" isolation="isolate">
+    <g id="Rectangle_1_copy_4-2" data-name="Rectangle 1 copy 4">
+      <path d="M331.48,45.62h-8.8c-5.73,0-10.37,4.64-10.37,10.37s4.64,10.37,10.37,10.37h8.8c5.73,0,10.37-4.64,10.37-10.37s-4.64-10.37-10.37-10.37Z" fill="#fff" fill-rule="evenodd"/>
+      <path d="M331.48,45.62h-8.8c-5.73,0-10.37,4.64-10.37,10.37s4.64,10.37,10.37,10.37h8.8c5.73,0,10.37-4.64,10.37-10.37s-4.64-10.37-10.37-10.37Z" fill="none" stroke="#454545" stroke-miterlimit="100"/>
+    </g>
+  </g>
+  <g id="Rectangle_1_copy_4-3" data-name="Rectangle 1 copy 4" isolation="isolate">
+    <g id="Rectangle_1_copy_4-4" data-name="Rectangle 1 copy 4">
+      <path d="M331.09,135.86h-8.8c-5.73,0-10.37,4.64-10.37,10.37s4.64,10.37,10.37,10.37h8.8c5.73,0,10.37-4.64,10.37-10.37s-4.64-10.37-10.37-10.37Z" fill="#fff" fill-rule="evenodd"/>
+      <path d="M331.09,135.86h-8.8c-5.73,0-10.37,4.64-10.37,10.37s4.64,10.37,10.37,10.37h8.8c5.73,0,10.37-4.64,10.37-10.37s-4.64-10.37-10.37-10.37Z" fill="none" stroke="#454545" stroke-miterlimit="100"/>
+    </g>
+  </g>
+  <g id="Triangle_2_copy_4-3" data-name="Triangle 2 copy 4" isolation="isolate">
+    <g id="Triangle_2_copy_4-4" data-name="Triangle 2 copy 4">
+      <path d="M332.96,226.68l-7.05-5.31c-4.61-3.48-11.28-1.38-13.07,4.12l-4.19,12.89c-2.48,7.61,6.07,14.05,12.7,9.58l11.24-7.58c4.79-3.23,4.98-10.22.36-13.7Z" fill="#ffc087" fill-rule="evenodd"/>
+      <path d="M332.96,226.68l-7.05-5.31c-4.61-3.48-11.28-1.38-13.07,4.12l-4.19,12.89c-2.48,7.61,6.07,14.05,12.7,9.58l11.24-7.58c4.79-3.23,4.98-10.22.36-13.7Z" fill="none" stroke="#454545" stroke-miterlimit="100"/>
+    </g>
+  </g>
+  <g id="Rectangle_1_copy_4-5" data-name="Rectangle 1 copy 4" isolation="isolate">
+    <g id="Rectangle_1_copy_4-6" data-name="Rectangle 1 copy 4">
+      <path d="M331.48,218.8h-8.8c-5.73,0-10.37,4.64-10.37,10.37s4.64,10.37,10.37,10.37h8.8c5.73,0,10.37-4.64,10.37-10.37s-4.64-10.37-10.37-10.37Z" fill="#fff" fill-rule="evenodd"/>
+      <path d="M331.48,218.8h-8.8c-5.73,0-10.37,4.64-10.37,10.37s4.64,10.37,10.37,10.37h8.8c5.73,0,10.37-4.64,10.37-10.37s-4.64-10.37-10.37-10.37Z" fill="none" stroke="#454545" stroke-miterlimit="100"/>
+    </g>
+  </g>
+  <g id="Triangle_2_copy_4-5" data-name="Triangle 2 copy 4" isolation="isolate">
+    <g id="Triangle_2_copy_4-6" data-name="Triangle 2 copy 4">
+      <path d="M332.58,316.92l-7.05-5.31c-4.61-3.48-11.28-1.38-13.07,4.12l-4.19,12.89c-2.47,7.61,6.07,14.05,12.7,9.58l11.24-7.58c4.79-3.23,4.98-10.22.36-13.7Z" fill="#ffc087" fill-rule="evenodd"/>
+      <path d="M332.58,316.92l-7.05-5.31c-4.61-3.48-11.28-1.38-13.07,4.12l-4.19,12.89c-2.47,7.61,6.07,14.05,12.7,9.58l11.24-7.58c4.79-3.23,4.98-10.22.36-13.7Z" fill="none" stroke="#454545" stroke-miterlimit="100"/>
+    </g>
+  </g>
+  <g id="Rectangle_1_copy_4-7" data-name="Rectangle 1 copy 4" isolation="isolate">
+    <g id="Rectangle_1_copy_4-8" data-name="Rectangle 1 copy 4">
+      <path d="M331.09,309.04h-8.8c-5.73,0-10.37,4.64-10.37,10.37s4.64,10.37,10.37,10.37h8.8c5.73,0,10.37-4.64,10.37-10.37s-4.64-10.37-10.37-10.37Z" fill="#fff" fill-rule="evenodd"/>
+      <path d="M331.09,309.04h-8.8c-5.73,0-10.37,4.64-10.37,10.37s4.64,10.37,10.37,10.37h8.8c5.73,0,10.37-4.64,10.37-10.37s-4.64-10.37-10.37-10.37Z" fill="none" stroke="#454545" stroke-miterlimit="100"/>
+    </g>
+  </g>
+  <g id="Triangle_2_copy_4-7" data-name="Triangle 2 copy 4" isolation="isolate">
+    <g id="Triangle_2_copy_4-8" data-name="Triangle 2 copy 4">
+      <path d="M332.58,405.04l-7.05-5.31c-4.61-3.48-11.28-1.38-13.07,4.12l-4.19,12.89c-2.47,7.61,6.07,14.05,12.7,9.58l11.24-7.58c4.79-3.23,4.98-10.22.36-13.7Z" fill="#ffc087" fill-rule="evenodd"/>
+      <path d="M332.58,405.04l-7.05-5.31c-4.61-3.48-11.28-1.38-13.07,4.12l-4.19,12.89c-2.47,7.61,6.07,14.05,12.7,9.58l11.24-7.58c4.79-3.23,4.98-10.22.36-13.7Z" fill="none" stroke="#454545" stroke-miterlimit="100"/>
+    </g>
+  </g>
+  <g id="Rectangle_1_copy_4-9" data-name="Rectangle 1 copy 4" isolation="isolate">
+    <g id="Rectangle_1_copy_4-10" data-name="Rectangle 1 copy 4">
+      <path d="M331.09,397.17h-8.8c-5.73,0-10.37,4.64-10.37,10.37s4.64,10.37,10.37,10.37h8.8c5.73,0,10.37-4.64,10.37-10.37s-4.64-10.37-10.37-10.37Z" fill="#fff" fill-rule="evenodd"/>
+      <path d="M331.09,397.17h-8.8c-5.73,0-10.37,4.64-10.37,10.37s4.64,10.37,10.37,10.37h8.8c5.73,0,10.37-4.64,10.37-10.37s-4.64-10.37-10.37-10.37Z" fill="none" stroke="#454545" stroke-miterlimit="100"/>
+    </g>
+  </g>
+  <g id="Rectangle_1_copy-16" data-name="Rectangle 1 copy" isolation="isolate">
+    <g id="Rectangle_1_copy-17" data-name="Rectangle 1 copy">
+      <path d="M291,353.59h-8.8c-5.73,0-10.37,4.64-10.37,10.37s4.64,10.37,10.37,10.37h8.8c5.73,0,10.37-4.64,10.37-10.37s-4.64-10.37-10.37-10.37Z" fill="#fff" fill-rule="evenodd"/>
+      <path d="M291,353.59h-8.8c-5.73,0-10.37,4.64-10.37,10.37s4.64,10.37,10.37,10.37h8.8c5.73,0,10.37-4.64,10.37-10.37s-4.64-10.37-10.37-10.37Z" fill="none" stroke="#454545" stroke-miterlimit="100"/>
+    </g>
+    <g id="Rectangle_1_copy-18" data-name="Rectangle 1 copy">
+      <path d="M291,441.59h-8.8c-5.73,0-10.37,4.64-10.37,10.37s4.64,10.37,10.37,10.37h8.8c5.73,0,10.37-4.64,10.37-10.37s-4.64-10.37-10.37-10.37Z" fill="#fff" fill-rule="evenodd"/>
+      <path d="M291,441.59h-8.8c-5.73,0-10.37,4.64-10.37,10.37s4.64,10.37,10.37,10.37h8.8c5.73,0,10.37-4.64,10.37-10.37s-4.64-10.37-10.37-10.37Z" fill="none" stroke="#454545" stroke-miterlimit="100"/>
+    </g>
+    <g id="Rectangle_1_copy-19" data-name="Rectangle 1 copy">
+      <path d="M161.78,442.93h-8.8c-5.73,0-10.37,4.64-10.37,10.37s4.64,10.37,10.37,10.37h8.8c5.73,0,10.37-4.64,10.37-10.37s-4.64-10.37-10.37-10.37Z" fill="#fff" fill-rule="evenodd"/>
+      <path d="M161.78,442.93h-8.8c-5.73,0-10.37,4.64-10.37,10.37s4.64,10.37,10.37,10.37h8.8c5.73,0,10.37-4.64,10.37-10.37s-4.64-10.37-10.37-10.37Z" fill="none" stroke="#454545" stroke-miterlimit="100"/>
+    </g>
+    <g>
+      <rect x="68.16" y="49.68" width="20.96" height="20.35" fill="none"/>
+      <path d="M70.75,58.12h-2.12v-.21h.27c.32,0,.47-.16.47-.48v-3.46c0-.23-.08-.35-.25-.35-.1,0-.23.04-.38.12l-.08-.19,1.22-.54h.17v4.42c0,.32.15.48.46.48h.23v.21Z" stroke="#454545" stroke-miterlimit="10" stroke-width=".5"/>
+    </g>
+    <g>
+      <rect x="25.16" y="95.76" width="20.96" height="20.35" fill="none"/>
+      <path d="M29.17,103.27l-.31.94h-3.23v-.15l1.45-1.4c.74-.72,1.11-1.34,1.11-1.88,0-.31-.1-.58-.3-.8-.21-.23-.47-.35-.77-.35-.26,0-.49.08-.67.23s-.3.36-.35.62h-.23c.05-.42.21-.75.49-1.01.28-.25.63-.38,1.05-.38s.75.13,1.03.39c.28.26.42.59.42,1,0,.57-.34,1.17-1.03,1.8l-1.42,1.31h2.12c.23,0,.38-.11.45-.33h.2Z" stroke="#454545" stroke-miterlimit="10" stroke-width=".5"/>
+    </g>
+    <g>
+      <rect x="68.55" y="139.43" width="20.96" height="20.35" fill="none"/>
+      <path d="M72,146.15c0,.52-.2.95-.59,1.27-.37.3-.81.45-1.33.45-.23,0-.45-.03-.65-.1-.28-.09-.42-.23-.42-.42,0-.17.09-.26.27-.26.11,0,.29.08.53.24.25.16.47.24.67.24.27,0,.5-.1.68-.29.17-.19.26-.42.26-.7,0-.4-.17-.71-.5-.93-.27-.18-.63-.29-1.06-.3l.02-.21c.33-.03.61-.15.85-.35.26-.22.39-.48.39-.8,0-.18-.07-.34-.2-.5-.16-.19-.38-.29-.66-.29-.42,0-.71.19-.87.58l-.18-.09c.21-.68.65-1.02,1.33-1.02.34,0,.63.1.85.3.24.21.36.48.36.82,0,.47-.25.83-.75,1.07.66.23.99.66.99,1.3Z" stroke="#454545" stroke-miterlimit="10" stroke-width=".5"/>
+    </g>
+    <g>
+      <rect x="67.36" y="222.43" width="20.96" height="20.35" fill="none"/>
+      <path d="M70.98,225.77l-.23.64h-1.7l-.31.67c.61.06,1.11.26,1.5.6.43.37.64.85.64,1.43,0,.45-.17.85-.52,1.2-.38.38-.86.57-1.44.57-.24,0-.46-.03-.65-.09-.29-.08-.43-.22-.43-.41,0-.08.03-.15.1-.21.07-.06.14-.09.22-.09.09,0,.27.08.54.24.27.16.49.24.65.24.3,0,.55-.13.75-.38.18-.24.28-.51.28-.82,0-.43-.18-.8-.55-1.09-.42-.34-1-.51-1.72-.5l.9-2h1.97Z" stroke="#454545" stroke-miterlimit="10" stroke-width=".5"/>
+    </g>
+    <g>
+      <rect x="25.16" y="185.97" width="20.96" height="20.35" fill="none"/>
+      <path d="M29.23,193.17h-.73v1.25h-.65v-1.25h-2.22v-.66l2.45-3.2h.42v3.25h.73v.61ZM27.84,192.56v-2.47l-1.88,2.47h1.88Z" stroke="#454545" stroke-miterlimit="10" stroke-width=".5"/>
+    </g>
+    <g>
+      <rect x="24.36" y="268.51" width="20.96" height="20.35" fill="none"/>
+      <path d="M28.13,275.22c0,.49-.14.9-.42,1.22-.29.35-.68.52-1.15.52-.53,0-.97-.22-1.29-.67-.29-.41-.44-.89-.44-1.44,0-.8.25-1.5.74-2.1.55-.66,1.27-.99,2.17-.99h.26v.21c-.54,0-1.01.15-1.41.46-.47.37-.78.91-.92,1.64.41-.25.78-.38,1.12-.38.41,0,.74.15.99.46.23.28.35.64.35,1.06ZM27.43,275.44c0-.3-.06-.58-.18-.84-.17-.36-.41-.54-.73-.54-.4,0-.7.11-.92.32-.01.18-.02.36-.02.54,0,1.19.33,1.79,1,1.79.56,0,.84-.42.84-1.27Z" stroke="#454545" stroke-miterlimit="10" stroke-width=".5"/>
+    </g>
+    <g>
+      <rect x="68.16" y="400.42" width="20.96" height="20.35" fill="none"/>
+      <path d="M71.92,405.78c0,.81-.24,1.51-.73,2.09-.55.66-1.28.99-2.18.99h-.26v-.21c.54,0,1.01-.15,1.41-.46.48-.37.79-.91.93-1.63-.43.25-.8.38-1.12.38-.4,0-.73-.17-.98-.5-.23-.3-.34-.64-.34-1.03,0-.46.13-.86.4-1.2.29-.37.68-.55,1.16-.55.55,0,.98.22,1.3.66.29.4.43.88.43,1.45ZM71.18,405.73c0-1.2-.33-1.8-1-1.8-.57,0-.85.43-.85,1.28,0,.29.06.57.18.83.17.36.41.54.74.54.13,0,.29-.03.49-.1s.34-.14.43-.22c.02-.18.02-.36.02-.53Z" stroke="#454545" stroke-miterlimit="10" stroke-width=".5"/>
+    </g>
+    <g>
+      <rect x="25.96" y="359.96" width="20.96" height="20.35" fill="none"/>
+      <path d="M29.47,367.12c0,.39-.15.71-.46.95-.28.22-.62.33-1.03.33-.43,0-.79-.09-1.06-.28-.33-.22-.49-.53-.49-.94,0-.54.35-1.02,1.05-1.42-.31-.27-.52-.46-.61-.57-.21-.26-.31-.53-.31-.82,0-.37.15-.66.44-.88.26-.19.58-.29.97-.29s.7.09.97.28c.3.21.45.5.45.86,0,.29-.11.55-.34.77-.1.1-.33.27-.68.49.35.25.59.44.72.57.27.29.41.61.41.95ZM28.88,367.31c0-.35-.39-.81-1.18-1.37-.43.32-.65.72-.65,1.22,0,.23.07.44.2.62.18.24.46.37.82.37.23,0,.43-.08.58-.25s.23-.36.23-.59ZM28.82,364.27c0-.24-.08-.44-.23-.59-.15-.15-.35-.22-.6-.22-.23,0-.42.06-.58.18-.18.13-.27.31-.27.53s.08.42.24.61c.12.14.36.35.74.64.46-.27.69-.65.69-1.15Z" stroke="#454545" stroke-miterlimit="10" stroke-width=".5"/>
+    </g>
+    <g>
+      <rect x="25.16" y="446.5" width="20.96" height="20.35" fill="none"/>
+      <path d="M27.74,454.95h-2.12v-.21h.27c.32,0,.47-.16.47-.48v-3.46c0-.23-.08-.35-.25-.35-.1,0-.23.04-.38.12l-.08-.19,1.22-.54h.17v4.42c0,.32.15.48.46.48h.23v.21Z" stroke="#454545" stroke-miterlimit="10" stroke-width=".5"/>
+      <path d="M32.28,452.35c0,.84-.19,1.5-.58,1.98-.33.42-.74.63-1.21.63s-.9-.22-1.25-.66c-.38-.48-.56-1.12-.56-1.91,0-.87.2-1.54.6-2.02.34-.4.74-.6,1.21-.6.44,0,.83.18,1.16.55.42.47.63,1.15.63,2.04ZM31.52,452.21c0-.77-.11-1.35-.33-1.73-.18-.31-.41-.46-.68-.46-.36,0-.63.23-.82.69-.17.42-.25,1-.25,1.76,0,.5.06.95.18,1.35.17.6.45.9.84.9.71,0,1.07-.83,1.07-2.49Z" stroke="#454545" stroke-miterlimit="10" stroke-width=".5"/>
+    </g>
+    <g>
+      <rect x="67.75" y="312.19" width="20.96" height="20.35" fill="none"/>
+      <path d="M71.52,315.52l-1.73,5.11-.38-.13,1.47-4.34h-1.81c-.18,0-.32.07-.42.2-.07.15-.15.29-.23.44l-.19-.07.5-1.21h2.8Z" stroke="#454545" stroke-miterlimit="10" stroke-width=".5"/>
+    </g>
+    <g>
+      <rect x="195.76" y="49.74" width="20.96" height="20.35" fill="none"/>
+      <path d="M198.35,58.19h-2.12v-.21h.27c.32,0,.47-.16.47-.48v-3.46c0-.23-.08-.35-.25-.35-.1,0-.23.04-.38.12l-.08-.19,1.22-.54h.17v4.42c0,.32.16.48.46.48h.23v.21Z" stroke="#454545" stroke-miterlimit="10" stroke-width=".5"/>
+      <path d="M201.41,58.19h-2.12v-.21h.27c.32,0,.47-.16.47-.48v-3.46c0-.23-.08-.35-.25-.35-.1,0-.23.04-.38.12l-.08-.19,1.22-.54h.17v4.42c0,.32.16.48.46.48h.23v.21Z" stroke="#454545" stroke-miterlimit="10" stroke-width=".5"/>
+    </g>
+    <g>
+      <rect x="154.36" y="95.82" width="20.96" height="20.35" fill="none"/>
+      <path d="M156.94,104.27h-2.12v-.21h.27c.32,0,.47-.16.47-.48v-3.46c0-.23-.08-.35-.25-.35-.1,0-.23.04-.38.12l-.08-.19,1.22-.54h.17v4.42c0,.32.15.48.46.48h.23v.21Z" stroke="#454545" stroke-miterlimit="10" stroke-width=".5"/>
+      <path d="M161.43,103.33l-.31.94h-3.23v-.15l1.45-1.4c.74-.72,1.11-1.34,1.11-1.88,0-.31-.1-.58-.3-.8-.21-.23-.47-.35-.77-.35-.26,0-.49.08-.67.23s-.3.36-.35.62h-.23c.05-.42.21-.75.49-1.01.28-.25.63-.38,1.05-.38s.75.13,1.03.39c.28.26.42.59.42,1,0,.57-.34,1.17-1.03,1.8l-1.42,1.31h2.12c.23,0,.38-.11.45-.33h.2Z" stroke="#454545" stroke-miterlimit="10" stroke-width=".5"/>
+    </g>
+    <g>
+      <rect x="196.95" y="139.49" width="20.96" height="20.35" fill="none"/>
+      <path d="M199.54,147.94h-2.12v-.21h.27c.32,0,.47-.16.47-.48v-3.46c0-.23-.08-.35-.25-.35-.1,0-.23.04-.38.12l-.08-.19,1.22-.54h.17v4.42c0,.32.16.48.46.48h.23v.21Z" stroke="#454545" stroke-miterlimit="10" stroke-width=".5"/>
+      <path d="M203.46,146.21c0,.52-.2.95-.59,1.27-.37.3-.81.45-1.33.45-.23,0-.45-.03-.65-.1-.28-.09-.42-.23-.42-.42,0-.17.09-.26.27-.26.11,0,.29.08.53.24.25.16.47.24.67.24.27,0,.5-.1.68-.29.17-.19.26-.42.26-.7,0-.4-.17-.71-.5-.93-.28-.18-.63-.29-1.06-.3l.02-.21c.33-.03.61-.15.85-.35.26-.22.39-.48.39-.8,0-.18-.07-.34-.2-.5-.16-.19-.38-.29-.66-.29-.42,0-.71.19-.87.58l-.18-.09c.21-.68.65-1.02,1.33-1.02.34,0,.63.1.85.3.24.21.36.48.36.82,0,.47-.25.83-.75,1.07.66.23.99.66.99,1.3Z" stroke="#454545" stroke-miterlimit="10" stroke-width=".5"/>
+    </g>
+    <g>
+      <rect x="195.76" y="222.5" width="20.96" height="20.35" fill="none"/>
+      <path d="M198.35,230.94h-2.12v-.21h.27c.32,0,.47-.16.47-.48v-3.46c0-.23-.08-.35-.25-.35-.1,0-.23.04-.38.12l-.08-.19,1.22-.54h.17v4.42c0,.32.16.48.46.48h.23v.21Z" stroke="#454545" stroke-miterlimit="10" stroke-width=".5"/>
+      <path d="M202.43,225.83l-.23.64h-1.7l-.31.67c.61.06,1.11.26,1.5.6.43.37.64.85.64,1.43,0,.45-.17.85-.52,1.2-.38.38-.86.57-1.44.57-.24,0-.46-.03-.65-.09-.29-.08-.43-.22-.43-.41,0-.08.03-.15.1-.21.07-.06.14-.09.22-.09.09,0,.27.08.54.24.27.16.49.24.65.24.3,0,.55-.13.75-.38.18-.24.28-.51.28-.82,0-.43-.18-.8-.55-1.09-.42-.34-1-.51-1.72-.5l.9-2h1.97Z" stroke="#454545" stroke-miterlimit="10" stroke-width=".5"/>
+    </g>
+    <g>
+      <rect x="154.36" y="186.03" width="20.96" height="20.35" fill="none"/>
+      <path d="M156.94,194.48h-2.12v-.21h.27c.32,0,.47-.16.47-.48v-3.46c0-.23-.08-.35-.25-.35-.1,0-.23.04-.38.12l-.08-.19,1.22-.54h.17v4.42c0,.32.15.48.46.48h.23v.21Z" stroke="#454545" stroke-miterlimit="10" stroke-width=".5"/>
+      <path d="M161.48,193.23h-.73v1.25h-.65v-1.25h-2.22v-.66l2.45-3.2h.42v3.25h.73v.61ZM160.1,192.62v-2.47l-1.88,2.47h1.88Z" stroke="#454545" stroke-miterlimit="10" stroke-width=".5"/>
+    </g>
+    <g>
+      <rect x="153.56" y="268.58" width="20.96" height="20.35" fill="none"/>
+      <path d="M156.14,277.02h-2.12v-.21h.27c.32,0,.47-.16.47-.48v-3.46c0-.23-.08-.35-.25-.35-.1,0-.23.04-.38.12l-.08-.19,1.22-.54h.17v4.42c0,.32.15.48.46.48h.23v.21Z" stroke="#454545" stroke-miterlimit="10" stroke-width=".5"/>
+      <path d="M160.38,275.28c0,.49-.14.9-.42,1.22-.29.35-.68.52-1.15.52-.53,0-.97-.22-1.29-.67-.29-.41-.44-.89-.44-1.44,0-.8.25-1.5.74-2.1.55-.66,1.27-.99,2.17-.99h.26v.21c-.54,0-1.01.15-1.41.46-.47.37-.78.91-.92,1.64.41-.25.78-.38,1.12-.38.41,0,.74.15.99.46.23.28.35.64.35,1.06ZM159.69,275.5c0-.3-.06-.58-.18-.84-.17-.36-.41-.54-.73-.54-.4,0-.7.11-.92.32-.01.18-.02.36-.02.54,0,1.19.33,1.79,1,1.79.56,0,.84-.42.84-1.27Z" stroke="#454545" stroke-miterlimit="10" stroke-width=".5"/>
+    </g>
+    <g>
+      <rect x="195.76" y="401.29" width="20.96" height="20.35" fill="none"/>
+      <path d="M198.35,409.73h-2.12v-.21h.27c.32,0,.47-.16.47-.48v-3.46c0-.23-.08-.35-.25-.35-.1,0-.23.04-.38.12l-.08-.19,1.22-.54h.17v4.42c0,.32.16.48.46.48h.23v.21Z" stroke="#454545" stroke-miterlimit="10" stroke-width=".5"/>
+      <path d="M202.58,406.65c0,.81-.24,1.51-.73,2.09-.55.66-1.28.99-2.18.99h-.26v-.21c.54,0,1.01-.15,1.41-.46.48-.37.79-.91.93-1.63-.43.25-.8.38-1.12.38-.4,0-.73-.17-.98-.5-.23-.3-.34-.64-.34-1.03,0-.46.13-.86.4-1.2.29-.37.68-.55,1.16-.55.55,0,.98.22,1.3.66.29.4.43.88.43,1.45ZM201.84,406.59c0-1.2-.33-1.8-1-1.8-.57,0-.85.43-.85,1.28,0,.29.06.57.18.83.17.36.41.54.74.54.13,0,.29-.03.49-.1.19-.07.34-.14.43-.22.02-.18.02-.36.02-.53Z" stroke="#454545" stroke-miterlimit="10" stroke-width=".5"/>
+    </g>
+    <g>
+      <rect x="154.36" y="360.02" width="20.96" height="20.35" fill="none"/>
+      <path d="M156.94,368.47h-2.12v-.21h.27c.32,0,.47-.16.47-.48v-3.46c0-.23-.08-.35-.25-.35-.1,0-.23.04-.38.12l-.08-.19,1.22-.54h.17v4.42c0,.32.15.48.46.48h.23v.21Z" stroke="#454545" stroke-miterlimit="10" stroke-width=".5"/>
+      <path d="M160.93,367.19c0,.39-.15.71-.46.95-.28.22-.62.33-1.03.33-.43,0-.79-.09-1.06-.28-.33-.22-.49-.53-.49-.94,0-.54.35-1.02,1.05-1.42-.31-.27-.52-.46-.61-.57-.21-.26-.31-.53-.31-.82,0-.37.15-.66.44-.88.26-.19.58-.29.97-.29s.7.09.97.28c.3.21.45.5.45.86,0,.29-.11.55-.34.77-.1.1-.33.27-.68.49.35.25.59.44.72.57.27.29.41.61.41.95ZM160.33,367.37c0-.35-.39-.81-1.18-1.37-.43.32-.65.72-.65,1.22,0,.23.07.44.2.62.18.24.46.37.82.37.23,0,.43-.08.58-.25s.23-.36.23-.59ZM160.28,364.34c0-.24-.08-.44-.23-.59-.15-.15-.35-.22-.6-.22-.23,0-.42.06-.58.18-.18.13-.27.31-.27.53s.08.42.24.61c.12.14.36.35.74.64.46-.27.69-.65.69-1.15Z" stroke="#454545" stroke-miterlimit="10" stroke-width=".5"/>
+    </g>
+    <g>
+      <rect x="153.56" y="446.57" width="20.96" height="20.35" fill="none"/>
+      <path d="M157.57,454.08l-.31.94h-3.23v-.15l1.45-1.4c.74-.72,1.11-1.34,1.11-1.88,0-.31-.1-.58-.3-.8-.21-.23-.47-.35-.77-.35-.26,0-.49.08-.67.23-.19.15-.3.36-.35.62h-.23c.05-.42.21-.75.49-1.01s.63-.38,1.05-.38.75.13,1.03.39c.28.26.42.59.42,1,0,.57-.34,1.17-1.03,1.8l-1.42,1.31h2.12c.23,0,.38-.11.45-.33h.2Z" stroke="#454545" stroke-miterlimit="10" stroke-width=".5"/>
+      <path d="M162.11,452.41c0,.84-.19,1.5-.58,1.98-.33.42-.74.63-1.21.63s-.9-.22-1.25-.66c-.38-.48-.56-1.12-.56-1.91,0-.87.2-1.54.6-2.02.34-.4.74-.6,1.21-.6.44,0,.83.18,1.16.55.42.47.63,1.15.63,2.04ZM161.34,452.27c0-.77-.11-1.35-.33-1.73-.18-.31-.41-.46-.68-.46-.36,0-.63.23-.82.69-.17.42-.25,1-.25,1.76,0,.5.06.95.18,1.35.17.6.45.9.84.9.71,0,1.07-.83,1.07-2.49Z" stroke="#454545" stroke-miterlimit="10" stroke-width=".5"/>
+    </g>
+    <g>
+      <rect x="195.35" y="313.05" width="20.96" height="20.35" fill="none"/>
+      <path d="M197.94,321.49h-2.12v-.21h.27c.32,0,.47-.16.47-.48v-3.46c0-.23-.08-.35-.25-.35-.1,0-.23.04-.38.12l-.08-.19,1.22-.54h.17v4.42c0,.32.16.48.46.48h.23v.21Z" stroke="#454545" stroke-miterlimit="10" stroke-width=".5"/>
+      <path d="M202.17,316.38l-1.73,5.11-.38-.13,1.47-4.34h-1.81c-.18,0-.32.07-.42.2-.07.15-.15.29-.23.44l-.19-.07.5-1.21h2.8Z" stroke="#454545" stroke-miterlimit="10" stroke-width=".5"/>
+    </g>
+    <g>
+      <rect x="323.76" y="49.74" width="20.96" height="20.35" fill="none"/>
+      <path d="M327.78,57.25l-.31.94h-3.23v-.15l1.45-1.4c.74-.72,1.11-1.34,1.11-1.88,0-.31-.1-.58-.3-.8-.21-.23-.47-.35-.77-.35-.26,0-.49.08-.67.23s-.3.36-.35.62h-.23c.05-.42.21-.75.49-1.01.28-.25.63-.38,1.05-.38s.75.13,1.03.39c.28.26.42.59.42,1,0,.57-.34,1.17-1.03,1.8l-1.42,1.31h2.12c.23,0,.38-.11.45-.33h.2Z" stroke="#454545" stroke-miterlimit="10" stroke-width=".5"/>
+      <path d="M330.83,58.19h-2.12v-.21h.27c.32,0,.47-.16.47-.48v-3.46c0-.23-.08-.35-.25-.35-.1,0-.23.04-.38.12l-.08-.19,1.22-.54h.17v4.42c0,.32.16.48.46.48h.23v.21Z" stroke="#454545" stroke-miterlimit="10" stroke-width=".5"/>
+    </g>
+    <g>
+      <rect x="282.36" y="95.02" width="20.96" height="20.35" fill="none"/>
+      <path d="M286.37,102.53l-.31.94h-3.23v-.15l1.45-1.4c.74-.72,1.11-1.34,1.11-1.88,0-.31-.1-.58-.3-.8-.21-.23-.47-.35-.77-.35-.26,0-.49.08-.67.23s-.3.36-.35.62h-.23c.05-.42.21-.75.49-1.01.28-.25.63-.38,1.05-.38s.75.13,1.03.39c.28.26.42.59.42,1,0,.57-.34,1.17-1.03,1.8l-1.42,1.31h2.12c.23,0,.38-.11.45-.33h.2Z" stroke="#454545" stroke-miterlimit="10" stroke-width=".5"/>
+      <path d="M290.85,102.53l-.31.94h-3.23v-.15l1.45-1.4c.74-.72,1.11-1.34,1.11-1.88,0-.31-.1-.58-.3-.8-.21-.23-.47-.35-.77-.35-.26,0-.49.08-.67.23s-.3.36-.35.62h-.23c.05-.42.21-.75.49-1.01.28-.25.63-.38,1.05-.38s.75.13,1.03.39c.28.26.42.59.42,1,0,.57-.34,1.17-1.03,1.8l-1.42,1.31h2.12c.23,0,.38-.11.45-.33h.2Z" stroke="#454545" stroke-miterlimit="10" stroke-width=".5"/>
+    </g>
+    <g>
+      <rect x="323.35" y="140.29" width="20.96" height="20.35" fill="none"/>
+      <path d="M327.36,147.8l-.31.94h-3.23v-.15l1.45-1.4c.74-.72,1.11-1.34,1.11-1.88,0-.31-.1-.58-.3-.8-.21-.23-.47-.35-.77-.35-.26,0-.49.08-.67.23s-.3.36-.35.62h-.23c.05-.42.21-.75.49-1.01.28-.25.63-.38,1.05-.38s.75.13,1.03.39c.28.26.42.59.42,1,0,.57-.34,1.17-1.03,1.8l-1.42,1.31h2.12c.23,0,.38-.11.45-.33h.2Z" stroke="#454545" stroke-miterlimit="10" stroke-width=".5"/>
+      <path d="M331.28,147.01c0,.52-.2.95-.59,1.27-.37.3-.81.45-1.33.45-.23,0-.45-.03-.65-.1-.28-.09-.42-.23-.42-.42,0-.17.09-.26.27-.26.11,0,.29.08.53.24.25.16.47.24.67.24.27,0,.5-.1.68-.29.17-.19.26-.42.26-.7,0-.4-.17-.71-.5-.93-.28-.18-.63-.29-1.06-.3l.02-.21c.33-.03.61-.15.85-.35.26-.22.39-.48.39-.8,0-.18-.07-.34-.2-.5-.16-.19-.38-.29-.66-.29-.42,0-.71.19-.87.58l-.18-.09c.21-.68.65-1.02,1.33-1.02.34,0,.63.1.85.3.24.21.36.48.36.82,0,.47-.25.83-.75,1.07.66.23.99.66.99,1.3Z" stroke="#454545" stroke-miterlimit="10" stroke-width=".5"/>
+    </g>
+    <g>
+      <rect x="322.96" y="222.5" width="20.96" height="20.35" fill="none"/>
+      <path d="M326.98,230.01l-.31.94h-3.23v-.15l1.45-1.4c.74-.72,1.11-1.34,1.11-1.88,0-.31-.1-.58-.3-.8-.21-.23-.47-.35-.77-.35-.26,0-.49.08-.67.23s-.3.36-.35.62h-.23c.05-.42.21-.75.49-1.01.28-.25.63-.38,1.05-.38s.75.13,1.03.39c.28.26.42.59.42,1,0,.57-.34,1.17-1.03,1.8l-1.42,1.31h2.12c.23,0,.38-.11.45-.33h.2Z" stroke="#454545" stroke-miterlimit="10" stroke-width=".5"/>
+      <path d="M331.06,225.83l-.23.64h-1.7l-.31.67c.61.06,1.11.26,1.5.6.43.37.64.85.64,1.43,0,.45-.17.85-.52,1.2-.38.38-.86.57-1.44.57-.24,0-.46-.03-.65-.09-.29-.08-.43-.22-.43-.41,0-.08.03-.15.1-.21.07-.06.14-.09.22-.09.09,0,.27.08.54.24.27.16.49.24.65.24.3,0,.55-.13.75-.38.18-.24.28-.51.28-.82,0-.43-.18-.8-.55-1.09-.42-.34-1-.51-1.72-.5l.9-2h1.97Z" stroke="#454545" stroke-miterlimit="10" stroke-width=".5"/>
+    </g>
+    <g>
+      <rect x="282.36" y="185.23" width="20.96" height="20.35" fill="none"/>
+      <path d="M286.37,192.74l-.31.94h-3.23v-.15l1.45-1.4c.74-.72,1.11-1.34,1.11-1.88,0-.31-.1-.58-.3-.8-.21-.23-.47-.35-.77-.35-.26,0-.49.08-.67.23s-.3.36-.35.62h-.23c.05-.42.21-.75.49-1.01.28-.25.63-.38,1.05-.38s.75.13,1.03.39c.28.26.42.59.42,1,0,.57-.34,1.17-1.03,1.8l-1.42,1.31h2.12c.23,0,.38-.11.45-.33h.2Z" stroke="#454545" stroke-miterlimit="10" stroke-width=".5"/>
+      <path d="M290.91,192.43h-.73v1.25h-.65v-1.25h-2.22v-.66l2.45-3.2h.42v3.25h.73v.61ZM289.52,191.82v-2.47l-1.88,2.47h1.88Z" stroke="#454545" stroke-miterlimit="10" stroke-width=".5"/>
+    </g>
+    <g>
+      <rect x="281.56" y="267.78" width="20.96" height="20.35" fill="none"/>
+      <path d="M285.57,275.29l-.31.94h-3.23v-.15l1.45-1.4c.74-.72,1.11-1.34,1.11-1.88,0-.31-.1-.58-.3-.8-.21-.23-.47-.35-.77-.35-.26,0-.49.08-.67.23s-.3.36-.35.62h-.23c.05-.42.21-.75.49-1.01.28-.25.63-.38,1.05-.38s.75.13,1.03.39c.28.26.42.59.42,1,0,.57-.34,1.17-1.03,1.8l-1.42,1.31h2.12c.23,0,.38-.11.45-.33h.2Z" stroke="#454545" stroke-miterlimit="10" stroke-width=".5"/>
+      <path d="M289.81,274.48c0,.49-.14.9-.42,1.22-.29.35-.68.52-1.15.52-.53,0-.97-.22-1.29-.67-.29-.41-.44-.89-.44-1.44,0-.8.25-1.5.74-2.1.55-.66,1.28-.99,2.18-.99h.26v.21c-.54,0-1.01.15-1.41.46-.47.37-.78.91-.92,1.64.41-.25.78-.38,1.12-.38.41,0,.74.15.99.46.23.28.35.64.35,1.06ZM289.11,274.7c0-.3-.06-.58-.18-.84-.17-.36-.41-.54-.73-.54-.4,0-.7.11-.92.32-.01.18-.02.36-.02.54,0,1.19.33,1.79,1,1.79.56,0,.84-.42.84-1.27Z" stroke="#454545" stroke-miterlimit="10" stroke-width=".5"/>
+    </g>
+    <g>
+      <rect x="323.76" y="401.29" width="20.96" height="20.35" fill="none"/>
+      <path d="M327.78,408.8l-.31.94h-3.23v-.15l1.45-1.4c.74-.72,1.11-1.34,1.11-1.88,0-.31-.1-.58-.3-.8-.21-.23-.47-.35-.77-.35-.26,0-.49.08-.67.23-.19.15-.3.36-.35.62h-.23c.05-.42.21-.75.49-1.01s.63-.38,1.05-.38.75.13,1.03.39c.28.26.42.59.42,1,0,.57-.34,1.17-1.03,1.8l-1.42,1.31h2.12c.23,0,.38-.11.45-.33h.2Z" stroke="#454545" stroke-miterlimit="10" stroke-width=".5"/>
+      <path d="M332.01,406.65c0,.81-.24,1.51-.73,2.09-.55.66-1.28.99-2.18.99h-.26v-.21c.54,0,1.01-.15,1.41-.46.48-.37.79-.91.93-1.63-.43.25-.8.38-1.12.38-.4,0-.73-.17-.98-.5-.23-.3-.34-.64-.34-1.03,0-.46.13-.86.4-1.2.29-.37.68-.55,1.16-.55.55,0,.98.22,1.3.66.29.4.43.88.43,1.45ZM331.26,406.59c0-1.2-.33-1.8-1-1.8-.57,0-.85.43-.85,1.28,0,.29.06.57.18.83.17.36.41.54.74.54.13,0,.29-.03.49-.1.19-.07.34-.14.43-.22.02-.18.02-.36.02-.53Z" stroke="#454545" stroke-miterlimit="10" stroke-width=".5"/>
+    </g>
+    <g>
+      <rect x="281.56" y="358.42" width="20.96" height="20.35" fill="none"/>
+      <path d="M285.57,365.93l-.31.94h-3.23v-.15l1.45-1.4c.74-.72,1.11-1.34,1.11-1.88,0-.31-.1-.58-.3-.8-.21-.23-.47-.35-.77-.35-.26,0-.49.08-.67.23-.19.15-.3.36-.35.62h-.23c.05-.42.21-.75.49-1.01s.63-.38,1.05-.38.75.13,1.03.39c.28.26.42.59.42,1,0,.57-.34,1.17-1.03,1.8l-1.42,1.31h2.12c.23,0,.38-.11.45-.33h.2Z" stroke="#454545" stroke-miterlimit="10" stroke-width=".5"/>
+      <path d="M289.55,365.59c0,.39-.15.71-.46.95-.28.22-.62.33-1.03.33-.43,0-.79-.09-1.06-.28-.33-.22-.49-.53-.49-.94,0-.54.35-1.02,1.05-1.42-.31-.27-.52-.46-.61-.57-.21-.26-.31-.53-.31-.82,0-.37.15-.66.44-.88.26-.19.58-.29.97-.29s.7.09.96.28c.3.21.45.5.45.86,0,.29-.11.55-.34.77-.1.1-.33.27-.68.49.35.25.59.44.72.57.27.29.41.61.41.95ZM288.96,365.77c0-.35-.39-.81-1.18-1.37-.43.32-.65.72-.65,1.22,0,.23.07.44.2.62.18.24.46.37.82.37.23,0,.42-.08.58-.25s.23-.36.23-.59ZM288.9,362.73c0-.24-.08-.44-.23-.59-.15-.15-.35-.22-.6-.22-.23,0-.42.06-.58.18-.18.13-.27.31-.27.53s.08.42.24.61c.12.14.36.35.74.64.46-.27.69-.65.69-1.15Z" stroke="#454545" stroke-miterlimit="10" stroke-width=".5"/>
+    </g>
+    <g>
+      <rect x="282.36" y="445.77" width="20.96" height="20.35" fill="none"/>
+      <path d="M285.81,452.49c0,.53-.2.95-.59,1.27-.37.3-.81.46-1.33.46-.23,0-.45-.03-.65-.1-.28-.09-.42-.23-.42-.42,0-.17.09-.26.27-.26.11,0,.29.08.53.24.25.16.47.24.67.24.27,0,.5-.1.68-.29.17-.19.26-.42.26-.7,0-.4-.17-.71-.5-.93-.28-.18-.63-.29-1.06-.3l.02-.21c.33-.03.61-.15.85-.35.26-.22.39-.48.39-.8,0-.18-.07-.34-.2-.5-.16-.19-.38-.29-.66-.29-.42,0-.71.19-.87.58l-.18-.09c.21-.68.65-1.02,1.33-1.02.34,0,.63.1.85.3.24.21.36.48.36.82,0,.47-.25.83-.75,1.07.66.23.99.66.99,1.3Z" stroke="#454545" stroke-miterlimit="10" stroke-width=".5"/>
+      <path d="M290.34,451.61c0,.84-.19,1.5-.58,1.98-.33.42-.74.63-1.21.63s-.9-.22-1.25-.66c-.38-.48-.56-1.12-.56-1.91,0-.87.2-1.54.6-2.02.34-.4.74-.6,1.21-.6.44,0,.83.18,1.16.55.42.47.63,1.15.63,2.04ZM289.58,451.47c0-.77-.11-1.35-.33-1.73-.18-.31-.41-.46-.68-.46-.36,0-.63.23-.82.69-.17.42-.25,1-.25,1.76,0,.5.06.95.18,1.35.18.6.46.9.84.9.71,0,1.07-.83,1.07-2.49Z" stroke="#454545" stroke-miterlimit="10" stroke-width=".5"/>
+    </g>
+    <g>
+      <rect x="323.35" y="313.05" width="20.96" height="20.35" fill="none"/>
+      <path d="M327.36,320.56l-.31.94h-3.23v-.15l1.45-1.4c.74-.72,1.11-1.34,1.11-1.88,0-.31-.1-.58-.3-.8-.21-.23-.47-.35-.77-.35-.26,0-.49.08-.67.23-.19.15-.3.36-.35.62h-.23c.05-.42.21-.75.49-1.01s.63-.38,1.05-.38.75.13,1.03.39c.28.26.42.59.42,1,0,.57-.34,1.17-1.03,1.8l-1.42,1.31h2.12c.23,0,.38-.11.45-.33h.2Z" stroke="#454545" stroke-miterlimit="10" stroke-width=".5"/>
+      <path d="M331.6,316.38l-1.73,5.11-.38-.13,1.47-4.34h-1.81c-.18,0-.32.07-.42.2-.07.15-.15.29-.23.44l-.19-.07.5-1.21h2.8Z" stroke="#454545" stroke-miterlimit="10" stroke-width=".5"/>
+    </g>
+  </g>
+</svg>
