@@ -1,0 +1,377 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 1420 760">
+  <!-- Generator: Adobe Illustrator 30.6.0, SVG Export Plug-In . SVG Version: 2.1.4 Build 75)  -->
+  <defs>
+    <style>
+      .st0, .st1, .st2, .st3, .st4, .st5, .st6, .st7, .st8, .st9, .st10, .st11, .st12, .st13, .st14, .st15, .st16, .st17, .st18, .st19, .st20, .st21, .st22, .st23 {
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+
+      .st0, .st24, .st25, .st26, .st27, .st5, .st10, .st28, .st29, .st14, .st17, .st19, .st20, .st21, .st30, .st31 {
+        stroke-width: 2px;
+      }
+
+      .st0, .st5, .st10, .st14, .st17, .st19, .st20, .st21 {
+        fill: #fff;
+      }
+
+      .st0, .st9, .st13 {
+        stroke: #9aa3b2;
+      }
+
+      .st32 {
+        fill: #5aa9ff;
+      }
+
+      .st1, .st33, .st2, .st3, .st4, .st34, .st6, .st7, .st8, .st9, .st35, .st11, .st12, .st13, .st15, .st16, .st18, .st36, .st37, .st22, .st38, .st39, .st23 {
+        isolation: isolate;
+      }
+
+      .st1, .st2, .st3, .st4, .st6, .st7, .st8, .st9, .st11, .st12, .st13, .st15, .st16, .st18, .st22, .st23 {
+        fill: none;
+      }
+
+      .st1, .st2, .st3, .st4, .st9, .st11, .st12, .st13, .st15, .st16, .st18, .st22, .st23 {
+        opacity: .85;
+      }
+
+      .st1, .st4, .st9, .st12 {
+        stroke-width: 4.8px;
+      }
+
+      .st1, .st17 {
+        stroke: #3fc7d4;
+      }
+
+      .st33 {
+        font-size: 16px;
+      }
+
+      .st33, .st34, .st35, .st37, .st38, .st39 {
+        font-family: Arial-BoldMT, Arial;
+        font-weight: 700;
+      }
+
+      .st33, .st34, .st37, .st39 {
+        fill: #101015;
+      }
+
+      .st40 {
+        fill: #f06292;
+      }
+
+      .st24 {
+        fill: #9c9cff;
+      }
+
+      .st24, .st25, .st26, .st27, .st28, .st29, .st30, .st31 {
+        stroke: #fff;
+      }
+
+      .st25 {
+        fill: #7ec0ff;
+      }
+
+      .st26 {
+        fill: #ff8f8f;
+      }
+
+      .st41 {
+        fill: #9aa3b2;
+      }
+
+      .st42, .st27 {
+        fill: #ff9c5b;
+      }
+
+      .st2, .st3, .st4, .st14 {
+        stroke: #54c98a;
+      }
+
+      .st2, .st11, .st16 {
+        stroke-width: 9.6px;
+      }
+
+      .st43 {
+        fill: #b48bf0;
+      }
+
+      .st3, .st13, .st15, .st18, .st22, .st23 {
+        stroke-width: 7.2px;
+      }
+
+      .st34 {
+        letter-spacing: .08em;
+      }
+
+      .st34, .st35 {
+        font-size: 13px;
+      }
+
+      .st44 {
+        fill: #fbfbf8;
+      }
+
+      .st5, .st22 {
+        stroke: #f06292;
+      }
+
+      .st6 {
+        stroke-width: 12.1px;
+      }
+
+      .st6, .st7, .st8 {
+        opacity: .07;
+        stroke: #0a1730;
+      }
+
+      .st7 {
+        stroke-width: 7.3px;
+      }
+
+      .st45 {
+        fill: #ffa733;
+      }
+
+      .st8 {
+        stroke-width: 9.7px;
+      }
+
+      .st35 {
+        letter-spacing: .12em;
+      }
+
+      .st35, .st36 {
+        fill: #444;
+      }
+
+      .st10, .st23 {
+        stroke: coral;
+      }
+
+      .st11, .st12, .st19 {
+        stroke: #ffd24d;
+      }
+
+      .st28 {
+        fill: #d9c089;
+      }
+
+      .st29 {
+        fill: #d9a6e6;
+      }
+
+      .st15, .st20 {
+        stroke: #ff4d6d;
+      }
+
+      .st16, .st18, .st21 {
+        stroke: #ffa733;
+      }
+
+      .st36 {
+        font-family: ArialMT, Arial;
+        font-size: 12px;
+      }
+
+      .st37 {
+        font-size: 20px;
+        letter-spacing: .1em;
+      }
+
+      .st46 {
+        fill: #3fc7d4;
+      }
+
+      .st47 {
+        fill: #ffd24d;
+      }
+
+      .st48 {
+        fill: #54c98a;
+      }
+
+      .st38 {
+        fill: #333;
+        font-size: 11px;
+      }
+
+      .st39 {
+        font-size: 10.5px;
+        opacity: .7;
+      }
+
+      .st49 {
+        fill: #ff4d6d;
+      }
+
+      .st50 {
+        fill: coral;
+      }
+
+      .st30 {
+        fill: #ffc473;
+      }
+
+      .st31 {
+        fill: #ff7a66;
+      }
+    </style>
+  </defs>
+  <rect class="st44" width="1420" height="760"/>
+  <path class="st42" d="M60,24h1300c11.05,0,20,8.95,20,20h0c0,11.05-8.95,20-20,20H60c-11.05,0-20-8.95-20-20h0c0-11.05,8.95-20,20-20Z"/>
+  <text class="st37" transform="translate(58 51)"><tspan x="0" y="0">RTP LANE MAP · BUS</tspan></text>
+  <text class="st34" transform="translate(1103.1538 50)"><tspan x="0" y="0">8 NODES · 54 LANES · 26 SESSIONS</tspan></text>
+  <g>
+    <path class="st6" d="M220,292h326v80h634"/>
+    <path class="st16" d="M220,292h326v80h634"/>
+    <circle class="st21" cx="546" cy="332" r="9"/>
+    <text class="st38" transform="translate(542.94 336)"><tspan x="0" y="0">3</tspan></text>
+    <path class="st6" d="M1180,372h-283V118h-459"/>
+    <path class="st16" d="M1180,372h-283V118h-459"/>
+    <circle class="st21" cx="897" cy="245" r="9"/>
+    <text class="st38" transform="translate(893.94 248)"><tspan x="0" y="0">3</tspan></text>
+    <path class="st6" d="M1180,372h-347v228h-473"/>
+    <path class="st16" d="M1180,372h-347v228h-473"/>
+    <circle class="st21" cx="833" cy="486" r="9"/>
+    <text class="st38" transform="translate(829.94 490)"><tspan x="0" y="0">3</tspan></text>
+    <path class="st6" d="M438,118h-36v482h-42"/>
+    <path class="st11" d="M438,118h-36v482h-42"/>
+    <circle class="st19" cx="402" cy="359" r="9"/>
+    <text class="st38" transform="translate(398.94 362)"><tspan x="0" y="0">3</tspan></text>
+    <path class="st6" d="M220,292h71v308h69"/>
+    <path class="st11" d="M220,292h71v308h69"/>
+    <circle class="st19" cx="291" cy="446" r="9"/>
+    <text class="st38" transform="translate(287.94 450)"><tspan x="0" y="0">3</tspan></text>
+    <path class="st6" d="M220,292h119V118h99"/>
+    <path class="st2" d="M220,292h119V118h99"/>
+    <circle class="st14" cx="339" cy="205" r="9"/>
+    <text class="st38" transform="translate(335.94 208)"><tspan x="0" y="0">3</tspan></text>
+    <path class="st6" d="M874,182h157v422h109"/>
+    <path class="st2" d="M874,182h157v422h109"/>
+    <circle class="st14" cx="1031" cy="393" r="9"/>
+    <text class="st38" transform="translate(1027.9412 396)"><tspan x="0" y="0">3</tspan></text>
+    <path class="st8" d="M751,604h-247v-4h-144"/>
+    <path class="st22" d="M751,604h-247v-4h-144"/>
+    <circle class="st5" cx="504" cy="602" r="9"/>
+    <text class="st38" transform="translate(500.94 606)"><tspan x="0" y="0">2</tspan></text>
+    <path class="st8" d="M300,438h-28v-146h-52"/>
+    <path class="st23" d="M300,438h-28v-146h-52"/>
+    <circle class="st10" cx="272" cy="365" r="9"/>
+    <text class="st38" transform="translate(268.94 368)"><tspan x="0" y="0">2</tspan></text>
+    <path class="st8" d="M300,438h178v166h273"/>
+    <path class="st23" d="M300,438h178v166h273"/>
+    <circle class="st10" cx="478" cy="521" r="9"/>
+    <text class="st38" transform="translate(474.94 524)"><tspan x="0" y="0">2</tspan></text>
+    <path class="st8" d="M300,438h250V182h324"/>
+    <path class="st23" d="M300,438h250V182h324"/>
+    <circle class="st10" cx="550" cy="310" r="9"/>
+    <text class="st38" transform="translate(546.94 314)"><tspan x="0" y="0">2</tspan></text>
+    <path class="st8" d="M300,438h420v-66h460"/>
+    <path class="st23" d="M300,438h420v-66h460"/>
+    <circle class="st10" cx="720" cy="405" r="9"/>
+    <text class="st38" transform="translate(716.94 408)"><tspan x="0" y="0">2</tspan></text>
+    <path class="st8" d="M300,438h72V118h66"/>
+    <path class="st23" d="M300,438h72V118h66"/>
+    <circle class="st10" cx="372" cy="278" r="9"/>
+    <text class="st38" transform="translate(368.94 282)"><tspan x="0" y="0">2</tspan></text>
+    <path class="st8" d="M300,438h34v162h26"/>
+    <path class="st23" d="M300,438h34v162h26"/>
+    <circle class="st10" cx="334" cy="519" r="9"/>
+    <text class="st38" transform="translate(330.94 522)"><tspan x="0" y="0">2</tspan></text>
+    <path class="st8" d="M751,604h258v-232h171"/>
+    <path class="st18" d="M751,604h258v-232h171"/>
+    <circle class="st21" cx="1009" cy="488" r="9"/>
+    <text class="st38" transform="translate(1005.9412 492)"><tspan x="0" y="0">2</tspan></text>
+    <path class="st8" d="M874,182h197v190h109"/>
+    <path class="st18" d="M874,182h197v190h109"/>
+    <circle class="st21" cx="1071" cy="277" r="9"/>
+    <text class="st38" transform="translate(1067.9412 280)"><tspan x="0" y="0">2</tspan></text>
+    <path class="st8" d="M220,292h194v312h337"/>
+    <path class="st13" d="M220,292h194v312h337"/>
+    <circle class="st0" cx="414" cy="448" r="9"/>
+    <text class="st38" transform="translate(410.94 452)"><tspan x="0" y="0">2</tspan></text>
+    <path class="st8" d="M751,604h389"/>
+    <path class="st13" d="M751,604h389"/>
+    <circle class="st0" cx="909" cy="604" r="9"/>
+    <text class="st38" transform="translate(905.94 608)"><tspan x="0" y="0">2</tspan></text>
+    <path class="st8" d="M360,600h350v4h430"/>
+    <path class="st13" d="M360,600h350v4h430"/>
+    <circle class="st0" cx="710" cy="602" r="9"/>
+    <text class="st38" transform="translate(706.94 606)"><tspan x="0" y="0">2</tspan></text>
+    <path class="st8" d="M220,292h451v312h469"/>
+    <path class="st15" d="M220,292h451v312h469"/>
+    <circle class="st20" cx="671" cy="448" r="9"/>
+    <text class="st38" transform="translate(667.94 452)"><tspan x="0" y="0">2</tspan></text>
+    <path class="st8" d="M220,292h348v-110h306"/>
+    <path class="st3" d="M220,292h348v-110h306"/>
+    <circle class="st14" cx="568" cy="237" r="9"/>
+    <text class="st38" transform="translate(564.94 240)"><tspan x="0" y="0">2</tspan></text>
+    <path class="st7" d="M874,182h-295v418h-219"/>
+    <path class="st12" d="M874,182h-295v418h-219"/>
+    <circle class="st19" cx="579" cy="391" r="9"/>
+    <text class="st38" transform="translate(575.94 394)"><tspan x="0" y="0">1</tspan></text>
+    <path class="st7" d="M751,604h-193V118h-120"/>
+    <path class="st9" d="M751,604h-193V118h-120"/>
+    <circle class="st0" cx="558" cy="361" r="9"/>
+    <text class="st38" transform="translate(554.94 364)"><tspan x="0" y="0">1</tspan></text>
+    <path class="st7" d="M874,182h-286v-64h-150"/>
+    <path class="st1" d="M874,182h-286v-64h-150"/>
+    <circle class="st17" cx="588" cy="150" r="9"/>
+    <text class="st38" transform="translate(584.94 154)"><tspan x="0" y="0">1</tspan></text>
+    <path class="st7" d="M1180,372h-15v232h-25"/>
+    <path class="st4" d="M1180,372h-15v232h-25"/>
+    <circle class="st14" cx="1165" cy="488" r="9"/>
+    <text class="st38" transform="translate(1161.9412 492)"><tspan x="0" y="0">1</tspan></text>
+    <path class="st7" d="M438,118h295v486h407"/>
+    <path class="st4" d="M438,118h295v486h407"/>
+    <circle class="st14" cx="733" cy="361" r="9"/>
+    <text class="st38" transform="translate(729.94 364)"><tspan x="0" y="0">1</tspan></text>
+  </g>
+  <rect class="st27" x="346" y="91" width="184" height="54" rx="10" ry="10"/>
+  <text class="st33" transform="translate(400.22 115)"><tspan x="0" y="0">MAC PRO</tspan></text>
+  <text class="st39" transform="translate(393.08 133)"><tspan x="0" y="0">Logic brain · 22 ln</tspan></text>
+  <rect class="st26" x="782" y="155" width="184" height="54" rx="10" ry="10"/>
+  <text class="st33" transform="translate(854.89 179)"><tspan x="0" y="0">KB E</tspan></text>
+  <text class="st39" transform="translate(825.27 197)"><tspan x="0" y="0">keys / drums · 22 ln</tspan></text>
+  <rect class="st29" x="128" y="265" width="184" height="54" rx="10" ry="10"/>
+  <text class="st33" transform="translate(183.56 289)"><tspan x="0" y="0">CIRKLON</tspan></text>
+  <text class="st39" transform="translate(170.99 307)"><tspan x="0" y="0">Cirklon brain · 22 ln</tspan></text>
+  <rect class="st31" x="1088" y="345" width="184" height="54" rx="10" ry="10"/>
+  <text class="st33" transform="translate(1136.4453 369)"><tspan x="0" y="0">KB ISLAND</tspan></text>
+  <text class="st39" transform="translate(1151.6915 387)"><tspan x="0" y="0">keys · 22 ln</tspan></text>
+  <rect class="st25" x="208" y="411" width="184" height="54" rx="10" ry="10"/>
+  <text class="st33" transform="translate(263.55 435)"><tspan x="0" y="0">AUX PRO</tspan></text>
+  <text class="st39" transform="translate(258.87 453)"><tspan x="0" y="0">clock hub · 12 ln</tspan></text>
+  <rect class="st30" x="268" y="573" width="184" height="54" rx="10" ry="10"/>
+  <text class="st33" transform="translate(309.34 597)"><tspan x="0" y="0">MAC STUDIO</tspan></text>
+  <text class="st39" transform="translate(324.4 615)"><tspan x="0" y="0">FX rack · 22 ln</tspan></text>
+  <rect class="st28" x="659" y="577" width="184" height="54" rx="10" ry="10"/>
+  <text class="st33" transform="translate(729.67 601)"><tspan x="0" y="0">CR W</tspan></text>
+  <text class="st39" transform="translate(700.23 619)"><tspan x="0" y="0">FX / samplers · 22 ln</tspan></text>
+  <rect class="st24" x="1048" y="577" width="184" height="54" rx="10" ry="10"/>
+  <text class="st33" transform="translate(1122.2227 601)"><tspan x="0" y="0">MPC</tspan></text>
+  <text class="st39" transform="translate(1097.4104 619)"><tspan x="0" y="0">MPC brain · 12 ln</tspan></text>
+  <text class="st35" transform="translate(40 536)"><tspan x="0" y="0">LANE FAMILY</tspan></text>
+  <rect class="st50" x="40" y="540" width="20" height="11" rx="2" ry="2"/>
+  <text class="st36" transform="translate(68 550)"><tspan x="0" y="0">ERM clock 2</tspan></text>
+  <rect class="st45" x="40" y="560" width="20" height="11" rx="2" ry="2"/>
+  <text class="st36" transform="translate(68 570)"><tspan x="0" y="0">ERM clock 3</tspan></text>
+  <rect class="st47" x="40" y="580" width="20" height="11" rx="2" ry="2"/>
+  <text class="st36" transform="translate(68 590)"><tspan x="0" y="0">ERM clock 4</tspan></text>
+  <rect class="st32" x="40" y="600" width="20" height="11" rx="2" ry="2"/>
+  <text class="st36" transform="translate(68 610)"><tspan x="0" y="0">SYNC-GEN 3LX</tspan></text>
+  <rect class="st43" x="40" y="620" width="20" height="11" rx="2" ry="2"/>
+  <text class="st36" transform="translate(68 630)"><tspan x="0" y="0">JL Cooper</tspan></text>
+  <rect class="st49" x="40" y="640" width="20" height="11" rx="2" ry="2"/>
+  <text class="st36" transform="translate(68 650)"><tspan x="0" y="0">MPC beatclock</tspan></text>
+  <rect class="st48" x="40" y="660" width="20" height="11" rx="2" ry="2"/>
+  <text class="st36" transform="translate(68 670)"><tspan x="0" y="0">synth-bank reach</tspan></text>
+  <rect class="st40" x="40" y="680" width="20" height="11" rx="2" ry="2"/>
+  <text class="st36" transform="translate(68 690)"><tspan x="0" y="0">FX</tspan></text>
+  <rect class="st46" x="40" y="700" width="20" height="11" rx="2" ry="2"/>
+  <text class="st36" transform="translate(68 710)"><tspan x="0" y="0">sequencer</tspan></text>
+  <rect class="st41" x="40" y="720" width="20" height="11" rx="2" ry="2"/>
+  <text class="st36" transform="translate(68 730)"><tspan x="0" y="0">guest</tspan></text>
+</svg>
